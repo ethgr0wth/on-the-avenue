@@ -9,8 +9,7 @@ export const BRAND = {
   hoursLines: [
     "Tuesday — Friday  ·  9:00 — 8:00",
     "Saturday  ·  9:00 — 6:00",
-    "Sunday  ·  10:00 — 5:00",
-    "Monday  ·  Closed",
+    "Sunday — Monday  ·  Closed",
   ],
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=228+N+Park+Ave+Winter+Park+FL+32789",
