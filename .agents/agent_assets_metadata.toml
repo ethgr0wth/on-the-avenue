@@ -1,0 +1,92 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "G6ouR8SCqYyPcw8nGaKHm"
+uri = "file://artifacts/mint/public/images/hero.png"
+type = "image"
+title = "Hero campaign image"
+
+[[generated]]
+id = "QQ6QKEE1mpJ5mJ8BuX-xM"
+uri = "file://artifacts/mint/public/images/service-design.png"
+type = "image"
+title = "Service hair design"
+
+[[generated]]
+id = "BTUJlw6Xake68XQJH7Zts"
+uri = "file://artifacts/mint/public/images/service-color.png"
+type = "image"
+title = "Service hair color"
+
+[[generated]]
+id = "gnY9fyWHbhI5PUBRmPfdU"
+uri = "file://artifacts/mint/public/images/lookbook-1.png"
+type = "image"
+title = "Lookbook 1"
+
+[[generated]]
+id = "IqhJWxp7prFd_RWUA2J4u"
+uri = "file://artifacts/mint/public/images/philosophy.png"
+type = "image"
+title = "Philosophy botanical interior"
+
+[[generated]]
+id = "y3X0QUm-cFy-85IANv2X1"
+uri = "file://attached_assets/generated_images/generated_image.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "sG0mcCI2ic9_8-K7Hohsn"
+uri = "file://artifacts/mint/public/images/artist-1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "MVtehmLR_pfaHeHB4hB1Y"
+uri = "file://artifacts/mint/public/images/artist-2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "9o_kowRpDrun1FiwpG5HO"
+uri = "file://artifacts/mint/public/images/artist-3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "JJAKjBPj15bz16m5wiOO1"
+uri = "file://artifacts/mint/public/images/artist-4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "JZz_cBoEbKQbRPZ1lBAbM"
+uri = "file://artifacts/mint/public/images/lookbook-2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "q3H3MJaV5jdjN8_TM69TM"
+uri = "file://artifacts/mint/public/images/lookbook-3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "fW9UlO2_APVyXuKM7-YvG"
+uri = "file://artifacts/mint/public/images/lookbook-4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "o-3Lq4_XY23dlgT0PZi_9"
+uri = "file://artifacts/mint/public/images/lookbook-5.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "14p6kpMrcXrt26tN0LxBo"
+uri = "file://artifacts/mint/public/images/lookbook-6.png"
+type = "image"
+title = "generated_image"
