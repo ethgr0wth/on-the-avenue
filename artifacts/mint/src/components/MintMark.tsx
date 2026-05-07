@@ -18,6 +18,6 @@ export function MintMark({ text = "MINT", className = "" }: { text?: string; cla
 
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <span className={`font-display tracking-[0.32em] uppercase ${className}`}>Mint</span>
+    <span className={`font-display tracking-[0.28em] uppercase whitespace-nowrap ${className}`}>Mint on the Avenue</span>
   );
 }
