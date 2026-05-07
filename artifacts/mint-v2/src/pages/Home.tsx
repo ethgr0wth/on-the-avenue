@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "wouter";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { BRAND, ARTISTS, LOOKBOOK } from "@/lib/data";
+import { BRAND, ARTISTS, LOOKBOOK, REVIEWS } from "@/lib/data";
 import { fadeUp, LUXURY_EASE, scrollMarquee } from "@/lib/motion";
 
 export default function Home() {
@@ -109,6 +109,63 @@ export default function Home() {
         </div>
       </section>
       
+      {/* TESTIMONIALS — EDITORIAL */}
+      <section className="py-32 lg:py-48 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 grain pointer-events-none opacity-40" />
+        <div className="relative max-w-[1600px] mx-auto px-6 lg:px-12">
+          <div className="flex justify-between items-end mb-20 lg:mb-28">
+            <div>
+              <p className="micro-label text-accent mb-6">Said In Our Chairs</p>
+              <h2 className="font-display text-5xl lg:text-7xl text-foreground leading-[1.05]">
+                Fifteen years of <em className="font-display-italic">trust.</em>
+              </h2>
+            </div>
+            <Link href="/reviews" className="hidden md:inline-flex items-center gap-4 micro-label border-b border-foreground pb-2 hover:text-accent hover:border-accent transition-colors">
+              Read All Reviews <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <motion.figure
+            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 1.2, ease: LUXURY_EASE as any }}
+            className="max-w-5xl mb-20 lg:mb-28"
+          >
+            <blockquote className="font-display text-[clamp(1.6rem,3.4vw,2.8rem)] leading-[1.25] text-foreground">
+              "{REVIEWS[2].text}"
+            </blockquote>
+            <figcaption className="mt-8 micro-label text-accent">— {REVIEWS[2].name} · {REVIEWS[2].date}</figcaption>
+          </motion.figure>
+
+          <div className="grid md:grid-cols-3 gap-10 lg:gap-16 border-t border-foreground/10 pt-16">
+            {[REVIEWS[0], REVIEWS[1], REVIEWS[15]].map((r, i) => (
+              <motion.figure
+                key={r.name + i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 1, delay: i * 0.15, ease: LUXURY_EASE as any }}
+              >
+                <div className="flex gap-1 mb-6 text-accent">
+                  {[...Array(5)].map((_, j) => <span key={j}>★</span>)}
+                </div>
+                <blockquote className="font-display text-xl lg:text-2xl text-foreground leading-[1.4] mb-6">
+                  "{r.text}"
+                </blockquote>
+                <figcaption className="micro-label text-muted-foreground">— {r.name} · {r.date}</figcaption>
+              </motion.figure>
+            ))}
+          </div>
+
+          <div className="md:hidden mt-12">
+            <Link href="/reviews" className="inline-flex items-center gap-4 micro-label border-b border-foreground pb-2 hover:text-accent hover:border-accent transition-colors">
+              Read All Reviews <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* LOOKBOOK MARQUEE */}
       <section className="py-32 overflow-hidden bg-background">
         <div className="flex mb-16 px-6 lg:px-12 max-w-[1600px] mx-auto justify-between items-end">
