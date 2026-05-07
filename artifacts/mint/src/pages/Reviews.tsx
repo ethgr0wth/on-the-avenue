@@ -6,7 +6,7 @@ import { REVIEWS } from "@/lib/data";
 import { PageHero } from "@/components/Layout";
 import { fadeUp, stagger } from "@/lib/motion";
 
-const TOPICS = ["All", "Color", "Cut", "Experience", "Mariza", "Sonia", "Marisa", "Ashley", "Maribel"];
+const TOPICS = ["All", "Color", "Cut", "Experience", "Sonia", "Marisa", "Ashley", "Maribel"];
 
 function matches(text: string, topic: string) {
   if (topic === "All") return true;

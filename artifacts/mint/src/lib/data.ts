@@ -274,7 +274,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
     id: "referrals",
     title: "Referrals",
     blurb:
-      "For the love of hair artistry. Refer a friend and you'll both receive $50 toward your next service. Valid with Marisa, Erin, Alexus, and Caleb.",
+      "For the love of hair artistry. Refer a friend and you'll both receive $50 toward your next service.",
     groups: [{ items: [{ name: "Referral Credit", price: "$50 each", note: "Applied to your next visit." }] }],
   },
 ];
@@ -331,56 +331,11 @@ export const ARTISTS: Artist[] = [
     note: "Maribel asks all the right questions before lifting a single foil. Her blonding work is luminous and patient.",
     image: "/images/artist-4.png",
   },
-  {
-    id: "caleb",
-    name: "Caleb",
-    role: "Stylist · Mint Men",
-    level: "Level 5",
-    specialties: ["Men's Cutting", "Beard & Neck", "Grey Blending"],
-    bestFor: "Anyone who wants a barber's precision with a salon's calm.",
-    note: "Caleb's chair has a near-cult following. Hot towels, sharp lines, no rush.",
-    image: "/images/lookbook-3.png",
-  },
-  {
-    id: "erin",
-    name: "Erin",
-    role: "Texture Specialist",
-    level: "Level 7",
-    specialties: ["Curl Definition", "Botanical Smoothing", "Texture Reset"],
-    bestFor: "Curls, waves, coils, and anyone who's been told their texture is 'too much'.",
-    note: "Erin specializes in working with your hair, not against it. Educator, advocate, perfectionist.",
-    image: "/images/lookbook-2.png",
-  },
-  {
-    id: "alexus",
-    name: "Alexus",
-    role: "Stylist & Educator",
-    level: "Level 5",
-    specialties: ["Lived-in Color", "Soft Cutting", "Editorial Styling"],
-    bestFor: "Modern, low-maintenance color and cuts that grow out beautifully.",
-    note: "Alexus brings an editorial eye to everyday hair. Her finishing work is quietly cinematic.",
-    image: "/images/lookbook-4.png",
-  },
-  {
-    id: "mariza",
-    name: "Mariza",
-    role: "Master Stylist",
-    level: "Level 8",
-    specialties: ["Modern Cutting", "Precision", "Refined Detail"],
-    bestFor: "Guests who want a modern, considered cut with no detail rushed.",
-    note: "Unhurried, exact, and thoughtful. Guests routinely call Mariza's cut 'one of the best ever.'",
-    image: "/images/lookbook-5.png",
-  },
 ];
 
 export type Review = { name: string; date: string; text: string };
 
 export const REVIEWS: Review[] = [
-  {
-    name: "Carolina L.",
-    date: "May 2026",
-    text: "The service at Mint is truly exceptional. From the moment you walk in you are warmly welcomed. Once seated, you're treated to a relaxing head, neck, and shoulder massage that sets the tone for the entire experience. Mariza took the time to deliver a modern haircut with great precision and attention to detail. Mint continues to deserve its excellent reputation.",
-  },
   { name: "Eva W.", date: "May 2026", text: "Best salon in the United States. No one can do color like Marisa. So much talent in all of the Master Stylists there!" },
   { name: "Barbara W.", date: "May 2026", text: "Maribel was so friendly and made me feel at home. She did an EXCELLENT job coloring, cutting and blow-drying my hair." },
   {

@@ -30,7 +30,7 @@ export default function Artists() {
     <>
       <PageHero
         eyebrow="Meet the Team"
-        title={<>The hands you'll be in. <em className="not-italic text-[#647962]">All eight of them.</em></>}
+        title={<>The hands you'll be in. <em className="not-italic text-[#647962]">All four of them.</em></>}
         copy="Master colorists, precision cutters, texture specialists, and the kind of barbers who turn a quick trim into the best part of your day."
         image="/images/lookbook-2.png"
       />

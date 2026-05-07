@@ -95,7 +95,7 @@ export default function NewGuests() {
               Find the artist whose hands fit your hair.
             </h2>
             <p className="mt-7 text-[#50563d] text-lg leading-relaxed">
-              Eight master artists, each with a distinct specialty. Tell us about your hair and what you're hoping for —
+              A small, intentional team — each with a distinct specialty. Tell us about your hair and what you're hoping for —
               we'll suggest the right fit, or pair you with the next available artist who'll do beautifully by you.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
