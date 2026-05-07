@@ -43,7 +43,7 @@ export function Header() {
         <div className="mx-auto max-w-[1440px] px-6 lg:px-12 h-[72px] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <Wordmark className="text-[15px] text-[#0b2e27]" />
-            <span className="hidden sm:inline micro-label text-[#647962] mt-[2px]">MintOnTheAvenue.com</span>
+            <span className="hidden sm:inline micro-label text-[#647962] mt-[2px]">on the Avenue</span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-7">
