@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/v2/"
+title = "Mint on the Avenue — V2"
+version = "1.0.0"
+id = "artifacts/mint-v2"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/v2/" ]
+localPort = 19479
+
+[services.development]
+run = "pnpm --filter @workspace/mint-v2 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mint-v2", "run", "build" ]
+publicDir = "artifacts/mint-v2/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19479"
+BASE_PATH = "/v2/"

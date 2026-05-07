@@ -90,3 +90,63 @@ id = "14p6kpMrcXrt26tN0LxBo"
 uri = "file://artifacts/mint/public/images/lookbook-6.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "e5r6fbPrw4xidhO04HUTF"
+uri = "file://artifacts/mint-v2/public/images/hero.png"
+type = "image"
+title = "cinematic hair salon hero"
+
+[[generated]]
+id = "p2tkUZEn7SUHYJOVyxL--"
+uri = "file://artifacts/mint-v2/public/images/artist-1.png"
+type = "image"
+title = "artist portrait sonia"
+
+[[generated]]
+id = "ngy7jD9Rh2BVzxxYgJj9d"
+uri = "file://artifacts/mint-v2/public/images/artist-2.png"
+type = "image"
+title = "artist portrait marisa"
+
+[[generated]]
+id = "5r_GlM4poWf2_tmBUzYtc"
+uri = "file://artifacts/mint-v2/public/images/artist-3.png"
+type = "image"
+title = "artist portrait ashley"
+
+[[generated]]
+id = "ViJ0Id4aoYHSwVh0HVv4c"
+uri = "file://artifacts/mint-v2/public/images/artist-4.png"
+type = "image"
+title = "artist portrait maribel"
+
+[[generated]]
+id = "HiqD0VjZxhfPQqPhQoGZS"
+uri = "file://artifacts/mint-v2/public/images/lookbook-1.png"
+type = "image"
+title = "lookbook soft waves"
+
+[[generated]]
+id = "4378czEzgfmvWiiUYa0NS"
+uri = "file://artifacts/mint-v2/public/images/lookbook-2.png"
+type = "image"
+title = "lookbook blonde balayage"
+
+[[generated]]
+id = "AajjmH3F-_dC-id_wc_ci"
+uri = "file://artifacts/mint-v2/public/images/lookbook-3.png"
+type = "image"
+title = "lookbook bob cut"
+
+[[generated]]
+id = "4nF2hl5wa5_rQILNVpBgM"
+uri = "file://artifacts/mint-v2/public/images/lookbook-4.png"
+type = "image"
+title = "lookbook hair texture"
+
+[[generated]]
+id = "z66RfAto2arr_Fcwnzd_T"
+uri = "file://artifacts/mint-v2/public/images/atmosphere.png"
+type = "image"
+title = "salon atmosphere close up"
