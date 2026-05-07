@@ -74,7 +74,7 @@ export function Header() {
         <div className="mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 mix-blend-difference text-white">
             <Wordmark className="h-4 w-auto" />
-            <span className="micro-label hidden md:block">Winter Park</span>
+            <span className="micro-label hidden md:block">on the Avenue</span>
           </Link>
 
           <div className="flex items-center gap-8 mix-blend-difference text-white">
