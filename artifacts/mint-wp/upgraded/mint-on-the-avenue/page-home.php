@@ -170,9 +170,9 @@ get_header();
         <div class="container">
             <div class="cta-inner">
                 <p class="micro-label fade-up sage"><?php esc_html_e( 'New Guests', 'mint-ota' ); ?></p>
-                <div class="cta-price fade-up">$50</div>
+                <div class="cta-price fade-up">20<span class="cta-price-pct">%</span> <span class="cta-price-off">off</span></div>
                 <p class="cta-body fade-up">
-                    <?php esc_html_e( "Because we'd love to meet you. $50 toward your first service at Mint, valid with select artists. A small welcome to make trying something new feel easy.", 'mint-ota' ); ?>
+                    <?php esc_html_e( "Because we'd love to meet you. Twenty percent off your first service at Mint, valid with select artists. A small welcome to make trying something new feel easy.", 'mint-ota' ); ?>
                 </p>
                 <a href="<?php echo mint_book_url(); ?>" class="btn-primary fade-up" target="_blank" rel="noopener">
                     <?php esc_html_e( 'Claim Your Welcome Offer', 'mint-ota' ); ?>
