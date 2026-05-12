@@ -191,3 +191,9 @@ id = "Oxm54PYeaZrWaAB4XuXHL"
 uri = "file://artifacts/mint-wp/mint-on-the-avenue-atelier.zip"
 type = "unspecified"
 title = "Mint on the Avenue — Atelier (deep teal-green palette + new editorial images)"
+
+[[outputs]]
+id = "KMnuLgp66_CyTH2G41CGe"
+uri = "file://artifacts/mint-wp/mint-on-the-avenue-atelier-v2.2.0-20260512-0231.zip"
+type = "unspecified"
+title = "Mint Atelier — fresh filename (cache-busted)"
