@@ -287,3 +287,9 @@ id = "WPZ2komR1YdygiIvIkKll"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-173002-v2.3.1-FINAL.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.1 FINAL — style.css version bumped"
+
+[[outputs]]
+id = "kv33u41KVnal6I6AEEnq1"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-173051-v2.3.2.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.2 — fixes 404 + bumps version"
