@@ -365,3 +365,9 @@ id = "RGiA_TTC09ixykKsCTsjp"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-225319-v2.4.3-OG-final.zip"
 type = "unspecified"
 title = "Mint Atelier v2.4.3 — final OG cover with call/text"
+
+[[outputs]]
+id = "ESH25zwiBh7l6dTSnNOCn"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-225512-v2.4.4.zip"
+type = "unspecified"
+title = "Mint Atelier v2.4.4"
