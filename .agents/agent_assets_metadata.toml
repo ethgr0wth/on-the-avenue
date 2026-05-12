@@ -347,3 +347,9 @@ id = "Nv8fl7v_CGdFe4Vqh6uiQ"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-224010-v2.4.0-OG.zip"
 type = "unspecified"
 title = "Mint Atelier v2.4.0 — new OG cover + social meta"
+
+[[outputs]]
+id = "arrDjFpCJ2B7yyZ7zSB8X"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-224513-v2.4.1-OG-branded.zip"
+type = "unspecified"
+title = "Mint Atelier v2.4.1 — your branded OG cover"
