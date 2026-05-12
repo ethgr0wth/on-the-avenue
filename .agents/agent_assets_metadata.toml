@@ -293,3 +293,9 @@ id = "kv33u41KVnal6I6AEEnq1"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-173051-v2.3.2.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.2 — fixes 404 + bumps version"
+
+[[outputs]]
+id = "Fde4S2d348DKM9kKQ0ver"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-205355-v2.3.3-logo.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.3 — stacked logo in hero"

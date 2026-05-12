@@ -38,11 +38,11 @@ $book_url = function_exists( 'mint_phorest_url' ) ? mint_phorest_url() : 'https:
             <?php esc_html_e( 'Winter Park, Florida · Aveda Concept Salon', 'mint-ota' ); ?>
         </p>
 
-        <h1 class="hero-title fade-up" data-delay="0.3">MINT</h1>
-
-        <p class="hero-subtitle fade-up" data-delay="0.45">
-            <?php esc_html_e( 'on the avenue', 'mint-ota' ); ?>
-        </p>
+        <h1 class="hero-title hero-title-logo fade-up" data-delay="0.3">
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/mint-stacked-wordmark.png' ); ?>"
+                 alt="<?php esc_attr_e( 'Mint on the Avenue — An Aveda Salon', 'mint-ota' ); ?>"
+                 class="hero-wordmark-img" />
+        </h1>
 
         <p class="hero-tagline fade-up" data-delay="0.6">
             <?php esc_html_e( 'A family-owned and operated Aveda salon on Park Avenue — celebrating five years of devoted color and master cutting.', 'mint-ota' ); ?>

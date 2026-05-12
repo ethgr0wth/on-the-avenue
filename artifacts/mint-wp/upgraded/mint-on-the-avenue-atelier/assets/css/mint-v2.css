@@ -278,6 +278,20 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
   letter-spacing: .005em;
   line-height: 1;
 }
+
+/* Hero stacked logo image (replaces text wordmark) */
+.hero-typo .hero-title-logo { margin: 0 0 2.5rem; line-height: 0; }
+.hero-wordmark-img {
+  display: block;
+  width: clamp(280px, 38vw, 520px);
+  height: auto;
+  /* Tint dark logo into deep aqua-teal to match palette */
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(24%) sepia(35%) saturate(900%) hue-rotate(135deg) brightness(95%) contrast(92%)
+    drop-shadow(0 1px 2px rgba(19,78,74,.08));
+}
 .hero-typo .hero-tagline {
   font-family: var(--font-body);
   font-size: clamp(.95rem, 1.35vw, 1.1rem);
