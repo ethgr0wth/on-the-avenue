@@ -38,38 +38,6 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<script>
-/* Permanently destroy Foundation tooltips ("Shop Aveda" / "Support our salon
-   and enjoy free shipping and samples" hover bubble fed by menu Title Attr). */
-(function(){
-  function stripTitles(){
-    document.querySelectorAll('a[title], .has-tip, [data-tooltip]').forEach(function(el){
-      // never touch images or icon titles outside of nav menus
-      if (el.closest('img')) return;
-      el.removeAttribute('title');
-      el.removeAttribute('data-tooltip');
-      el.classList.remove('has-tip');
-    });
-    document.querySelectorAll('body > .tooltip, [role="tooltip"]').forEach(function(el){ el.remove(); });
-  }
-  function killFoundationTooltips(){
-    if (window.jQuery && window.Foundation) {
-      try {
-        jQuery('.has-tip').each(function(){
-          var p = jQuery(this).data('zfPlugin');
-          if (p && typeof p.destroy === 'function') p.destroy();
-        });
-        jQuery(document).off('.zf.tooltip');
-      } catch(e) {}
-    }
-    stripTitles();
-  }
-  document.addEventListener('DOMContentLoaded', stripTitles);
-  if (window.jQuery) { jQuery(killFoundationTooltips); }
-  [400, 1200, 2500, 5000].forEach(function(ms){ setTimeout(killFoundationTooltips, ms); });
-})();
-</script>
-
 <a class="skip-link" href="#main-content"><?php esc_html_e( 'Skip to content', 'mint-ota' ); ?></a>
 
 <!-- ─── Site Header ─────────────────────────────────────────── -->

@@ -251,3 +251,9 @@ id = "5S6aX3Bc8ahs4WhOKMxw9"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-170142.zip"
 type = "unspecified"
 title = "Mint Atelier — Foundation tooltip destroyer (kills Shop Aveda popup)"
+
+[[outputs]]
+id = "JqiAUMu2fzGP7k2y0MRy9"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-170422.zip"
+type = "unspecified"
+title = "Mint Atelier — clean (no popup hacks, nothing hidden)"
