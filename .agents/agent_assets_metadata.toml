@@ -180,6 +180,12 @@ uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/image
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "Wu6PaZ0CKmrEPcGb0o-Cp"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/og-cover.png"
+type = "image"
+title = "mint og cover"
+
 [[outputs]]
 id = "0bx0-zB5Jk_mMy1k1PEbS"
 uri = "file://artifacts/mint-on-the-avenue.zip"
@@ -335,3 +341,9 @@ id = "Igvzb6E0RpV6jXA_zlLJx"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-223610-v2.3.9-hero-2x.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.9 — hero logo 2x, tighter spacing"
+
+[[outputs]]
+id = "Nv8fl7v_CGdFe4Vqh6uiQ"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-224010-v2.4.0-OG.zip"
+type = "unspecified"
+title = "Mint Atelier v2.4.0 — new OG cover + social meta"

@@ -11,6 +11,35 @@
 
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
+    <?php
+    // Open Graph / Twitter Card — eco-luxury cover
+    $mint_og_image  = get_template_directory_uri() . '/assets/images/og-cover.png?v=' . ( defined('MINT_VERSION') ? MINT_VERSION : '2.4.0' );
+    $mint_og_title  = wp_get_document_title();
+    $mint_og_desc   = get_bloginfo( 'description' );
+    if ( is_singular() ) {
+        $excerpt = get_the_excerpt();
+        if ( $excerpt ) { $mint_og_desc = wp_strip_all_tags( $excerpt ); }
+    }
+    if ( ! $mint_og_desc ) {
+        $mint_og_desc = 'Mint on the Avenue — an Aveda salon in Winter Park, Florida. Editorial color, cut, and care on Park Avenue.';
+    }
+    $mint_og_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    ?>
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+    <meta property="og:title"       content="<?php echo esc_attr( $mint_og_title ); ?>">
+    <meta property="og:description" content="<?php echo esc_attr( $mint_og_desc ); ?>">
+    <meta property="og:url"         content="<?php echo esc_url( $mint_og_url ); ?>">
+    <meta property="og:image"       content="<?php echo esc_url( $mint_og_image ); ?>">
+    <meta property="og:image:secure_url" content="<?php echo esc_url( $mint_og_image ); ?>">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt"   content="Mint on the Avenue — eco-luxury Aveda salon in Winter Park, Florida">
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="<?php echo esc_attr( $mint_og_title ); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr( $mint_og_desc ); ?>">
+    <meta name="twitter:image"       content="<?php echo esc_url( $mint_og_image ); ?>">
+
     <?php wp_head(); ?>
 
     <?php
