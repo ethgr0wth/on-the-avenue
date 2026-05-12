@@ -292,13 +292,14 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
   line-height: 1;
 }
 
-/* Hero stacked logo image — DOMINANT, fills typo column */
-.hero-typo .hero-title-logo { margin: 0 0 2.5rem; line-height: 0; width: 100%; }
+/* Hero stacked logo image — DOMINANT, fills typo column (2x) */
+.hero-typo .hero-title-logo { margin: 0 0 .5rem; line-height: 0; width: 100%; }
 .hero-wordmark-img {
   display: block;
   width: 100%;
-  max-width: 920px;
+  max-width: 1400px;
   height: auto;
+  margin-left: -2%;
   filter:
     brightness(0)
     saturate(100%)
@@ -306,13 +307,14 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
     drop-shadow(0 2px 4px rgba(19,78,74,.1));
 }
 @media (max-width: 767px) {
-  .hero-typo .hero-title-logo { margin: 0 0 1.75rem; }
-  .hero-wordmark-img { max-width: 92vw; margin-inline: auto; }
+  .hero-typo .hero-title-logo { margin: 0 0 .25rem; }
+  .hero-wordmark-img { max-width: 100vw; margin-inline: -1rem; width: calc(100% + 2rem); }
 }
 .hero-typo .hero-tagline {
   font-family: var(--font-body);
   font-size: clamp(.95rem, 1.35vw, 1.1rem);
   font-weight: 300;
+  margin-top: .5rem !important;
   line-height: 1.75;
   color: var(--color-muted);
   max-width: 34ch;

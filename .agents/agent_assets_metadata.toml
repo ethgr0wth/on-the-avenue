@@ -329,3 +329,9 @@ id = "rIAJQOXcDvsSx48vMjQ6H"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-223354-v2.3.8-MAX.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.8 — MAX logos, no scroll-shrink"
+
+[[outputs]]
+id = "Igvzb6E0RpV6jXA_zlLJx"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-223610-v2.3.9-hero-2x.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.9 — hero logo 2x, tighter spacing"
