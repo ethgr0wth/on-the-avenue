@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "G6ouR8SCqYyPcw8nGaKHm"
@@ -150,3 +149,9 @@ id = "z66RfAto2arr_Fcwnzd_T"
 uri = "file://artifacts/mint-v2/public/images/atmosphere.png"
 type = "image"
 title = "salon atmosphere close up"
+
+[[outputs]]
+id = "0bx0-zB5Jk_mMy1k1PEbS"
+uri = "file://artifacts/mint-on-the-avenue.zip"
+type = "unspecified"
+title = "Mint on the Avenue — WordPress Theme v2.0"
