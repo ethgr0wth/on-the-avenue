@@ -257,3 +257,9 @@ id = "JqiAUMu2fzGP7k2y0MRy9"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-170422.zip"
 type = "unspecified"
 title = "Mint Atelier — clean (no popup hacks, nothing hidden)"
+
+[[outputs]]
+id = "2Y5tRztYwJaO7fi0lL-ev"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-171444.zip"
+type = "unspecified"
+title = "Mint Atelier — aqua/teal greens + sage + blush palette"

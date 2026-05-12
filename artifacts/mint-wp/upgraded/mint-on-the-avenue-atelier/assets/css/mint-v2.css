@@ -1,18 +1,17 @@
 /* =========================================================
    Mint on the Avenue — ATELIER variant
-   Built on Imaginal framework. Loaded after site-css so it
-   overrides cleanly. Palette: ivory + deep olive + terracotta.
+   Palette: aqua/teal-blue-greens + sage tints + blush accent.
    ========================================================= */
 
 :root {
-  --color-forest:     #1c4a48;   /* deep teal-green — green forward, clear blue undertone */
-  --color-eucalyptus: #2a5e5a;
-  --color-sage:       #6e918d;
-  --color-mist:       #ede7d6;   /* bone */
-  --color-parchment:  #f5efe1;   /* warm ivory */
+  --color-forest:     #134e4a;   /* deep aqua-teal */
+  --color-eucalyptus: #1f6b66;   /* teal-blue-green */
+  --color-sage:       #8aada8;   /* soft sage with aqua tint */
+  --color-mist:       #e6ede9;   /* cool bone */
+  --color-parchment:  #f3efe6;   /* warm ivory */
   --color-cream:      #faf6ec;   /* warmer cream */
-  --color-brass:      #b85c3a;   /* TERRACOTTA — atelier accent */
-  --color-brass-warm: #c4694a;
+  --color-brass:      #d49a8a;   /* BLUSH — atelier accent */
+  --color-brass-warm: #e3b3a4;   /* soft blush highlight */
   --color-warm-white: #f1ecdf;
   --color-text:       #2a2818;
   --color-muted:      #6a6859;
