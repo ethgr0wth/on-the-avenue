@@ -38,6 +38,24 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<script>
+/* Strip title attributes from header nav links so browsers + Foundation
+   can't render the "Shop Aveda" hover popover. Runs early. */
+(function(){
+  function strip(){
+    document.querySelectorAll('.site-header a[title], .header-nav a[title], .site-header .has-tip').forEach(function(el){
+      el.removeAttribute('title');
+      el.removeAttribute('data-tooltip');
+      el.classList.remove('has-tip');
+    });
+    document.querySelectorAll('body > .tooltip').forEach(function(el){ el.remove(); });
+  }
+  document.addEventListener('DOMContentLoaded', strip);
+  setTimeout(strip, 800);
+  setTimeout(strip, 2000);
+})();
+</script>
+
 <a class="skip-link" href="#main-content"><?php esc_html_e( 'Skip to content', 'mint-ota' ); ?></a>
 
 <!-- ─── Site Header ─────────────────────────────────────────── -->

@@ -129,11 +129,32 @@ body footer.footer:not(.site-footer) { display: none !important; }
 
 .wordmark {
   font-family: var(--font-display);
-  font-size: 0.9rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
+  font-size: 0.95rem; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--color-forest);
-  white-space: nowrap; transition: color 0.3s;
+  white-space: nowrap; transition: color 0.3s, text-shadow 0.3s;
+  /* readable on any backdrop — soft ivory halo */
+  text-shadow:
+    0 0 1px rgba(245,239,225,.95),
+    0 1px 2px rgba(245,239,225,.85),
+    0 0 12px rgba(245,239,225,.55);
+  -webkit-text-stroke: 0.4px var(--color-forest);
 }
-.wordmark-logo { max-height: 40px; width: auto; }
+.site-header.scrolled .wordmark { text-shadow: none; -webkit-text-stroke: 0; }
+
+/* Logo image — drop-shadow halo so a white wordmark stays legible on white */
+.wordmark-logo,
+.wordmark .custom-logo {
+  max-height: 44px; width: auto;
+  filter:
+    drop-shadow(0 0 1px rgba(34,65,58,.55))
+    drop-shadow(0 1px 2px rgba(245,239,225,.9))
+    drop-shadow(0 0 8px rgba(245,239,225,.7));
+  transition: filter .3s;
+}
+.site-header.scrolled .wordmark-logo,
+.site-header.scrolled .wordmark .custom-logo {
+  filter: drop-shadow(0 1px 2px rgba(34,65,58,.18));
+}
 
 .header-nav { display: none; }
 @media (min-width: 1024px) { .header-nav { display: flex; align-items: center; gap: 2rem; } }
@@ -241,10 +262,11 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   color: var(--color-brass);
-  margin: .25rem 0 2.75rem;
-  letter-spacing: .01em;
+  margin: .35rem 0 2.75rem;
+  letter-spacing: .005em;
+  line-height: 1;
 }
 .hero-typo .hero-tagline {
   font-family: var(--font-body);
@@ -515,6 +537,23 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
 .artist-role { color: var(--color-brass); margin-bottom: .35rem; }
 .artist-name { font-family: var(--font-display); font-size: 2rem; color: var(--color-warm-white); margin: 0 0 .75rem; }
 .artist-note { font-size: .95rem; font-weight: 300; color: rgba(241,236,223,.75); line-height: 1.65; }
+
+/* ─── Kill leftover Foundation tooltips/popovers (Shop Aveda etc) ─ */
+.tooltip,
+.has-tip + .tooltip,
+[data-tooltip] + .tooltip,
+.site-header .tooltip,
+.header-nav .tooltip,
+.header-nav .dropdown-pane,
+.header-nav [aria-haspopup="true"] + ul,
+body > .tooltip {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.has-tip { cursor: inherit !important; border-bottom: 0 !important; }
+.header-nav a[title] { position: relative; }
 
 /* ─── Editorial Gallery (atelier) ────────────────────────────── */
 .section-gallery {

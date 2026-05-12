@@ -227,3 +227,9 @@ id = "KGWLMpjkKDF4yARxu5pBM"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-025437.zip"
 type = "unspecified"
 title = "Mint Atelier — all 'quiet' references removed"
+
+[[outputs]]
+id = "PTfd0WtCLb1Tyja0mu2aw"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-165218.zip"
+type = "unspecified"
+title = "Mint Atelier — bigger subtitle, readable wordmark, Shop Aveda popover killed"
