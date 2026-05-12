@@ -1,13 +1,13 @@
 <?php
 /**
- * Mint on the Avenue — functions.php
+ * Mint on the Avenue — Atelier — functions.php
  * Built on the Imaginal Master framework. Preserves all existing
  * custom post types, ACF fields, theme options, and admin panels.
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.1.0' );
+define( 'MINT_VERSION', '2.2.0' );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── Inherit Imaginal framework files (preserves existing CMS) ─── */
@@ -44,26 +44,28 @@ if ( ! function_exists( 'mint_field' ) ) {
 /* ─── Theme-options safety wrapper ───────────────────────────────── */
 if ( ! function_exists( 'mint_option' ) ) {
     function mint_option( $key, $default = '' ) {
-        // Imaginal stores theme options in a global $im_theme array,
-        // populated in assets/functions/theme-options.php.
         global $im_theme;
         if ( is_array( $im_theme ) && isset( $im_theme[ $key ] ) && $im_theme[ $key ] !== '' ) {
             return $im_theme[ $key ];
         }
-        // Fallback: try the raw 'im-' prefixed option directly
         $opt = get_option( 'im-' . $key );
         if ( $opt ) return $opt;
         return $default;
     }
 }
 
-/* ─── Booking URL Helper ─────────────────────────────────────────── */
-if ( ! function_exists( 'mint_book_url' ) ) {
-    function mint_book_url() {
-        $custom = get_theme_mod( 'mint_booking_url' );
-        if ( $custom ) return esc_url( $custom );
-        return esc_url( 'https://www.fresha.com/a/mint-on-the-avenue-winter-park-228-n-park-avenue-bybduhv1/booking' );
+/* ─── Phorest Booking URL helpers ─────────────────────────────────
+   Single source of truth: the Customizer setting `mint_phorest_url`.
+   `mint_book_url()` is kept as an alias so older calls keep working. */
+if ( ! function_exists( 'mint_phorest_url' ) ) {
+    function mint_phorest_url() {
+        $u = get_theme_mod( 'mint_phorest_url', 'https://phorest.com/book/salons/mintontheavenue' );
+        if ( ! $u ) $u = 'https://phorest.com/book/salons/mintontheavenue';
+        return esc_url( $u );
     }
+}
+if ( ! function_exists( 'mint_book_url' ) ) {
+    function mint_book_url() { return mint_phorest_url(); }
 }
 
 /* ─── Phone link in primary nav (preserved from Imaginal) ────────── */
@@ -111,21 +113,22 @@ function mint_schema_local_business() {
 }
 add_action( 'wp_head', 'mint_schema_local_business' );
 
-/* ─── Customizer: booking URL + hero overrides ──────────────────── */
+/* ─── Customizer: Phorest URL ────────────────────────────────────── */
 function mint_customizer( $wp_customize ) {
     $wp_customize->add_section( 'mint_options', [
         'title'    => __( 'Mint Theme Options', 'mint-ota' ),
         'priority' => 30,
     ] );
 
-    $wp_customize->add_setting( 'mint_booking_url', [
-        'default'           => 'https://www.fresha.com/a/mint-on-the-avenue-winter-park-228-n-park-avenue-bybduhv1/booking',
+    $wp_customize->add_setting( 'mint_phorest_url', [
+        'default'           => 'https://phorest.com/book/salons/mintontheavenue',
         'sanitize_callback' => 'esc_url_raw',
     ] );
-    $wp_customize->add_control( 'mint_booking_url', [
-        'label'   => __( 'Booking URL (Fresha / Booksy)', 'mint-ota' ),
-        'section' => 'mint_options',
-        'type'    => 'url',
+    $wp_customize->add_control( 'mint_phorest_url', [
+        'label'       => __( 'Phorest Booking URL', 'mint-ota' ),
+        'description' => __( 'The URL guests are sent to when they tap "Reserve". Defaults to your Phorest hosted booking page.', 'mint-ota' ),
+        'section'     => 'mint_options',
+        'type'        => 'url',
     ] );
 }
 add_action( 'customize_register', 'mint_customizer' );
@@ -149,7 +152,7 @@ function mint_enqueue_v2_assets() {
     wp_enqueue_script( 'gsap-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',  [ 'gsap' ],  '3.12.5', true );
     wp_enqueue_script( 'mint-v2',            get_template_directory_uri() . '/assets/js/mint-v2.js',                     [ 'gsap', 'gsap-scrolltrigger' ], MINT_VERSION, true );
 }
-add_action( 'wp_enqueue_scripts', 'mint_enqueue_v2_assets', 1000 ); // priority 1000 = after Imaginal's 999
+add_action( 'wp_enqueue_scripts', 'mint_enqueue_v2_assets', 1000 );
 
 /* ─── Replace dead Instagram API call (silently) ─────────────────── */
 function mint_kill_dead_instagram_call( $url ) {

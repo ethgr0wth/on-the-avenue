@@ -1,5 +1,11 @@
 </div><!-- /#main-wrapper -->
 
+<!-- ─── Sticky Reserve Pill ────────────────────────────────── -->
+<a class="reserve-pill" href="<?php echo mint_phorest_url(); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Reserve appointment online', 'mint-ota' ); ?>">
+    <span class="reserve-pill-dot" aria-hidden="true"></span>
+    <span class="reserve-pill-label"><?php esc_html_e( 'Reserve', 'mint-ota' ); ?></span>
+</a>
+
 <!-- ─── Site Footer ─────────────────────────────────────────── -->
 <footer class="site-footer" role="contentinfo">
     <div class="container">

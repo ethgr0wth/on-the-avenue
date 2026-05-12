@@ -1,41 +1,19 @@
 <?php
 /**
- * Front Page Template — Mint v2 Cinematic
- * Pulls hero panels from `hp_slides` CPT (preserved from Imaginal),
- * renders new editorial sections (manifesto, artists, reviews, lookbook).
+ * Atelier Front Page — typographic editorial variant.
+ * Pulls hero image from `hp_slides` CPT, preserves promo CPT block,
+ * replaces marquee with a pull-quote, adds numbered services strip.
  */
 get_header();
 ?>
 
 <main id="main-content">
 
-    <!-- ─── CINEMATIC HERO (driven by hp_slides CPT) ──────────── -->
+    <!-- ─── ATELIER HERO (typographic editorial split) ────────── -->
     <?php get_template_part( 'parts/content', 'slides' ); ?>
 
-    <!-- ─── MARQUEE TICKER ───────────────────────────────────── -->
-    <div class="marquee-strip" aria-hidden="true">
-        <div class="marquee-mask">
-            <div class="marquee-track">
-                <?php
-                $items = [
-                    'Aveda · Plant-Powered Color',
-                    'Master Stylists',
-                    'Park Avenue · Winter Park',
-                    'Color · Cut · Texture · Event',
-                    'Est. on the Avenue',
-                    'Aveda · Plant-Powered Color',
-                    'Master Stylists',
-                    'Park Avenue · Winter Park',
-                    'Color · Cut · Texture · Event',
-                    'Est. on the Avenue',
-                ];
-                foreach ( $items as $item ) {
-                    echo '<span>' . esc_html( $item ) . '</span>';
-                }
-                ?>
-            </div>
-        </div>
-    </div>
+    <!-- ─── PHOREST BOOKING STRIP (under hero) ────────────────── -->
+    <?php get_template_part( 'parts/booking-strip' ); ?>
 
     <!-- ─── PROMOS (preserved from Imaginal — uses promo_btn CPT + ACF) ─── -->
     <?php
@@ -46,18 +24,24 @@ get_header();
     endwhile; endif;
     ?>
 
-    <!-- ─── MANIFESTO / PHILOSOPHY ───────────────────────────── -->
-    <section class="section-manifesto">
+    <!-- ─── PULL QUOTE (replaces ticker — atelier prefers stillness) ─── -->
+    <section class="section-pullquote">
         <div class="container">
-            <div class="manifesto-grid">
-                <div>
-                    <img
-                        class="manifesto-image fade-up"
-                        src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/promo-welcome.jpg' ); ?>"
-                        alt="<?php esc_attr_e( 'Editorial hair styling', 'mint-ota' ); ?>"
-                        loading="lazy"
-                    >
-                </div>
+            <figure class="pullquote">
+                <blockquote class="fade-blur">
+                    <?php esc_html_e( 'A great haircut is a quiet conversation between scissors, a stylist who is paying attention, and the person sitting in the chair.', 'mint-ota' ); ?>
+                </blockquote>
+                <figcaption class="micro-label fade-up brass">
+                    <?php esc_html_e( 'House Belief, No. 1', 'mint-ota' ); ?>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- ─── MANIFESTO (copy left, image right — flipped from v2) ─── -->
+    <section class="section-manifesto" id="manifesto">
+        <div class="container">
+            <div class="manifesto-grid manifesto-grid--flipped">
                 <div class="manifesto-copy">
                     <p class="micro-label fade-up brass"><?php esc_html_e( 'Our Philosophy', 'mint-ota' ); ?></p>
                     <h2 class="display-editorial fade-up">
@@ -66,17 +50,62 @@ get_header();
                         <?php esc_html_e( 'craft, and quiet luxury.', 'mint-ota' ); ?>
                     </h2>
                     <p class="manifesto-body fade-up">
-                        <?php esc_html_e( 'Every detail is a deliberate choice. We believe in the power of less, executed perfectly. Our botanical Aveda approach to color and cutting is designed to enhance, not mask, your natural texture.', 'mint-ota' ); ?>
+                        <?php esc_html_e( "Every detail is a deliberate choice. We believe in the power of less, executed perfectly. Our botanical Aveda approach to color and cutting is designed to enhance, not mask, your natural texture.", 'mint-ota' ); ?>
                     </p>
                     <a href="<?php echo esc_url( home_url( '/about' ) ); ?>" class="link-arrow fade-up">
                         <?php esc_html_e( 'Read Our Story', 'mint-ota' ); ?>
                     </a>
                 </div>
+                <div>
+                    <img
+                        class="manifesto-image fade-up"
+                        src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/promo-welcome.jpg' ); ?>"
+                        alt="<?php esc_attr_e( 'The Mint salon, Winter Park', 'mint-ota' ); ?>"
+                        loading="lazy"
+                    >
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ─── ARTISTS ──────────────────────────────────────────── -->
+    <!-- ─── NUMBERED SERVICES STRIP (atelier-only) ───────────── -->
+    <section class="section-services">
+        <div class="container">
+            <header class="services-header">
+                <p class="micro-label fade-up brass"><?php esc_html_e( 'The Menu', 'mint-ota' ); ?></p>
+                <h2 class="fade-up">
+                    <?php esc_html_e( 'What we do, and ', 'mint-ota' ); ?>
+                    <em class="display-italic"><?php esc_html_e( 'how we do it.', 'mint-ota' ); ?></em>
+                </h2>
+            </header>
+
+            <ol class="services-list">
+                <?php
+                $services = [
+                    [ 'n' => '01', 'label' => __( 'Color',          'mint-ota' ), 'note' => __( 'Single-process, dimensional, balayage, gloss. Built on Aveda botanical pigments.', 'mint-ota' ) ],
+                    [ 'n' => '02', 'label' => __( 'Hair',           'mint-ota' ), 'note' => __( 'Editorial cutting, blowouts, finishing. The cut that lives quietly in your week.',     'mint-ota' ) ],
+                    [ 'n' => '03', 'label' => __( 'Texture',        'mint-ota' ), 'note' => __( 'Smoothing, curl care, restoration. Working with what your hair is, not against it.',   'mint-ota' ) ],
+                    [ 'n' => '04', 'label' => __( 'Treatments',     'mint-ota' ), 'note' => __( 'Botanical scalp and bond therapy. Twenty minutes that resets the rest of the month.',   'mint-ota' ) ],
+                    [ 'n' => '05', 'label' => __( 'Extensions',     'mint-ota' ), 'note' => __( 'Tape-in and hand-tied, color-matched and discreetly placed.',                          'mint-ota' ) ],
+                    [ 'n' => '06', 'label' => __( 'Wedding',        'mint-ota' ), 'note' => __( 'Bridal hair on the day, with trials and a calm room. The morning, handled.',           'mint-ota' ) ],
+                ];
+                $book = mint_phorest_url();
+                foreach ( $services as $s ) :
+                ?>
+                <li class="service-row fade-up">
+                    <span class="service-num"><?php echo esc_html( $s['n'] ); ?></span>
+                    <h3 class="service-label"><?php echo esc_html( $s['label'] ); ?></h3>
+                    <p class="service-note"><?php echo esc_html( $s['note'] ); ?></p>
+                    <a class="service-cta" href="<?php echo esc_url( $book ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( sprintf( __( 'Book %s', 'mint-ota' ), $s['label'] ) ); ?>">
+                        <?php esc_html_e( 'Book', 'mint-ota' ); ?>
+                    </a>
+                </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ─── ARTISTS (3 — Sonia, Marisa, Maribel) ──────────────── -->
     <section class="section-artists">
         <div class="container">
             <div class="artists-header">
@@ -92,13 +121,13 @@ get_header();
                 </a>
             </div>
 
-            <div class="artists-grid">
+            <div class="artists-grid artists-grid--three">
                 <?php
+                // 3 artists for now — Ashley's photo pending; she'll be added when received.
                 $artists = [
-                    [ 'name'=>'Sonia',   'role'=>'Master Stylist',  'note'=>'Fifteen years of quiet mastery. Sonia reads texture, bone structure, and what you have not yet said — then gives you the version of yourself you forgot was possible.', 'image'=>'promo-welcome.jpg' ],
-                    [ 'name'=>'Marisa',  'role'=>'Color Director',  'note'=>'Marisa works in dimension — placing light where it lives naturally, pulling warmth from the undertone, building color that photographs like sunlight.',                          'image'=>'promo-center.jpg'  ],
-                    [ 'name'=>'Ashley',  'role'=>'Senior Stylist',  'note'=>'Ashley has a rare fluency in texture. She understands that the best cut dissolves into your life — effortless on a Tuesday, editorial on a Saturday.',                            'image'=>'promo-reviews.jpg' ],
-                    [ 'name'=>'Maribel', 'role'=>'Senior Colorist', 'note'=>"Maribel's highlights catch light the way a Venetian painting does — warmth, depth, a luminosity that feels earned rather than applied.",                                          'image'=>'interior-header.jpg' ],
+                    [ 'name'=>'Sonia',   'role'=>'Master Stylist',  'note'=>'Fifteen years of quiet mastery. Sonia reads texture, bone structure, and what you have not yet said — then gives you the version of yourself you forgot was possible.', 'image'=>'artist-sonia.png'   ],
+                    [ 'name'=>'Marisa',  'role'=>'Color Director',  'note'=>'Marisa works in dimension — placing light where it lives naturally, pulling warmth from the undertone, building color that photographs like sunlight.',                          'image'=>'artist-marisa.jpg'  ],
+                    [ 'name'=>'Maribel', 'role'=>'Senior Colorist', 'note'=>"Maribel's highlights catch light the way a Venetian painting does — warmth, depth, a luminosity that feels earned rather than applied.",                                          'image'=>'artist-maribel.png' ],
                 ];
                 foreach ( $artists as $i => $a ) :
                     $delay = $i * 0.15;
@@ -147,7 +176,7 @@ get_header();
                 $reviews = [
                     [ 'text'=>"Best salon in the United States. No one can do color like Marisa. So much talent in all of the Master Stylists there!", 'name'=>'Eva W.', 'date'=>'May 2026' ],
                     [ 'text'=>"Maribel was so friendly and made me feel at home. She did an EXCELLENT job coloring, cutting and blow-drying my hair.", 'name'=>'Barbara W.', 'date'=>'May 2026' ],
-                    [ 'text'=>"The best place to get anything hair-related done in Orlando. The service is phenomenal from the moment you walk in to the moment you leave. The staff is so kind and easy to talk to.", 'name'=>'Corbin S.', 'date'=>'April 2026' ],
+                    [ 'text'=>"The best place to get anything hair-related done in Orlando. The service is phenomenal from the moment you walk in to the moment you leave.", 'name'=>'Corbin S.', 'date'=>'April 2026' ],
                 ];
                 foreach ( $reviews as $i => $r ) :
                     $delay = $i * 0.12;

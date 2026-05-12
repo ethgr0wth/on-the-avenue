@@ -2,6 +2,7 @@
 /**
  * Cinematic Hero — pulls panels from the existing `hp_slides` CPT.
  * Falls back to two default images if no slides exist.
+ * Includes the primary "Reserve Your Visit" CTA inside the hero.
  */
 
 $panels = [];
@@ -36,6 +37,8 @@ if ( count( $panels ) < 2 ) {
         $panels[] = [ 'image' => $defaults[ count( $panels ) ], 'text' => '' ];
     }
 }
+
+$book_url = function_exists( 'mint_phorest_url' ) ? mint_phorest_url() : 'https://phorest.com/book/salons/mintontheavenue';
 ?>
 
 <section class="site-hero" aria-label="<?php esc_attr_e( 'Hero', 'mint-ota' ); ?>">
@@ -57,6 +60,9 @@ if ( count( $panels ) < 2 ) {
             <p class="hero-subtitle fade-up" data-delay="0.6">
                 <?php esc_html_e( 'on the Avenue', 'mint-ota' ); ?>
             </p>
+            <a class="hero-reserve fade-up" data-delay="0.8" href="<?php echo esc_url( $book_url ); ?>" target="_blank" rel="noopener">
+                <?php esc_html_e( 'Reserve Your Visit', 'mint-ota' ); ?>
+            </a>
         </div>
     </div>
 
