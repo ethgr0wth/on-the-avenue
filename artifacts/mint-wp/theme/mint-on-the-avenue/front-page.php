@@ -151,7 +151,7 @@ $eyebrow    = get_theme_mod( 'mint_hero_eyebrow', 'Winter Park, Florida' );
           [
             'name'  => 'Maribel',
             'role'  => 'Senior Colorist',
-            'note'  => 'Maribel's highlights catch light the way a Venetian painting does — warmth, depth, a luminosity that feels earned rather than applied.',
+            'note'  => 'Maribel\'s highlights catch light the way a Venetian painting does — warmth, depth, a luminosity that feels earned rather than applied.',
             'image' => get_template_directory_uri() . '/assets/images/artist-4.jpg',
           ],
         ];
