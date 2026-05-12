@@ -19,7 +19,7 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --header-h:         240px;
+  --header-h:         300px;
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
@@ -145,8 +145,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .wordmark .custom-logo,
 .wordmark img,
 .custom-logo-link img {
-  height: clamp(180px, 22vw, 300px) !important;
-  max-height: 300px !important;
+  height: clamp(220px, 28vw, 380px) !important;
+  max-height: 380px !important;
   width: auto !important;
   max-width: 100% !important;
   object-fit: contain !important;
@@ -157,19 +157,21 @@ body footer.footer:not(.site-footer) { display: none !important; }
     drop-shadow(0 1px 2px rgba(19,78,74,.15));
   transition: filter .3s, height .3s;
 }
+/* Keep logo full size on scroll — no shrinking */
 .site-header.scrolled .wordmark-logo,
 .site-header.scrolled .wordmark img,
 .site-header.scrolled .custom-logo-link img {
-  height: clamp(90px, 11vw, 140px) !important;
+  height: clamp(220px, 28vw, 380px) !important;
+  max-height: 380px !important;
 }
 /* Mobile: huge logo, taller header, prominent hamburger */
 @media (max-width: 767px) {
-  :root { --header-h: 180px; }
-  .header-inner { padding-inline: .75rem; gap: .75rem; }
+  :root { --header-h: 220px; }
+  .header-inner { padding-inline: .5rem; gap: .5rem; }
   .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
   .wordmark-logo, .wordmark img, .custom-logo-link img {
-    height: clamp(140px, 38vw, 180px) !important;
-    max-height: 180px !important;
+    height: clamp(180px, 50vw, 220px) !important;
+    max-height: 220px !important;
   }
   .header-actions { flex-shrink: 0; gap: .75rem; }
   .menu-toggle { padding: .5rem; }
@@ -295,7 +297,7 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
 .hero-wordmark-img {
   display: block;
   width: 100%;
-  max-width: 760px;
+  max-width: 920px;
   height: auto;
   filter:
     brightness(0)

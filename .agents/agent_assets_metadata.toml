@@ -323,3 +323,9 @@ id = "TIaav1kUmLopP7AdXlEHq"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-223223-v2.3.7-PROMINENT.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.7 — PROMINENT logos (header + hero)"
+
+[[outputs]]
+id = "rIAJQOXcDvsSx48vMjQ6H"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-223354-v2.3.8-MAX.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.8 — MAX logos, no scroll-shrink"
