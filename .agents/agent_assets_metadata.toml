@@ -150,6 +150,36 @@ uri = "file://artifacts/mint-v2/public/images/atmosphere.png"
 type = "image"
 title = "salon atmosphere close up"
 
+[[generated]]
+id = "gYyG4kNhoc5m7lEJs41Gq"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/hero.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ghnzhjLApaNHni_n_Naw7"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/editorial-cut.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "1CGQ8Bd7zP-K30O-gX5H5"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/color-work.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "LIM-FMaFRQCaNgiv62Mji"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/atmosphere.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "8r5z9SGrf1lBGUqCHDHgI"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/assets/images/treatment.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "0bx0-zB5Jk_mMy1k1PEbS"
 uri = "file://artifacts/mint-on-the-avenue.zip"
@@ -160,4 +190,4 @@ title = "Mint on the Avenue — Updated (20% off offer)"
 id = "Oxm54PYeaZrWaAB4XuXHL"
 uri = "file://artifacts/mint-wp/mint-on-the-avenue-atelier.zip"
 type = "unspecified"
-title = "Mint on the Avenue — Atelier (WP Theme v2.2.0)"
+title = "Mint on the Avenue — Atelier (deep teal-green palette + new editorial images)"

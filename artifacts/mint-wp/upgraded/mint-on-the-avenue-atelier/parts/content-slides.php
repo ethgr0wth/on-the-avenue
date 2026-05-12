@@ -25,7 +25,7 @@ if ( $q->have_posts() ) {
 }
 
 if ( ! $hero_image ) {
-    $hero_image = get_template_directory_uri() . '/assets/images/promo-welcome.jpg';
+    $hero_image = get_template_directory_uri() . '/assets/images/hero.png';
 }
 
 $book_url = function_exists( 'mint_phorest_url' ) ? mint_phorest_url() : 'https://phorest.com/book/salons/mintontheavenue';

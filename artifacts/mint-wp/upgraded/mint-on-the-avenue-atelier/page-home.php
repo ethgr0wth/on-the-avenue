@@ -59,8 +59,8 @@ get_header();
                 <div>
                     <img
                         class="manifesto-image fade-up"
-                        src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/promo-welcome.jpg' ); ?>"
-                        alt="<?php esc_attr_e( 'The Mint salon, Winter Park', 'mint-ota' ); ?>"
+                        src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/editorial-cut.png' ); ?>"
+                        alt="<?php esc_attr_e( 'Editorial cut at Mint on the Avenue', 'mint-ota' ); ?>"
                         loading="lazy"
                     >
                 </div>
@@ -142,6 +142,33 @@ get_header();
                     <p class="artist-note"><?php echo esc_html( $a['note'] ); ?></p>
                 </article>
                 <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── EDITORIAL GALLERY (atelier) ─────────────────────── -->
+    <section class="section-gallery">
+        <div class="container">
+            <header class="gallery-header">
+                <p class="micro-label fade-up brass"><?php esc_html_e( 'In The Room', 'mint-ota' ); ?></p>
+                <h2 class="fade-up">
+                    <?php esc_html_e( 'Quiet hours, ', 'mint-ota' ); ?>
+                    <em class="display-italic"><?php esc_html_e( 'considered work.', 'mint-ota' ); ?></em>
+                </h2>
+            </header>
+            <div class="gallery-grid">
+                <figure class="gallery-tile gallery-tile--tall fade-up">
+                    <img loading="lazy" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/color-work.png' ); ?>" alt="<?php esc_attr_e( 'Aveda balayage color work', 'mint-ota' ); ?>">
+                    <figcaption class="micro-label"><?php esc_html_e( 'Color · Balayage', 'mint-ota' ); ?></figcaption>
+                </figure>
+                <figure class="gallery-tile fade-up">
+                    <img loading="lazy" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/atmosphere.png' ); ?>" alt="<?php esc_attr_e( 'Salon styling station detail', 'mint-ota' ); ?>">
+                    <figcaption class="micro-label"><?php esc_html_e( 'The Station', 'mint-ota' ); ?></figcaption>
+                </figure>
+                <figure class="gallery-tile fade-up">
+                    <img loading="lazy" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/treatment.png' ); ?>" alt="<?php esc_attr_e( 'Botanical scalp treatment', 'mint-ota' ); ?>">
+                    <figcaption class="micro-label"><?php esc_html_e( 'Botanical Treatments', 'mint-ota' ); ?></figcaption>
+                </figure>
             </div>
         </div>
     </section>
