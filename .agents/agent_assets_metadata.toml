@@ -311,3 +311,9 @@ id = "rIefO2c0MmCwqDcj1095H"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-222455-v2.3.5-bigger-logo.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.5 — logo ~3x bigger (110–180px)"
+
+[[outputs]]
+id = "IFrOiJZIx_QsiMjMAucS9"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-222828-v2.3.6-mobile-header.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.6 — mobile header (bigger logo + breathing room)"

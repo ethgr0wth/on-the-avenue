@@ -148,6 +148,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
   max-height: 180px !important;
   height: clamp(110px, 14vw, 180px) !important;
   width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
   filter:
     brightness(0)
     saturate(100%)
@@ -161,11 +163,19 @@ body footer.footer:not(.site-footer) { display: none !important; }
   height: clamp(70px, 9vw, 110px) !important;
   max-height: 110px !important;
 }
+/* Mobile: bigger logo, taller header, prominent hamburger */
 @media (max-width: 767px) {
+  :root { --header-h: 110px; }
+  .header-inner { padding-inline: 1rem; gap: 1rem; }
+  .wordmark { flex: 1 1 auto; min-width: 0; }
   .wordmark-logo, .wordmark img, .custom-logo-link img {
-    height: clamp(70px, 18vw, 110px) !important;
+    height: clamp(78px, 22vw, 110px) !important;
     max-height: 110px !important;
   }
+  .header-actions { flex-shrink: 0; gap: .75rem; }
+  .menu-toggle { padding: .5rem; }
+  .menu-toggle-bars { width: 28px; gap: 6px; }
+  .menu-toggle-bars span { height: 2px; }
 }
 
 .header-nav { display: none; }
