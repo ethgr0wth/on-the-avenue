@@ -13,7 +13,7 @@
 
     <?php
     // Open Graph / Twitter Card — eco-luxury cover
-    $mint_og_image  = get_template_directory_uri() . '/assets/images/og-cover.png?v=' . ( defined('MINT_VERSION') ? MINT_VERSION : '2.4.0' );
+    $mint_og_image  = get_template_directory_uri() . '/assets/images/og-cover-v244.png';
     $mint_og_title  = wp_get_document_title();
     $mint_og_desc   = get_bloginfo( 'description' );
     if ( is_singular() ) {
