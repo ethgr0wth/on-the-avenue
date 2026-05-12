@@ -273,7 +273,7 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
   font-style: italic;
   font-weight: 400;
   font-size: clamp(2.4rem, 5vw, 4rem);
-  color: var(--color-brass);
+  color: var(--color-forest);
   margin: .35rem 0 2.75rem;
   letter-spacing: .005em;
   line-height: 1;

@@ -269,3 +269,9 @@ id = "PcvzUplSyYNfmp6y4iIPw"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-171642-aqua-blush.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3 — aqua/teal + blush, cache-bust bumped"
+
+[[outputs]]
+id = "Cb1WVn-VBYYuWDgycgI4z"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-172444-aqua-unified.zip"
+type = "unspecified"
+title = "Mint Atelier — MINT + on the avenue both aqua-teal"
