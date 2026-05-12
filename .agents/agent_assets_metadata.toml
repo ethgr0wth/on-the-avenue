@@ -197,3 +197,9 @@ id = "KMnuLgp66_CyTH2G41CGe"
 uri = "file://artifacts/mint-wp/mint-on-the-avenue-atelier-v2.2.0-20260512-0231.zip"
 type = "unspecified"
 title = "Mint Atelier — fresh filename (cache-busted)"
+
+[[outputs]]
+id = "3Ydb_BOwzTF_aO7-p1-HZ"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-023211.zip"
+type = "unspecified"
+title = "Mint Atelier — fresh re-zip"
