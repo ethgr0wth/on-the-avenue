@@ -19,7 +19,7 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --header-h:         80px;
+  --header-h:         140px;
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
@@ -145,16 +145,27 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .wordmark .custom-logo,
 .wordmark img,
 .custom-logo-link img {
-  max-height: 52px !important; width: auto !important;
+  max-height: 180px !important;
+  height: clamp(110px, 14vw, 180px) !important;
+  width: auto !important;
   filter:
     brightness(0)
     saturate(100%)
     invert(24%) sepia(35%) saturate(900%) hue-rotate(135deg) brightness(95%) contrast(92%)
     drop-shadow(0 1px 2px rgba(19,78,74,.15));
-  transition: filter .3s, max-height .3s;
+  transition: filter .3s, height .3s, max-height .3s;
+}
+.site-header.scrolled .wordmark-logo,
+.site-header.scrolled .wordmark img,
+.site-header.scrolled .custom-logo-link img {
+  height: clamp(70px, 9vw, 110px) !important;
+  max-height: 110px !important;
 }
 @media (max-width: 767px) {
-  .wordmark-logo, .wordmark img, .custom-logo-link img { max-height: 40px !important; }
+  .wordmark-logo, .wordmark img, .custom-logo-link img {
+    height: clamp(70px, 18vw, 110px) !important;
+    max-height: 110px !important;
+  }
 }
 
 .header-nav { display: none; }
