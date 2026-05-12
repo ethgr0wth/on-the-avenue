@@ -281,3 +281,9 @@ id = "TctHxU2pMY7ZOsbHg0_9g"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-172614-v2.3.1.zip"
 type = "unspecified"
 title = "Mint Atelier v2.3.1 — auto cache-bust on every load"
+
+[[outputs]]
+id = "WPZ2komR1YdygiIvIkKll"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-173002-v2.3.1-FINAL.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.1 FINAL — style.css version bumped"
