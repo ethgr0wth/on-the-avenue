@@ -353,3 +353,9 @@ id = "arrDjFpCJ2B7yyZ7zSB8X"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-224513-v2.4.1-OG-branded.zip"
 type = "unspecified"
 title = "Mint Atelier v2.4.1 — your branded OG cover"
+
+[[outputs]]
+id = "_aEzC935Qayhjij2x8XDI"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-224756-v2.4.2-OG-services.zip"
+type = "unspecified"
+title = "Mint Atelier v2.4.2 — OG cover with services"
