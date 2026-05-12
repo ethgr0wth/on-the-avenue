@@ -1,0 +1,76 @@
+/******************************************************************
+
+Stylesheet: Mixins & Constants Stylesheet
+
+This is where you can take advantage of Sass' great features:
+Mixins & Constants.
+
+******************************************************************/
+
+/*********************
+COLORS
+*********************/
+$colorPrimary: #323232;
+$colorSecondary: #1882c5;
+$colorTertiary: #7a8690;
+
+/*********************
+TYPOGRAPHY
+*********************/
+
+$font: "ff-meta-web-pro", sans-serif;
+$fontAlt: 'essonnes-display', serif;
+
+//Use the best ampersand - http://simplebits.com/notebook/2008/08/14/ampersands-2/
+span.amp {
+  font-family: Baskerville,'Goudy Old Style',Palatino,'Book Antiqua',serif !important;
+  font-style: italic;
+}
+
+/*********************
+TOOLS
+*********************/
+
+// http://www.zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement/
+.image-replacement {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin rotate($rotate...) {
+    /* Safari */
+    -webkit-transform: rotate($rotate);
+    /* Firefox */
+    -moz-transform: rotate($rotate);
+    /* IE */
+    -ms-transform: rotate($rotate);
+    /* Opera */
+    -o-transform: rotate($rotate);
+    /* Other */
+    transform: rotate($rotate);
+}
+
+@mixin css-gradient($from: #dfdfdf, $to: #f8f8f8) {
+	background-color: $to;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+	background-image: -webkit-linear-gradient(top, $from, $to);
+	background-image: -moz-linear-gradient(top, $from, $to);
+	background-image: -o-linear-gradient(top, $from, $to);
+	background-image: linear-gradient(to bottom, $from, $to);
+} /* usage: @include css-gradient(#dfdfdf,#f8f8f8); */
