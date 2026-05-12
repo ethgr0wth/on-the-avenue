@@ -39,20 +39,56 @@
 <?php wp_body_open(); ?>
 
 <script>
-/* Strip title attributes from header nav links so browsers + Foundation
-   can't render the "Shop Aveda" hover popover. Runs early. */
+/* Strip nav tooltips AND aggressively kill third-party Aveda affiliate popups
+   ("Shop Aveda", "Support our salon and enjoy free shipping and samples", etc).
+   These popups come from external scripts not in our theme — we nuke them in DOM. */
 (function(){
+  var KILL_PHRASES = [
+    'shop aveda',
+    'support our salon',
+    'free shipping',
+    'free samples',
+    'enjoy free'
+  ];
   function strip(){
-    document.querySelectorAll('.site-header a[title], .header-nav a[title], .site-header .has-tip').forEach(function(el){
+    // Kill nav tooltips
+    document.querySelectorAll('.site-header a[title], .header-nav a[title], .site-header .has-tip, [data-tooltip]').forEach(function(el){
       el.removeAttribute('title');
       el.removeAttribute('data-tooltip');
       el.classList.remove('has-tip');
     });
-    document.querySelectorAll('body > .tooltip').forEach(function(el){ el.remove(); });
+    // Kill any tooltip/popover/modal whose text matches an Aveda affiliate phrase
+    var nodes = document.querySelectorAll(
+      '.tooltip, .reveal, .popup, .popover, .modal, [role="tooltip"], [role="dialog"], ' +
+      '[class*="popup"], [class*="popover"], [class*="modal"], [class*="overlay"], ' +
+      '[id*="popup"], [id*="popover"], [id*="modal"], iframe[src*="aveda"]'
+    );
+    nodes.forEach(function(el){
+      var t = (el.innerText || el.textContent || '').toLowerCase();
+      for (var i = 0; i < KILL_PHRASES.length; i++) {
+        if (t.indexOf(KILL_PHRASES[i]) !== -1) { el.remove(); return; }
+      }
+    });
+    // Also scan top-level body children (some popups inject as fixed divs)
+    Array.prototype.slice.call(document.body.children).forEach(function(el){
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return;
+      var cs = window.getComputedStyle(el);
+      if (cs.position !== 'fixed' && cs.position !== 'absolute') return;
+      var t = (el.innerText || '').toLowerCase();
+      for (var i = 0; i < KILL_PHRASES.length; i++) {
+        if (t.indexOf(KILL_PHRASES[i]) !== -1) { el.remove(); return; }
+      }
+    });
   }
   document.addEventListener('DOMContentLoaded', strip);
-  setTimeout(strip, 800);
-  setTimeout(strip, 2000);
+  [300, 800, 1500, 3000, 5000, 8000].forEach(function(ms){ setTimeout(strip, ms); });
+  // Mutation observer catches popups injected late by external scripts
+  if (window.MutationObserver) {
+    var obs = new MutationObserver(function(){ strip(); });
+    document.addEventListener('DOMContentLoaded', function(){
+      obs.observe(document.body, { childList: true, subtree: true });
+    });
+  }
 })();
 </script>
 
