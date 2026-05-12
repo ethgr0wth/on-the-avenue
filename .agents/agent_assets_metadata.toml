@@ -263,3 +263,9 @@ id = "2Y5tRztYwJaO7fi0lL-ev"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-171444.zip"
 type = "unspecified"
 title = "Mint Atelier — aqua/teal greens + sage + blush palette"
+
+[[outputs]]
+id = "PcvzUplSyYNfmp6y4iIPw"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-171642-aqua-blush.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3 — aqua/teal + blush, cache-bust bumped"

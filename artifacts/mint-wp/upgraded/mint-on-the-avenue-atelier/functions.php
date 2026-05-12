@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.2.0' );
+define( 'MINT_VERSION', '2.3.0-aqua-blush' );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── Inherit Imaginal framework files (preserves existing CMS) ─── */
