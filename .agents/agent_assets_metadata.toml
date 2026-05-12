@@ -215,3 +215,9 @@ id = "57AM8HhQ5GXT4wK6SYj7u"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-024243.zip"
 type = "unspecified"
 title = "Mint Atelier — front-page.php fix (kills the old 4 cards)"
+
+[[outputs]]
+id = "Ey4dupXWyFX1UD4ao_f3P"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-025146.zip"
+type = "unspecified"
+title = "Mint Atelier — family-owned, 5 years on Park Ave"
