@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.4.2-og-' . date( 'YmdHi' ) );
+define( 'MINT_VERSION', '2.4.3-og-' . date( 'YmdHi' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── Inherit Imaginal framework files (preserves existing CMS) ─── */
