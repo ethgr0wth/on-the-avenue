@@ -1,0 +1,17 @@
+/*
+Theme Name: Mint on the Avenue — Atelier
+Theme URI: https://mintontheavenue.com
+Author: Mint on the Avenue
+Author URI: https://mintontheavenue.com
+Description: Atelier variant of the Mint on the Avenue editorial theme — warmer palette (ivory, deep olive, terracotta) and a typographic editorial hero. Same eco-luxury foundation, built on the Imaginal Master framework. Preserves all CPTs, ACF fields, and theme options.
+Version: 2.1.0
+Requires at least: 5.6
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License & MIT
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: mint-ota-atelier
+Tags: custom-logo, custom-menu, featured-images, footer-widgets, full-width-template, translation-ready
+*/
+
+/* WordPress requires this file. Actual styles live in assets/css/mint-v2.css for caching purposes. */

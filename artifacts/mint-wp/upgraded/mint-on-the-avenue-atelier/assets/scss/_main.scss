@@ -1,0 +1,1377 @@
+/************************************************
+
+Stylesheet: Main Stylesheet
+
+*************************************************/
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+/*********************
+GENERAL STYLES
+*********************/
+html, body {
+	height: 100%;
+}
+
+.fluid {
+	width: 100%;
+	max-width: 100%;
+}
+
+$violet: #54364f;
+.violet { color: $violet; }
+$violetLite: #815a77;
+$grey: #343434;
+
+$aqua: #5bbbc9; 
+
+/*********************
+LINK STYLES
+*********************/
+a, a:visited {
+	color: $aqua;
+	&:hover {
+		color: darken($aqua, 20%);
+	}
+	// Mobile tap color
+	&:link {
+		//Highlight links on iOS, Similar to :hover for mobile devices.
+		-webkit-tap-highlight-color : rgba( 0, 0, 0, 0.3 );
+	}
+}
+button, .button, .button:visited, button:visited {
+	background-color: #fff;
+	text-transform: uppercase;
+	font-size: 1rem;
+	letter-spacing: 4px;
+	display: inline-block;
+	font-weight: bold;
+	color: $aqua;
+	position: relative;
+	padding: 0;
+	padding: 11px 20px 12px 55px;
+	border: 2px solid $violetLite;
+	&:before {
+		content: '+';
+		background-color: $violetLite;
+		color: #fff;
+		font-weight: bold;
+		font-size: 2.25rem;
+		line-height: 0;
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		padding-top: 18px;
+		text-align: center;
+		position: absolute;
+		left: 0px;
+		top: 0px;
+	}
+	&:hover, &:active, &:focus {
+		background-color: $aqua;
+		color: #fff;
+	}
+}
+
+/*********************
+H1, H2, H3, H4, H5 P STYLES
+*********************/
+
+p {
+	color: $colorPrimary;
+	&.credit {
+		font-style:italic;
+		font-size:.8rem;
+	}
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+	color: $colorSecondary;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	// Removing text decoration from all headline links
+	a {
+		text-decoration: none;
+	}
+}
+
+h1, .h1 {
+	@include breakpoint(medium down) { font-size: 2.25rem; }
+}
+
+h2, .h2 {
+
+}
+
+h3, .h3 {
+
+}
+
+h4, .h4 {
+	color: $aqua;
+}
+
+h5, .h5 {
+	color: $aqua;
+	font-size: 1.15rem;
+	margin-top: 10px;
+	letter-spacing: 2px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+/*********************
+HEADER STYLES
+*********************/
+.header {
+	width: 100%;
+	z-index: 999;
+	ul.off-canvas-list li {
+		list-style: none;
+	}
+}
+body.home .header {
+	height: 100%;
+	&, #heroimage, #slides { min-height: 100vh; }
+}
+    
+/*********************
+NAVIGATION STYLES
+*********************/
+.top-bar {
+	width: 100%;
+	position: absolute;
+    z-index: 999;
+    text-align: center;
+    padding: 0;
+    margin: 0 auto;
+	.title-area {
+		z-index: 1;
+	}
+	#logo {
+		img { max-width: 280px; }
+	}
+	.columns:first-child {
+		margin-left: 4.166665%;
+		padding-right: 0;
+		text-align: right;
+	}
+	.columns:nth-child(3) {
+		padding-left: 0;
+		text-align: left;
+	}
+	.columns:nth-child(even) { padding: 0; }
+	.navigation {
+		padding-top: 22px;
+		> ul.menu {
+			> li {
+				display: inline-block;
+				> a {
+					text-align: left;
+					font-weight: bold;
+					text-transform: uppercase;
+    				padding: 0.7rem;
+    				font-size: 0.85rem;
+    				letter-spacing: 2px;
+				}
+				&.button {
+					background-color: transparent;
+					padding: 0;
+					margin: 0;
+					border: none;
+					&:before {
+						background-color: transparent;
+						color: $violetLite;
+						left: -10px;
+						font-size: 1.5rem;
+					}
+					a {
+						color: $violetLite;
+						padding-left: 20px;
+					}
+				}
+				ul {
+					border: none;
+					padding: 10px;
+					padding-left: 15px;
+					opacity: 0.9;
+					li {
+						a {
+							letter-spacing: 1px;
+							position: relative;
+							text-transform: none;
+							padding: 5px 10px;
+							text-align: left;
+							&:hover:before {
+								content: '\00b7';
+								color: #fff;
+								position: absolute;
+								left: -6px;
+								display: inline-block;
+								font-size: 3rem;
+								line-height: 0;
+								top: 10px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+body:not(.home) .top-bar {
+	background-color: $grey;
+	padding-bottom: 25px;
+	position: relative;
+}
+.menu-icon {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    background: none;
+    border: none;
+    &:before { content: none; }
+    &:after {
+    	width: 50%;
+    	right: 0;
+    	left: auto;
+    }
+    &:hover { background: none; }
+}
+
+.off-canvas {
+	background: $grey;
+	ul {
+		li {
+			a {
+				color: #fff;
+				&:after {
+					border-color: $violetLite transparent transparent;
+				}
+				&:hover { color: $violetLite; }
+			}
+			&.active a { background: $aqua; }
+			&.button {
+				padding: 0;
+			    background: transparent;
+			    border: none;
+			    text-align: left;
+			    &:before { content: none; }
+			}
+			ul {
+				padding-left: 30px;
+				li a {
+					padding: 5px 10px;
+    				font-size: 0.9rem;
+				}
+			}
+		}
+	}
+}
+.off-canvas.is-open { z-index: 9999; }
+.off-canvas-list {
+	ul {
+		margin-left: 0;
+		li {
+			a {
+				border-bottom: 0px;
+			}
+		}
+		.dropdown {
+			margin-left: 20px;
+		}
+	}
+}
+
+.navigation .menu .active>a {
+	background: none;
+
+
+}
+
+/*********************
+HOMEPAGE STYLES
+*********************/
+#homeBanner {
+	padding: 50px 10%;
+	min-height: 400px;
+	width: 100%;
+	background-size: cover;
+	background-position: top center;
+}
+#blogfeed {
+	padding: 130px 0 50px;
+	max-width: 81%;
+	@include breakpoint(small only) {
+		padding-top: 100px;
+	}
+	.columns { position: relative; }
+	.columns:first-child { padding: 0 6.7% 80px 0; }
+	.columns:last-child { 
+		padding: 0 0 80px 6.7%; 
+		@include breakpoint(small only) {
+			display: none;
+		}
+	}
+	h4 {
+		border-bottom: 2px solid $grey;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+		line-height: 2rem;
+		color: $violetLite;
+		font-weight: bold;
+		font-size: 1.45rem;
+	}
+	p {
+		font-size: 1.1rem;
+		line-height: 2.1rem;
+	}
+	a.button {
+	    position: absolute;
+	    bottom: 0;
+	}
+}
+#intro {
+	background: url('../images/bg-about.png') bottom center no-repeat;
+	background-size: cover;
+	text-align: center;
+	width: 100%;
+	padding: 130px 30px 200px;
+}
+
+
+/*********************
+PROMO BUTTONS
+*********************/
+#promoWrapper {
+	max-width: 81.25rem;
+	position: relative;
+	z-index: 3;
+	padding-top: 80px;
+	.column {
+		position: relative;
+		a.button {
+			border-color: #fff;
+			font-size: 0.75rem;
+			color: #fff;
+			background-color: $aqua;
+			padding: 7px 10px 6px 35px;
+			&:before {
+				background-color: #fff;
+				color: $aqua;
+				font-size: 1.5rem;
+				width: 26px;
+				height: 26px;
+				padding-top: 12px;
+			}
+			&:hover { background-color: $aqua; }
+		}
+		.promo_img_holder {
+			top: 50%;
+			transform: translateY(-50%);
+			position: relative;
+			overflow: hidden;
+			@include breakpoint(medium down) { 
+			  	top: auto;
+			  	transform: none;
+			}
+			a {
+				&.promo_link {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: 99;
+				}
+			}
+			.mask {
+				position: absolute;
+				top: auto;
+				bottom: 0;
+				padding: 0 20px;
+				left: 0;
+				width: 100%;
+				height: 0;
+				background-color:rgba(129,90,119,0.7);
+				z-index: 9;
+				-moz-transition: all .6s cubic-bezier(.165,.84,.44,1);
+				-ms-transition: all .6s cubic-bezier(.165,.84,.44,1);
+				-o-transition: all .6s cubic-bezier(.165,.84,.44,1);
+				-webkit-transition: all .6s cubic-bezier(.165,.84,.44,1);
+				transition: all .6s cubic-bezier(.165,.84,.44,1);
+		    	h3 {
+		    		color: #fff;
+		    		line-height: normal;
+		    		margin-bottom: 0;
+		    		font-weight: bold;
+		    		font-size: 1rem;
+		    	}
+		    	h4 {
+		    		color: #fff;
+		    		line-height: normal;
+		    		font-size: 1rem;
+		    		font-weight: 300;
+		    		margin-bottom: 20px;
+		    		letter-spacing: 2px;
+		    	}
+		    	p {
+		    		color: #fff;
+		    		font-size: 0.85rem;
+		    		letter-spacing: 1.5px;
+		    		line-height: 1.2rem;
+		    	}
+			}
+			&:hover {
+				.mask {
+					height: 100%;
+					padding: 30px 20px;
+				}
+			}
+		}
+		img {
+			width: 100%;
+			height: auto;
+			position:relative;
+			&.burst {
+			    width: auto;
+			    display: inline-block;
+			    height: auto;
+			    top: 0;
+			    transform: none;
+			    margin-bottom: 0.75rem;
+			}
+			&.center-left-img {
+				top: 50%;
+				width: 100%;
+				height: auto;
+				transform: translateY(-50%);
+				position: relative;
+				@include breakpoint(small down) {
+					transform: translateY(-50%) scale(2.5);
+				}
+			}
+		}
+	}
+	#left_promo, #left_mirror {
+		padding: 0;
+		@include breakpoint(large up) { 
+			width: 26%;
+		}
+		@include breakpoint(small down) { 
+		  	width: 100%;
+		}
+		.promo_inner {
+			margin-right: 2.5%;
+			position: relative;
+			@include breakpoint(small down) {
+				margin: 0 30px 70px;
+			}
+			.promo_text_holder {
+				position: absolute;
+				top:50%;
+				left:0;
+				width: 100%;
+				.promo_text {
+				    text-align: center;
+				    position: absolute;
+				    top: 50%;
+				    transform: translate(-50%, -50%);
+				    left: 50%;
+				    text-transform: uppercase;
+				    z-index: 99;
+				    p {
+				    	color:#fff;
+				    	font-size: 1.25rem;
+				    	letter-spacing: 6px;
+				    	line-height: 1.1;
+				    	margin-bottom: 0;
+				    	a {
+				    		color:#fff;
+				    	}
+				    }
+				}
+			}
+		}
+	}
+	#center_promo {
+		padding: 0;
+		width: 42%;
+		margin: auto;
+		position: absolute;
+		left: 0; right: 0;
+		@include breakpoint(medium down) { 
+		  	width: 100%;
+		  	position: relative;
+		  	padding: 30px 50px;
+		}
+		@include breakpoint(small down) { padding: 0; }
+		.column {
+			padding: 0;
+			width: 43%;
+			margin: 0 auto;
+			@include breakpoint(small down) { 
+			  	width: 23%;
+			}
+			&:last-of-type {
+				width: 57%;
+				position: relative;
+				@include breakpoint(small down) { 
+				  	width: 77%;
+				}
+				.promo_img_holder img { max-height: 500px; }
+				.promo_text_holder {
+					position: absolute;
+					top:50%;
+					left:0;
+					width: 100%;
+					.promo_text {
+					    position: absolute;
+					    top: 50%;
+					    transform: translate(-50%, -50%);
+					    left: 50%;
+				    	z-index: 99;
+				    	width: 80%;
+				    	a { color: #fff; }
+				    	h3 {
+				    		color: #fff;
+				    		line-height: normal;
+				    		margin-bottom: 0;
+				    		font-weight: bold;
+							@include breakpoint(medium down) { 
+							  	font-size: 1.7rem;
+							}
+				    	}
+				    	h4 {
+				    		color: #fff;
+				    		line-height: normal;
+				    		font-size: 1.25rem;
+				    		font-weight: 300;
+				    		margin-bottom: 20px;
+				    		letter-spacing: 2px;
+				    	}
+				    	p {
+				    		color: #fff;
+				    		font-size: 0.85rem;
+				    		letter-spacing: 1.5px;
+				    		line-height: 1.2rem;
+				    	}
+					}
+				}
+			}
+		}
+	}
+	#right_promo {
+		padding: 0;
+		@include breakpoint(large up) { 
+			width: 26%;
+		}
+		@include breakpoint(small down) { 
+		  	width: 100%;
+		}
+		.promo_inner {
+			margin-left: 2.5%;
+			position: relative;
+			@include breakpoint(small down) {
+				margin: 70px 30px 0;
+			}
+			.promo_text_holder {
+				position: absolute;
+				top:50%;
+				left:0;
+				width: 100%;
+				.promo_text {
+				    text-align: center;
+				    position: absolute;
+				    top: 50%;
+				    transform: translate(-50%, -50%);
+				    left: 50%;
+				    text-transform: uppercase;
+				    z-index: 99;
+				    p {
+				    	color:#e9e4d7;
+				    	font-size: 1.25rem;
+				    	letter-spacing: 6px;
+				    	line-height: 1.1;
+				    	margin-bottom: 0;
+				    	a {
+				    		color:#e9e4d7;
+				    	}
+				    }
+				}
+			}
+		}
+	}
+}
+body:not(.home) #promoWrapper {
+	padding-top: 0;
+}
+
+
+
+/*********************
+POSTS & CONTENT STYLES
+*********************/
+#content {
+	#inner-content {
+			padding: 2rem 0;
+		#main {
+		}
+	}
+}
+
+// Post meta  
+.byline {
+	color: #999;
+	time {}
+}
+
+// Entry content  
+.entry-content {
+	@include breakpoint(small only) { 
+	  	padding: 0 1rem;
+	  }
+	 @include breakpoint(medium up) { 
+	  	padding: 0 4rem 4rem 3rem;
+	  }
+
+	
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.alignleft, img.alignleft { 
+		margin-right: 1.5em; 
+		display: inline; 
+		float: left; 
+	}
+	.alignright, img.alignright { 
+		margin-left: 1.5em; 
+		display: inline; 
+		float: right; 
+	}
+	.aligncenter, img.aligncenter { 
+		margin-right: auto; 
+		margin-left: auto; 
+		display: block; 
+		clear: both; 
+	}
+			
+	video, object {
+		max-width: 100%;
+		height: auto;
+		}
+
+	pre {
+		background: #eee;
+		border: 1px solid #cecece;
+		padding: 10px;
+		}
+
+} 
+
+.wp-caption {
+	max-width: 100%;
+	background: #eee;
+	padding: 5px;
+
+	// Images inside wp-caption  
+	img {
+		max-width: 100%;
+		margin-bottom: 0;
+		width: 100%;
+	}
+
+	p.wp-caption-text {
+		font-size: 0.85em;
+		margin: 4px 0 7px;
+		text-align: center;
+	}
+} 
+
+// Add Foundation styling to password protect button
+.post-password-form input[type="submit"] {
+	@include button;
+}
+
+
+//*********************
+//HOME SLIDE SHOW 
+//*********************
+
+#heroimage {
+    position: relative;
+    height: 100%;
+    &:after {
+    	content: '';
+    	display: block;
+    	left: 0;
+    	bottom: 0;
+    	width: 100%;
+    	position: absolute;
+    	height: 200px;
+    	z-index: 99;
+		background: url('../images/headmask.png') bottom center repeat-x;
+		background-size: contain;
+		@include breakpoint(small down) { background-size: cover; }
+    }
+	#slides {
+	    position: relative;
+	    height: 100%;
+	    z-index: 99;
+	    padding: 0;
+	    .slide {
+			width: 100%;
+			height: 100%;
+			.background {
+			    position: absolute;
+			    top: 0;
+			    width: 100%;
+			    height: 100%;
+			    overflow: hidden;
+			    background-size: cover;
+			    background-repeat: no-repeat;
+			    background-position: center center;
+			    img {
+					width: 100%;
+					height: auto;
+				}
+			}
+			a.slide_link {
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    height: 100%;
+			    width: 100%;
+			}
+			.slidetext {
+			    @include vertical-align;
+			    width: 50%;
+			    position: absolute;
+			    &.right_position {
+			    	right: 5%;
+			    }
+			    &.left_position {
+			    	left: 5%;
+			    }
+			    &.center_position {
+			    	left: 25%;
+			    }
+				@include breakpoint(small down) {
+				    right: auto;
+				    left: auto;
+				    width: 100%;
+				    top: auto;
+				    bottom: 120px;
+				    transform: translateY(0%);
+				    &.right_position {
+				    	right: auto;
+				    }
+				    &.left_position {
+				    	left: auto;
+				    }
+				    &.center_position {
+				    	left: auto;
+				    }
+				}
+				.slidetext_inner {
+				    display: block;
+					position:relative;
+					width:100%;
+					h1 {
+						line-height: normal;
+						font-weight: bolder;
+						font-size: 6rem;
+						line-height: 5rem;
+						letter-spacing: 15px;
+						color: lighten($violetLite, 12%);
+						@include breakpoint(small down) {
+						    font-size: 5rem;
+		    				letter-spacing: 8px;
+		    				line-height: 4rem;
+						}
+					}
+					h3 { color: #fff; }
+					p {
+						font-weight: normal;
+						line-height: 1.5em;
+						letter-spacing: 0.5px;
+						font-size: 0.9rem;
+						a.button {
+							border-color: #fff;
+							background-color: transparent;
+							color: #fff;
+						    margin: 1rem auto 0;
+						    &:before {
+						    	background-color: #fff;
+						    	color: $violetLite;
+								@include breakpoint(small down) {
+								    height: 36px;
+								    width: 36px;
+								    font-size: 1.5rem;
+								}
+						    }
+						    &:hover, &:active, &:focus {
+						    	background-color: $aqua;
+						    }
+						    &.dark {
+						    	border-color: $violetLite;
+						    	color: $aqua;
+						    	background-color: transparent;
+						    	&:before {
+							    	background-color: $violetLite;
+							    	color: #fff;
+							    }
+							    &:hover, &:active, &:focus {
+							    	background-color: $aqua;
+							    	color: #fff;
+							    }
+						    }
+							@include breakpoint(small down) {
+							    font-size: 0.8rem;
+							    letter-spacing: 3px;
+							}
+						}
+					}
+				}
+			} 
+			.slidegraphic {
+			    position: absolute;
+			    top: auto;
+			    bottom: 0;
+			    &.right_position {
+			    	right: 5%;
+			    }
+			    &.left_position {
+			    	left: 5%;
+			    }
+			    &.center_position {
+			    	left: 25%;
+			    }
+			    @include breakpoint(small down) {
+				    right: auto;
+				    left: auto;
+				    width: 100%;
+				    top: auto;
+				    bottom: 120px;
+				    transform: translateY(0%);
+				    &.right_position {
+				    	right: auto;
+				    }
+				    &.left_position {
+				    	left: auto;
+				    }
+				    &.center_position {
+				    	left: auto;
+				    }
+				}
+			}
+		}
+	}
+}
+
+/* SLIDESHOW CONTROLS */
+
+.cycle-pager { 
+    text-align: center;
+    z-index: 9999;
+    left: 10px;
+    overflow: hidden;
+    @include vertical-align;
+    position: absolute;
+	@include breakpoint(small down) {
+	    top: auto;
+	    transform: none;
+	    bottom: 70px;
+	    left: 0;
+	    right: 0;
+	}
+}
+.cycle-pager span { 
+    font-family: arial; font-size: 50px; width: 16px; height: 16px; 
+    display: inline-block; color: #fff; cursor: pointer; text-shadow: 0 0 4px rgba(0,0,0,.8); margin: 2px;
+}
+.cycle-pager span.cycle-pager-active { color: #666;}
+.cycle-pager > * { cursor: pointer;}
+
+/* Interior Headers */
+#heroImage {
+    position: relative;
+    .pageslide {
+	    background-position: center;
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    padding-bottom: 25.5%;
+	    &.header_right {
+		    background-position: center right 20%;
+		}
+		&.header_center {
+		    background-position: center;
+		}
+		&.header_left {
+		    background-position: center left 12%;
+		}
+	}
+}
+
+
+/*********************
+INTERIOR STYLING
+*********************/
+
+#headerimage {
+	height: 350px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+    &:after {
+    	content: '';
+    	display: block;
+    	left: 0;
+    	bottom: 0;
+    	width: 100%;
+    	position: absolute;
+    	height: 200px;
+    	z-index: 99;
+		background: url('../images/headmask.png') bottom center repeat-x;
+		background-size: contain;
+		@include breakpoint(small down) { background-size: cover; }
+    }
+}
+
+
+
+/*********************
+SIDEBARS & ASIDES
+*********************/
+
+.widget {
+	ul {
+		margin: 0;
+
+		li {
+			list-style: none;
+
+			&:first-child {}
+
+			&:last-child {}
+
+			a {}
+
+			// deep nesting  
+			ul {}
+
+		}
+	}
+}
+
+#sidebar {
+	@include breakpoint(medium down) { 
+		padding: 2rem 3rem 3rem;
+	}
+	@include breakpoint(large up) { 
+		padding: 5rem 4rem 4rem 6rem;
+	}
+	#sidenav {
+			@include breakpoint(medium down) { 
+				display: none;
+			}
+			ul {
+				margin: 0 auto 30px;
+				width: 90%;
+				background-color: $violetLite;
+				padding: 10px;
+				li {
+					list-style: none;
+					text-align: center;
+					padding: 5px;
+					a {
+						color: #fff;
+					    text-transform: uppercase;
+					    letter-spacing: 2px;
+					    font-size: 0.9rem;
+					}
+				}
+			}
+		}
+    div.opensub {
+		background-color: #fff;
+		text-transform: uppercase;
+		font-size: 1rem;
+		letter-spacing: 4px;
+		display: block;
+		font-weight: bold;
+		color: $aqua;
+		position: relative;
+		text-align: center;
+		padding: 8px;
+		margin: 0 auto;
+		border: 2px solid $violetLite;
+		width: 90%;
+		&:before {
+			content: "\f107";
+			font-family: FontAwesome;
+			background-color: $violetLite;
+			color: #fff;
+			font-weight: bold;
+			font-size: 2rem;
+			line-height: 0;
+			display: inline-block;
+			width: 40px;
+			height: 40px;
+			padding-top: 18px;
+			text-align: center;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+		}
+		&:hover, &:active, &:focus {
+			background-color: $violet;
+			color: #fff;
+		}
+    }
+    #subnav {
+	    position: relative;
+	    ul {
+	    	li {
+	    		list-style: none;
+	    		text-align: right;
+	    			padding: 7px 0;
+	    		a {
+	    			color: $violetLite;
+	    			
+	    			letter-spacing: 2px;
+	    			text-transform: uppercase;
+	    		}
+	    		&.active a {
+	    			position: relative;
+					&:after {
+						content: '+';
+						color: $violetLite;
+						position: absolute;
+						right: -30px;
+						display: block;
+						font-size: 1.5rem;
+						line-height: 0;
+						top: 9px;
+					}
+	    		}
+	    	}
+	    }
+		@include breakpoint(medium down) {
+			display: none;
+			position: relative;
+		    top: 0;
+		    bottom: initial;
+		    max-height: initial;
+		    padding: 30px 10px;
+		    width: 90%;
+		    margin: 0 auto;
+		    background-color: rgba(100,139,178, 0.7);
+		    text-align: center;
+		}
+    }
+}
+
+/*********************
+HOURS
+*********************/
+table.loc_hours {
+	width:auto;
+	thead{
+	border:none;
+	background-color: transparent;
+	}
+	tbody {
+		background-color: transparent;
+		border: none;
+		tr {
+			&:nth-child(odd) {
+				background-color: #eee;
+			}
+		}
+	}
+}
+
+
+/*********************
+FOOTER STYLES
+*********************/
+.footer {
+	clear: both;
+	background: url('https://mintontheavenue.com/wp-content/uploads/2021/03/mint_footer.jpg') center center no-repeat;
+	background-size: cover;
+	#footer-top {
+		padding: 120px 0 80px;
+		position: relative;
+		@include breakpoint(medium down) {
+			text-align: center;
+			padding: 80px 0 40px;
+		}
+		i.fa {
+			color: #fff;
+			margin-right: 10px;
+			&:hover { color: $violetLite; }
+		}
+		h4 {
+			color: lighten($violetLite, 12%);
+			font-size: 0.9rem;
+			font-weight: bold;
+			letter-spacing: 2px;
+		}
+		p {
+			font-size: 0.9rem;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+			color: #fff;
+		}
+		.columns {
+			position: relative;
+			@include breakpoint(medium down) {
+				padding: 15px 0;
+			}
+		}
+	}
+	img {
+		max-width: 250px;
+	}
+	#footer-bottom {
+		padding: 20px 0;
+		p {
+			margin-bottom: 0;
+			font-size: 0.65rem;
+			font-weight: bold;
+			letter-spacing: 1px;
+			color: #fff;
+			a { color: lighten($violetLite, 12%); }
+		}
+	}
+}
+
+
+/*********************
+SERVICES
+*********************/
+
+
+/* Services */
+
+table {
+	tbody {
+		background-color: transparent;
+		border: none;
+		tr {
+			&:nth-child(2n) {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+
+.serv_subcat_desc {
+	p {
+		padding-left: 0;
+		font-weight: 300;
+		font-size: rem-calc(14.99);
+		text-transform: none;
+	}
+}
+
+
+table.im-services {
+	margin: 0 0 50px;
+	thead {
+		background-color: transparent;
+		border: none;
+		tr {
+			th {
+				background: transparent;
+				font-weight: 500;
+				text-align: left;
+				font-weight: bold;
+				padding: 0;
+				vertical-align: bottom;
+				font-size: 0.7rem;
+				color: $grey;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+				h3 {
+					display: none;
+				}
+				@include breakpoint(medium down) { 
+					font-size: 0.7rem;
+					display: inline-block;
+					padding: 2px 5px 0 0;
+					width: 25%;
+					&:first-child { display: none; }
+				}
+			}
+		}
+	}
+	tbody {
+		tr {
+			border-bottom: none;
+			td {
+				font-size: 1.1875rem;
+				padding: 5px 0;
+				&.serv-col {
+					padding: 2px 0;
+					font-weight: 500;
+					font-size: rem-calc(14.99);
+					letter-spacing: 1px;
+					&:not(:first-child) { width: 100px; }
+					@include breakpoint(medium down) { 
+						font-size: 0.8rem;
+						display: inline-block;
+						padding: 2px 5px 0 0;
+						width: 25%;
+						&:first-child {
+							font-weight: bold;
+							width: 100%;
+							font-size: 1rem;
+						}
+					}
+				}
+				&.serv-desc {
+					padding: 0 0 rem-calc(10);
+					font-style: italic;
+					font-weight: 300;
+					font-size: 0.8rem;
+					text-transform: none;
+					letter-spacing: normal;
+				}
+			}
+		}
+	}
+}
+h3.im-services-subhead {
+	padding-bottom: 15px;
+	margin-bottom: 25px;
+	border-bottom: 2px solid $grey;
+	font-size: 1.5rem;
+	color: $violetLite;
+	font-weight: bold;
+}
+
+/*********************
+PLUGIN STYLES
+*********************/
+// Makes Gravity Forms play nice with Foundation Form styles
+.gform_body ul {
+    list-style: none outside none;
+    margin: 0;
+}
+
+
+
+/*********************
+INSTAFEED / INSTAGRAM
+*********************/
+#instafeed {
+	background: url('../images/instamask.png') bottom center repeat-x;
+	background-size: contain;
+	margin: 0;
+	@include breakpoint(small down) { background-size: cover; }
+	.columns {
+		position: relative;
+		transform: translateY(50px);
+		@include breakpoint(small down) { text-align: center; }
+		.button {
+			@include breakpoint(small down) {
+				padding: 14px 14px 14px 50px;
+			    letter-spacing: 2px;
+			    font-size: 0.8rem;
+			}
+		}
+	}
+	.column-block {
+		padding: 10px;
+		margin: 0;
+		a {
+			display: block;
+			padding-bottom: 100%;
+			background-position: center center;
+			background-size: cover;
+		}
+	}
+	button.slick-arrow {
+		@include vertical-align;
+	    position: absolute;
+	    z-index: 99;
+	    font-size: 0;
+	    line-height: 0;
+	    padding: 0;
+	    width: 42px;
+	    height: 42px;
+	    background-color: #fff;
+	    border: 2px solid $violetLite;
+	    &:before {
+	    	@include vertical-align;
+	    	color: $violetLite;
+	    	background-color: transparent;
+	    	font-size: 3rem;
+	    	position: absolute;
+	    	margin: -4px auto 0;
+	    	left: 0;
+	    	right: 0;
+	    	font-weight: 300;
+	    }
+	    &.slick-prev {
+	    	left: 0;
+	    	right: initial;
+	    	margin-left: -50px;
+	    	&:before { content: '\2039'; }
+	    }
+	    &.slick-next {
+	    	right: 0;
+	    	left: initial;
+	    	margin-right: -50px;
+	    	&:before { content: '\203A'; }
+	    }
+	    &:hover {
+	    	background-color: $aqua;
+	    	&:before { color: #fff; }
+	    }
+	}
+	#follow {
+		background-color: #e3dfd4;
+		text-align: center;
+		@include breakpoint(small down) {
+			height: 70px;
+			img { display: none; }
+			a {
+				display: inline-block;
+				@include vertical-align;
+				text-transform: uppercase;
+				color: #000;
+				letter-spacing: 3px;
+			}
+		}
+		a:hover {
+			-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+	    	filter: grayscale(100%);
+		}
+	} 
+}
+
+
+
+// Team page
+form#teamfilter { display: none !important; }
+#theteam .team_member .team_wrap {
+	min-height: 300px;
+    background: #f3f3f3;
+    box-shadow: none;
+}
+#theteam .team_member .team_wrap .team_info h4 { color: #815a77; }
+#theteam .team_member .team_wrap .team_info h5 { border-bottom: none; }
+
+
+
+
+// Misc.
+
+#ytc-wrapper .widescreen.flex-video {
+    position: static;
+}
