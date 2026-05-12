@@ -275,3 +275,9 @@ id = "Cb1WVn-VBYYuWDgycgI4z"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-172444-aqua-unified.zip"
 type = "unspecified"
 title = "Mint Atelier — MINT + on the avenue both aqua-teal"
+
+[[outputs]]
+id = "TctHxU2pMY7ZOsbHg0_9g"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-172614-v2.3.1.zip"
+type = "unspecified"
+title = "Mint Atelier v2.3.1 — auto cache-bust on every load"
