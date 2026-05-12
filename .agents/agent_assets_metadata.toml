@@ -203,3 +203,9 @@ id = "3Ydb_BOwzTF_aO7-p1-HZ"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-023211.zip"
 type = "unspecified"
 title = "Mint Atelier — fresh re-zip"
+
+[[outputs]]
+id = "uKu0jhHGMOdZZCL8McF5W"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-023842.zip"
+type = "unspecified"
+title = "Mint Atelier — 20% off New Client Gift, fresh re-zip"

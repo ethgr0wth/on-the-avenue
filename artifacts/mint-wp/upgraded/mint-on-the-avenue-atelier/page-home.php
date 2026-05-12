@@ -221,17 +221,19 @@ get_header();
         </div>
     </section>
 
-    <!-- ─── NEW GUESTS CTA ──────────────────────────────────── -->
+    <!-- ─── NEW CLIENT GIFT ─────────────────────────────────── -->
     <section class="section-cta">
         <div class="container">
             <div class="cta-inner">
-                <p class="micro-label fade-up sage"><?php esc_html_e( 'New Guests', 'mint-ota' ); ?></p>
+                <p class="micro-label fade-up sage"><?php esc_html_e( 'New Client Gift', 'mint-ota' ); ?></p>
                 <div class="cta-price fade-up">20<span class="cta-price-pct">%</span> <span class="cta-price-off">off</span></div>
+                <p class="cta-tagline fade-up display-italic"><?php esc_html_e( "because we'd love to meet you", 'mint-ota' ); ?></p>
                 <p class="cta-body fade-up">
-                    <?php esc_html_e( "Because we'd love to meet you. Twenty percent off your first service at Mint, valid with select artists. A small welcome to make trying something new feel easy.", 'mint-ota' ); ?>
+                    <?php esc_html_e( "Change is beautiful. If you're ready to try something new, we're here to make it easy by offering 20% off your first service at Mint.", 'mint-ota' ); ?>
                 </p>
+                <p class="cta-fineprint fade-up"><?php esc_html_e( 'Valid with select artists.', 'mint-ota' ); ?></p>
                 <a href="<?php echo mint_book_url(); ?>" class="btn-primary fade-up" target="_blank" rel="noopener">
-                    <?php esc_html_e( 'Claim Your Welcome Offer', 'mint-ota' ); ?>
+                    <?php esc_html_e( 'Book Your First Visit', 'mint-ota' ); ?>
                 </a>
             </div>
         </div>
