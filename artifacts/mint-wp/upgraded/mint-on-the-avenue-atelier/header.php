@@ -44,18 +44,11 @@
 <header class="site-header" role="banner">
     <div class="header-inner">
 
-        <!-- Wordmark / Logo -->
+        <!-- Wordmark / Logo (bundled horizontal mark) -->
         <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="wordmark" rel="home" aria-label="<?php bloginfo( 'name' ); ?> — Home">
-            <?php
-            $logo = mint_option( 'logo', '' );
-            if ( has_custom_logo() ) {
-                the_custom_logo();
-            } elseif ( $logo ) {
-                echo '<img src="' . esc_url( $logo ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" class="wordmark-logo" />';
-            } else {
-                bloginfo( 'name' );
-            }
-            ?>
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/mint-horizontal-wordmark.png' ); ?>"
+                 alt="<?php esc_attr_e( 'Mint on the Avenue — An Aveda Salon', 'mint-ota' ); ?>"
+                 class="wordmark-logo" />
         </a>
 
         <!-- Desktop Nav (uses existing Primary - Right menu if assigned) -->
