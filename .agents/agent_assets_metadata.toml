@@ -221,3 +221,9 @@ id = "Ey4dupXWyFX1UD4ao_f3P"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-025146.zip"
 type = "unspecified"
 title = "Mint Atelier — family-owned, 5 years on Park Ave"
+
+[[outputs]]
+id = "KGWLMpjkKDF4yARxu5pBM"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-025437.zip"
+type = "unspecified"
+title = "Mint Atelier — all 'quiet' references removed"

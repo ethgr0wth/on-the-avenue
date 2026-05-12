@@ -45,7 +45,7 @@ $book_url = function_exists( 'mint_phorest_url' ) ? mint_phorest_url() : 'https:
         </p>
 
         <p class="hero-tagline fade-up" data-delay="0.6">
-            <?php esc_html_e( 'A family-owned and operated Aveda salon on Park Avenue — celebrating five years of devoted color, master cutting, and a quiet room to spend an hour in.', 'mint-ota' ); ?>
+            <?php esc_html_e( 'A family-owned and operated Aveda salon on Park Avenue — celebrating five years of devoted color and master cutting.', 'mint-ota' ); ?>
         </p>
 
         <div class="hero-actions fade-up" data-delay="0.75">

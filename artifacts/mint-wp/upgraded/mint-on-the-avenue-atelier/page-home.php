@@ -29,7 +29,7 @@ get_header();
         <div class="container">
             <figure class="pullquote">
                 <blockquote class="fade-blur">
-                    <?php esc_html_e( 'A great haircut is a quiet conversation between scissors, a stylist who is paying attention, and the person sitting in the chair.', 'mint-ota' ); ?>
+                    <?php esc_html_e( 'A great haircut is a real conversation between scissors, a stylist who is paying attention, and the person sitting in the chair.', 'mint-ota' ); ?>
                 </blockquote>
                 <figcaption class="micro-label fade-up brass">
                     <?php esc_html_e( 'House Belief, No. 1', 'mint-ota' ); ?>
@@ -47,7 +47,7 @@ get_header();
                     <h2 class="display-editorial fade-up">
                         <?php esc_html_e( 'A space defined by ', 'mint-ota' ); ?>
                         <em class="display-italic"><?php esc_html_e( 'restraint,', 'mint-ota' ); ?></em><br>
-                        <?php esc_html_e( 'craft, and quiet luxury.', 'mint-ota' ); ?>
+                        <?php esc_html_e( 'craft, and lived-in luxury.', 'mint-ota' ); ?>
                     </h2>
                     <p class="manifesto-body fade-up">
                         <?php esc_html_e( "Every detail is a deliberate choice. We believe in the power of less, executed perfectly. Our botanical Aveda approach to color and cutting is designed to enhance, not mask, your natural texture.", 'mint-ota' ); ?>
@@ -83,7 +83,7 @@ get_header();
                 <?php
                 $services = [
                     [ 'n' => '01', 'label' => __( 'Color',          'mint-ota' ), 'note' => __( 'Single-process, dimensional, balayage, gloss. Built on Aveda botanical pigments.', 'mint-ota' ) ],
-                    [ 'n' => '02', 'label' => __( 'Hair',           'mint-ota' ), 'note' => __( 'Editorial cutting, blowouts, finishing. The cut that lives quietly in your week.',     'mint-ota' ) ],
+                    [ 'n' => '02', 'label' => __( 'Hair',           'mint-ota' ), 'note' => __( 'Editorial cutting, blowouts, finishing. The cut that lives easily in your week.',     'mint-ota' ) ],
                     [ 'n' => '03', 'label' => __( 'Texture',        'mint-ota' ), 'note' => __( 'Smoothing, curl care, restoration. Working with what your hair is, not against it.',   'mint-ota' ) ],
                     [ 'n' => '04', 'label' => __( 'Treatments',     'mint-ota' ), 'note' => __( 'Botanical scalp and bond therapy. Twenty minutes that resets the rest of the month.',   'mint-ota' ) ],
                     [ 'n' => '05', 'label' => __( 'Extensions',     'mint-ota' ), 'note' => __( 'Tape-in and hand-tied, color-matched and discreetly placed.',                          'mint-ota' ) ],
@@ -125,7 +125,7 @@ get_header();
                 <?php
                 // 3 artists for now — Ashley's photo pending; she'll be added when received.
                 $artists = [
-                    [ 'name'=>'Sonia',   'role'=>'Master Stylist',  'note'=>'Fifteen years of quiet mastery. Sonia reads texture, bone structure, and what you have not yet said — then gives you the version of yourself you forgot was possible.', 'image'=>'artist-sonia.png'   ],
+                    [ 'name'=>'Sonia',   'role'=>'Master Stylist',  'note'=>'Fifteen years of mastery. Sonia reads texture, bone structure, and what you have not yet said — then gives you the version of yourself you forgot was possible.', 'image'=>'artist-sonia.png'   ],
                     [ 'name'=>'Marisa',  'role'=>'Color Director',  'note'=>'Marisa works in dimension — placing light where it lives naturally, pulling warmth from the undertone, building color that photographs like sunlight.',                          'image'=>'artist-marisa.jpg'  ],
                     [ 'name'=>'Maribel', 'role'=>'Senior Colorist', 'note'=>"Maribel's highlights catch light the way a Venetian painting does — warmth, depth, a luminosity that feels earned rather than applied.",                                          'image'=>'artist-maribel.png' ],
                 ];
@@ -152,7 +152,7 @@ get_header();
             <header class="gallery-header">
                 <p class="micro-label fade-up brass"><?php esc_html_e( 'In The Room', 'mint-ota' ); ?></p>
                 <h2 class="fade-up">
-                    <?php esc_html_e( 'Quiet hours, ', 'mint-ota' ); ?>
+                    <?php esc_html_e( 'In the room, ', 'mint-ota' ); ?>
                     <em class="display-italic"><?php esc_html_e( 'considered work.', 'mint-ota' ); ?></em>
                 </h2>
             </header>
@@ -245,7 +245,7 @@ get_header();
             <p class="micro-label fade-up"><?php esc_html_e( 'Gift Cards', 'mint-ota' ); ?></p>
             <h2 class="fade-up"><?php esc_html_e( 'Give the gift of a great hair day.', 'mint-ota' ); ?></h2>
             <p class="lead fade-up">
-                <?php esc_html_e( "A Mint gift card is a quiet, generous gesture — for a friend, a partner, a parent, or yourself, after the week you've had.", 'mint-ota' ); ?>
+                <?php esc_html_e( "A Mint gift card is a generous gesture — for a friend, a partner, a parent, or yourself, after the week you've had.", 'mint-ota' ); ?>
             </p>
             <a href="<?php echo mint_book_url(); ?>" class="btn-outline fade-up" target="_blank" rel="noopener">
                 <?php esc_html_e( 'Shop Gift Cards', 'mint-ota' ); ?>
