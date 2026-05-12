@@ -209,3 +209,9 @@ id = "uKu0jhHGMOdZZCL8McF5W"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-023842.zip"
 type = "unspecified"
 title = "Mint Atelier — 20% off New Client Gift, fresh re-zip"
+
+[[outputs]]
+id = "57AM8HhQ5GXT4wK6SYj7u"
+uri = "file://artifacts/mint-wp/mint-atelier-20260512-024243.zip"
+type = "unspecified"
+title = "Mint Atelier — front-page.php fix (kills the old 4 cards)"
