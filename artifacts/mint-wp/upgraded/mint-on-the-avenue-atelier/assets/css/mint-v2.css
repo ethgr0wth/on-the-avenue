@@ -177,9 +177,17 @@ body footer.footer:not(.site-footer) { display: none !important; }
     --header-h: clamp(170px, 42vw, 230px);
     --logo-h: var(--header-h);
   }
-  .site-header { padding-block: 0; overflow: visible; }
-  .header-inner { padding-inline: .75rem; gap: .5rem; }
-  .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
+  .site-header { padding-block: 0 !important; overflow: visible; min-height: var(--header-h) !important; }
+  .header-inner { padding-inline: .75rem; gap: .5rem; min-height: var(--header-h) !important; }
+  /* Mobile uses the sticky bottom CTA — hide the redundant header button */
+  .header-book { display: none !important; }
+  .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; max-width: 70%; }
+  .wordmark a, .wordmark .custom-logo-link { display: block; line-height: 0; }
+  .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
+    height: var(--logo-h) !important;
+    width: auto !important;
+    max-width: none !important;
+  }
   .header-actions { flex-shrink: 0; gap: .75rem; }
   .menu-toggle { padding: .5rem; }
   .menu-toggle-bars { width: 30px; gap: 7px; }

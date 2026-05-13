@@ -437,3 +437,9 @@ id = "JLY4x5MgqiWvCKWivuWzO"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-140535-v2.6.0-MOBILE-LOGO.zip"
 type = "unspecified"
 title = "Mint Atelier v2.6.0 — bigger mobile logo"
+
+[[outputs]]
+id = "cg6AefTTq0XKyPflAK815"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-140825-v2.6.1-MOBILE-FIX.zip"
+type = "unspecified"
+title = "Mint Atelier v2.6.1 — mobile logo big + redundant header CTA hidden"
