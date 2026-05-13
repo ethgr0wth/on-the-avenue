@@ -1,9 +1,14 @@
 </div><!-- /#main-wrapper -->
 
-<!-- ─── Sticky Reserve Pill (Phorest) ──────────────────────── -->
+<!-- ─── Sticky Reserve Pill (desktop) ──────────────────────── -->
 <a class="reserve-pill" href="<?php echo mint_phorest_url(); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Reserve appointment online', 'mint-ota' ); ?>">
     <span class="reserve-pill-dot" aria-hidden="true"></span>
     <span class="reserve-pill-label"><?php esc_html_e( 'Reserve', 'mint-ota' ); ?></span>
+</a>
+
+<!-- ─── Sticky Mobile CTA (audit CRO P1) ──────────────────── -->
+<a class="mint-mobile-cta" href="<?php echo mint_phorest_url(); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Book an appointment', 'mint-ota' ); ?>">
+    <?php esc_html_e( 'Book Appointment', 'mint-ota' ); ?>
 </a>
 
 <!-- ─── Site Footer ─────────────────────────────────────────── -->
@@ -48,7 +53,7 @@
                 } else { ?>
                 <ul>
                     <li><a href="<?php echo esc_url( home_url( '/services' ) ); ?>"><?php esc_html_e( 'Services', 'mint-ota' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/our-artists' ) ); ?>"><?php esc_html_e( 'Artists', 'mint-ota' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/about/meet-the-team/' ) ); ?>"><?php esc_html_e( 'Artists', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/gallery' ) ); ?>"><?php esc_html_e( 'Lookbook', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><?php esc_html_e( 'Visit', 'mint-ota' ); ?></a></li>
                 </ul>

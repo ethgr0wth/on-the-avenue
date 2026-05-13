@@ -383,3 +383,15 @@ id = "tz4SL2U0afYzmHD3E0YCT"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-124836-v2.4.6-header-fit.zip"
 type = "unspecified"
 title = "Mint Atelier v2.4.6 — header sized to logo + always visible"
+
+[[outputs]]
+id = "OICncHVqs1O2pLfZy29-f"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-131256-v2.5.0-AUDIT.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.0 — full audit remediation"
+
+[[outputs]]
+id = "FTyzn4jgSRcmeifvj9zUY"
+uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/AUDIT-CHECKLIST.md"
+type = "text"
+title = "Audit Checklist — what's fixed + what needs WP-Admin"

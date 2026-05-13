@@ -7,8 +7,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.4.6-header-fit-' . date( 'YmdHi' ) );
+define( 'MINT_VERSION', '2.5.0-audit-' . date( 'YmdHi' ) );
 define( 'MINT_VARIANT', 'atelier' );
+
+/* ─── Audit fixes (security headers, REST lockdown, redirects, a11y) ─── */
+$mint_audit_fixes = get_template_directory() . '/inc/audit-fixes.php';
+if ( file_exists( $mint_audit_fixes ) ) {
+    require_once $mint_audit_fixes;
+}
 
 /* ─── Inherit Imaginal framework files (preserves existing CMS) ─── */
 $mint_includes = [

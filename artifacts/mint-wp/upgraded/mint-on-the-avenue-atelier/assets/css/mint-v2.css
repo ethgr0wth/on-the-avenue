@@ -804,3 +804,68 @@ body .promo-btn-card:hover {
   border-color: var(--color-brass) !important;
   transform: translateY(-2px) !important;
 }
+
+/* ─── A11Y / Audit fixes (v2.5.0) ────────────────────────────────── */
+
+/* WCAG 2.5.8 — minimum 44×44 touch targets on interactive elements */
+.header-nav a,
+.header-actions a,
+.header-actions button,
+.menu-toggle,
+.drawer-overlay a,
+.footer-col a,
+.footer-bottom a,
+.reserve-pill,
+a.button,
+.button {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Visible keyboard focus on every interactive element */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-forest, #134e4a);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Hide honeypot anti-spam fields properly (audit A11Y-03) */
+.gform_validation_container,
+.hp-field,
+[name*="validation_purposes"] {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important; height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* Sticky mobile Book Now CTA (CRO P1) */
+.mint-mobile-cta {
+  display: none;
+  position: fixed; left: 12px; right: 12px; bottom: 12px;
+  z-index: 90;
+  padding: 14px 18px;
+  background: var(--color-forest, #134e4a);
+  color: var(--color-warm-white, #f5efe1);
+  text-align: center;
+  font-family: var(--font-body, system-ui);
+  font-weight: 500; letter-spacing: .12em; text-transform: uppercase; font-size: .82rem;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px -8px rgba(19,78,74,.45), 0 2px 6px rgba(0,0,0,.12);
+  text-decoration: none;
+}
+.mint-mobile-cta:hover,
+.mint-mobile-cta:focus-visible {
+  background: var(--color-eucalyptus, #1f6b66);
+  color: var(--color-warm-white, #f5efe1);
+}
+@media (max-width: 767px) {
+  .mint-mobile-cta { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+  /* desktop reserve pill hides on mobile so they don't stack */
+  .reserve-pill { display: none !important; }
+  /* leave room above footer so the CTA doesn't cover content */
+  body { padding-bottom: 80px; }
+}
