@@ -419,3 +419,9 @@ id = "7ISFu_vdknh82rFujaOGB"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-134845-v2.5.6-FOOTER-FIX.zip"
 type = "unspecified"
 title = "Mint Atelier v2.5.6 — footer Visit + Connect items now visible"
+
+[[outputs]]
+id = "PdyrIb5KWPSQfyNM6r6VN"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-135924-v2.5.7-LOGO-FILL.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.7 — desktop logo fills full header height"

@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.5.6-footer-fix-' . date( 'YmdHi' ) );
+define( 'MINT_VERSION', '2.5.7-logo-fill-' . date( 'YmdHi' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── Audit fixes (security headers, REST lockdown, redirects, a11y) ─── */

@@ -19,8 +19,8 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --logo-h:           clamp(56px, 6vw, 80px);
-  --header-h:         calc(var(--logo-h) + 8px);
+  --header-h:         clamp(72px, 8vw, 110px);
+  --logo-h:           var(--header-h);
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
