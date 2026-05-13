@@ -19,7 +19,8 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --header-h:         300px;
+  --logo-h:           clamp(140px, 16vw, 200px);
+  --header-h:         calc(var(--logo-h) + 24px);
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
@@ -106,14 +107,19 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: var(--header-h);
-  transition: background 0.4s var(--ease-luxury), backdrop-filter 0.4s var(--ease-luxury), border-color 0.4s;
-  background: transparent; border-bottom: 1px solid transparent;
+  padding-block: 12px;
+  transition: background 0.4s var(--ease-luxury), backdrop-filter 0.4s var(--ease-luxury), border-color 0.4s, box-shadow 0.4s;
+  background: rgba(245,239,225,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(122,135,114,.14);
 }
 .site-header.scrolled {
-  background: rgba(245,239,225,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom-color: rgba(122,135,114,.18);
+  background: rgba(245,239,225,0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom-color: rgba(122,135,114,.22);
+  box-shadow: 0 2px 18px -8px rgba(19,78,74,.18);
 }
 .site-header.scrolled .wordmark { color: var(--color-forest); }
 .site-header.scrolled .header-nav a { color: var(--color-sage); }
@@ -145,8 +151,7 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .wordmark .custom-logo,
 .wordmark img,
 .custom-logo-link img {
-  height: clamp(220px, 28vw, 380px) !important;
-  max-height: 380px !important;
+  height: var(--logo-h) !important;
   width: auto !important;
   max-width: 100% !important;
   object-fit: contain !important;
@@ -155,24 +160,30 @@ body footer.footer:not(.site-footer) { display: none !important; }
     saturate(100%)
     invert(24%) sepia(35%) saturate(900%) hue-rotate(135deg) brightness(95%) contrast(92%)
     drop-shadow(0 1px 2px rgba(19,78,74,.15));
-  transition: filter .3s, height .3s;
+  transition: filter .3s;
 }
 /* Keep logo full size on scroll — no shrinking */
 .site-header.scrolled .wordmark-logo,
 .site-header.scrolled .wordmark img,
 .site-header.scrolled .custom-logo-link img {
-  height: clamp(220px, 28vw, 380px) !important;
-  max-height: 380px !important;
+  height: var(--logo-h) !important;
 }
-/* Mobile: huge logo, taller header, prominent hamburger */
+/* Mobile: same logo+padding rule */
 @media (max-width: 767px) {
-  :root { --header-h: 220px; }
-  .header-inner { padding-inline: .5rem; gap: .5rem; }
-  .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
-  .wordmark-logo, .wordmark img, .custom-logo-link img {
-    height: clamp(180px, 50vw, 220px) !important;
-    max-height: 220px !important;
+  :root {
+    --logo-h: clamp(110px, 28vw, 160px);
+    --header-h: calc(var(--logo-h) + 20px);
   }
+  .site-header { padding-block: 10px; }
+  .header-inner { padding-inline: .75rem; gap: .5rem; }
+  .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
+  .header-actions { flex-shrink: 0; gap: .75rem; }
+  .menu-toggle { padding: .5rem; }
+  .menu-toggle-bars { width: 30px; gap: 7px; }
+  .menu-toggle-bars span { height: 2px; }
+}
+@media (max-width: 767px) {
+  /* legacy block kept harmless */
   .header-actions { flex-shrink: 0; gap: .75rem; }
   .menu-toggle { padding: .5rem; }
   .menu-toggle-bars { width: 30px; gap: 7px; }

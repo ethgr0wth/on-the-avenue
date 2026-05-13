@@ -377,3 +377,9 @@ id = "XvJTih3u4Ow-NbD5qQlmX"
 uri = "file://artifacts/mint-wp/mint-atelier-20260512-225823-v2.4.5-OG-fresh-url.zip"
 type = "unspecified"
 title = "Mint Atelier v2.4.5 — fresh OG URL (cache-bust)"
+
+[[outputs]]
+id = "tz4SL2U0afYzmHD3E0YCT"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-124836-v2.4.6-header-fit.zip"
+type = "unspecified"
+title = "Mint Atelier v2.4.6 — header sized to logo + always visible"
