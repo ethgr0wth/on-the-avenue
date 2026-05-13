@@ -46,18 +46,14 @@
                 <?php if ( is_active_sidebar( 'footer1' ) ) dynamic_sidebar( 'footer1' ); ?>
             </div>
 
-            <div class="footer-col">
+            <div class="footer-col footer-visit">
                 <h4><?php esc_html_e( 'Visit', 'mint-ota' ); ?></h4>
-                <?php if ( is_active_sidebar( 'footer2' ) ) {
-                    dynamic_sidebar( 'footer2' );
-                } else { ?>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="<?php echo esc_url( home_url( '/services' ) ); ?>"><?php esc_html_e( 'Services', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/about/meet-the-team/' ) ); ?>"><?php esc_html_e( 'Artists', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/gallery' ) ); ?>"><?php esc_html_e( 'Lookbook', 'mint-ota' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><?php esc_html_e( 'Visit', 'mint-ota' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact', 'mint-ota' ); ?></a></li>
                 </ul>
-                <?php } ?>
 
                 <a class="footer-aveda" href="https://www.aveda.com/salon/mintontheavenue" target="_blank" rel="noopener">
                     <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/aveda.png' ); ?>" alt="Aveda" width="100" />

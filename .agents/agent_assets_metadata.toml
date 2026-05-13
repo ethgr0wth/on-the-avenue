@@ -413,3 +413,9 @@ id = "bsBodO1BijblhB_TCm0xI"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-134451-v2.5.5-COMPACT.zip"
 type = "unspecified"
 title = "Mint Atelier v2.5.5 — compact contained header"
+
+[[outputs]]
+id = "7ISFu_vdknh82rFujaOGB"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-134845-v2.5.6-FOOTER-FIX.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.6 — footer Visit + Connect items now visible"
