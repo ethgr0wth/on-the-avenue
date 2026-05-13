@@ -19,8 +19,8 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --logo-h:           clamp(96px, 11vw, 140px);
-  --header-h:         calc(var(--logo-h) + 10px);
+  --logo-h:           clamp(56px, 6vw, 80px);
+  --header-h:         calc(var(--logo-h) + 8px);
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
@@ -107,7 +107,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: var(--header-h);
-  padding-block: 12px;
+  padding-block: 0;
+  overflow: visible;
   transition: background 0.4s var(--ease-luxury), backdrop-filter 0.4s var(--ease-luxury), border-color 0.4s, box-shadow 0.4s;
   background: rgba(245,239,225,0.88);
   backdrop-filter: blur(14px);
@@ -146,12 +147,14 @@ body footer.footer:not(.site-footer) { display: none !important; }
 }
 .site-header.scrolled .wordmark { text-shadow: none; -webkit-text-stroke: 0; }
 
-/* Header horizontal logo — tinted to deep aqua-teal to match palette */
+/* Header horizontal logo — contained inside header */
 .wordmark-logo,
 .wordmark .custom-logo,
 .wordmark img,
 .custom-logo-link img {
   height: var(--logo-h) !important;
+  margin-block: 0 !important;
+  display: block;
   width: auto !important;
   max-width: 100% !important;
   object-fit: contain !important;
@@ -171,10 +174,10 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: same logo+padding rule */
 @media (max-width: 767px) {
   :root {
-    --logo-h: clamp(72px, 18vw, 108px);
+    --logo-h: clamp(48px, 11vw, 64px);
     --header-h: calc(var(--logo-h) + 8px);
   }
-  .site-header { padding-block: 4px; }
+  .site-header { padding-block: 0; overflow: visible; }
   .header-inner { padding-inline: .75rem; gap: .5rem; }
   .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
   .header-actions { flex-shrink: 0; gap: .75rem; }

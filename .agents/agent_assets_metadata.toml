@@ -407,3 +407,9 @@ id = "cGucA7_Wktnue4W9zAbpd"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-134306-v2.5.2-TIGHT.zip"
 type = "unspecified"
 title = "Mint Atelier v2.5.2 — tighter header (smaller logo + less padding)"
+
+[[outputs]]
+id = "bsBodO1BijblhB_TCm0xI"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-134451-v2.5.5-COMPACT.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.5 — compact contained header"
