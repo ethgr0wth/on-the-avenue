@@ -174,7 +174,7 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: same logo+padding rule */
 @media (max-width: 767px) {
   :root {
-    --header-h: clamp(130px, 30vw, 180px);
+    --header-h: clamp(170px, 42vw, 230px);
     --logo-h: var(--header-h);
   }
   .site-header { padding-block: 0; overflow: visible; }

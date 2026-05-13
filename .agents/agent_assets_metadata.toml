@@ -431,3 +431,9 @@ id = "v9PUzvtl3Us9YhopL96n0"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-140343-v2.5.9-LOGO-BIGGER.zip"
 type = "unspecified"
 title = "Mint Atelier v2.5.9 — bigger header + footer logos"
+
+[[outputs]]
+id = "JLY4x5MgqiWvCKWivuWzO"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-140535-v2.6.0-MOBILE-LOGO.zip"
+type = "unspecified"
+title = "Mint Atelier v2.6.0 — bigger mobile logo"
