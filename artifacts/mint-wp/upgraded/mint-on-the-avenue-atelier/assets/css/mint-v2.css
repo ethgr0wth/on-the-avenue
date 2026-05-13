@@ -19,8 +19,8 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --logo-h:           clamp(140px, 16vw, 200px);
-  --header-h:         calc(var(--logo-h) + 24px);
+  --logo-h:           clamp(96px, 11vw, 140px);
+  --header-h:         calc(var(--logo-h) + 10px);
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
 }
@@ -171,10 +171,10 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: same logo+padding rule */
 @media (max-width: 767px) {
   :root {
-    --logo-h: clamp(110px, 28vw, 160px);
-    --header-h: calc(var(--logo-h) + 20px);
+    --logo-h: clamp(72px, 18vw, 108px);
+    --header-h: calc(var(--logo-h) + 8px);
   }
-  .site-header { padding-block: 10px; }
+  .site-header { padding-block: 4px; }
   .header-inner { padding-inline: .75rem; gap: .5rem; }
   .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; }
   .header-actions { flex-shrink: 0; gap: .75rem; }
