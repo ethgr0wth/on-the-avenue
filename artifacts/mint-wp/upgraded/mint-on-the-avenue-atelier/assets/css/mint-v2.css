@@ -19,7 +19,7 @@
   --font-body:        'Inter Tight', system-ui, -apple-system, sans-serif;
   --ease-luxury:      cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out:         cubic-bezier(0.22, 1, 0.36, 1);
-  --header-h:         clamp(72px, 8vw, 110px);
+  --header-h:         clamp(190px, 20vw, 280px);
   --logo-h:           var(--header-h);
   --max-w:            1440px;
   --px:               clamp(1.5rem, 4vw, 3rem);
@@ -174,8 +174,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: same logo+padding rule */
 @media (max-width: 767px) {
   :root {
-    --logo-h: clamp(48px, 11vw, 64px);
-    --header-h: calc(var(--logo-h) + 8px);
+    --header-h: clamp(130px, 30vw, 180px);
+    --logo-h: var(--header-h);
   }
   .site-header { padding-block: 0; overflow: visible; }
   .header-inner { padding-inline: .75rem; gap: .5rem; }
@@ -709,7 +709,7 @@ html.menu-open .menu-toggle-bars span:nth-child(3) { transform: translateY(-5px)
 .footer-brand p { font-size: .85rem; line-height: 1.7; max-width: 30ch; }
 .footer-brand address { font-style: normal; font-size: .85rem; margin-top: 1rem; line-height: 1.8; }
 .footer-brand address a { color: var(--color-brass); }
-#footer-logo { max-height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1) opacity(0.9); }
+#footer-logo { max-height: 140px; height: auto; width: auto; max-width: 100%; margin-bottom: 1rem; filter: brightness(0) invert(1) opacity(0.9); }
 .footer-col h4 { color: var(--color-warm-white); margin-bottom: 1rem; font-size: .65rem; letter-spacing: .22em; font-family: var(--font-body); font-weight: 500; text-transform: uppercase; }
 .footer-col ul { list-style: none; padding: 0; margin: 0; }
 .footer-col ul li + li { margin-top: .5rem; }

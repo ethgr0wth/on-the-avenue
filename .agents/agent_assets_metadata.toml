@@ -425,3 +425,9 @@ id = "PdyrIb5KWPSQfyNM6r6VN"
 uri = "file://artifacts/mint-wp/mint-atelier-20260513-135924-v2.5.7-LOGO-FILL.zip"
 type = "unspecified"
 title = "Mint Atelier v2.5.7 — desktop logo fills full header height"
+
+[[outputs]]
+id = "v9PUzvtl3Us9YhopL96n0"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-140343-v2.5.9-LOGO-BIGGER.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.9 — bigger header + footer logos"
