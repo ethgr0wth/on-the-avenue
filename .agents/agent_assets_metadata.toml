@@ -395,3 +395,9 @@ id = "FTyzn4jgSRcmeifvj9zUY"
 uri = "file://artifacts/mint-wp/upgraded/mint-on-the-avenue-atelier/AUDIT-CHECKLIST.md"
 type = "text"
 title = "Audit Checklist — what's fixed + what needs WP-Admin"
+
+[[outputs]]
+id = "QZ5GZCJuR-AbOh9_O9m5s"
+uri = "file://artifacts/mint-wp/mint-atelier-20260513-134217-v2.5.1-CONNECT.zip"
+type = "unspecified"
+title = "Mint Atelier v2.5.1 — footer Connect column (IG / FB / Yelp)"
