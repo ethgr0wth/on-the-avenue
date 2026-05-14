@@ -1300,3 +1300,40 @@ select:focus-visible {
 /* hide any leftover collapse panels just in case */
 .testimonial-wrap .testimonial-content,
 section#testimonials .testimonials[style*="display: none"] { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   v2.9.6 — Services landing: force tiles visible on mobile
+   Parent Imaginal theme hid .testimonial on small screens (relied
+   on inline accordion). With permalink tiles we need them shown.
+   ═══════════════════════════════════════════════════════════════ */
+section#testimonials .testimonial,
+.section-services .testimonial,
+#main .testimonial {
+  display: block !important;
+  float: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+@media (max-width: 767px) {
+  section#testimonials .testimonial,
+  .section-services .testimonial,
+  #main .testimonial {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 0 .75rem !important;
+  }
+  section#testimonials .row {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+  }
+  section#testimonials .services-title {
+    min-height: 160px !important;
+    font-size: clamp(1.6rem, 7vw, 2.1rem) !important;
+    padding: 1.5rem 1rem !important;
+  }
+}
+section#testimonials .services-tile,
+section#testimonials .services-tile > div { display: block !important; }
