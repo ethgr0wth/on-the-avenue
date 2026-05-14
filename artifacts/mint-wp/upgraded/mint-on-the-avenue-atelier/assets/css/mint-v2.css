@@ -1337,3 +1337,36 @@ section#testimonials .testimonial,
 }
 section#testimonials .services-tile,
 section#testimonials .services-tile > div { display: block !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   v2.9.7 — Kill the parent theme's duplicate in-page sidebar nav.
+   Header dropdown is the only nav we want. The sidebar.php /
+   sidebar-page.php files render .interiorsub-nav twice (mobile +
+   desktop) and the Foundation hide/show classes don't always fire,
+   producing visible duplicates on service child pages.
+   ═══════════════════════════════════════════════════════════════ */
+#sidebar .opensub,
+#sidebar #sidenav,
+#sidebar #subnav,
+#sidenav,
+#subnav,
+nav.interiorsub,
+.interiorsub-nav,
+ul.interiorsub-nav,
+.sidebar .interiorsub-nav,
+#sidebar .interiorsub-nav {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* Reclaim the column space on singular pages — let content fill width. */
+#sidebar { display: none !important; }
+#inner-content .large-8.medium-8.columns,
+#inner-content .medium-8.columns {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 100% !important;
+}
