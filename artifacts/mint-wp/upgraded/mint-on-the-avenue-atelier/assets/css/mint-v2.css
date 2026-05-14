@@ -175,7 +175,7 @@ body footer.footer:not(.site-footer) { display: none !important; }
 @media (max-width: 767px) {
   :root {
     --header-h: clamp(94px, 24vw, 128px);
-    --logo-h:   clamp(94px, 24vw, 128px);
+    --logo-h:   clamp(188px, 48vw, 256px);
   }
   .site-header {
     padding-block: 0 !important;
@@ -204,9 +204,9 @@ body footer.footer:not(.site-footer) { display: none !important; }
     width: 100%;
   }
   .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
-    height: auto !important;
-    max-height: var(--logo-h) !important;
-    width: 100% !important;
+    height: var(--logo-h) !important;
+    max-height: none !important;
+    width: auto !important;
     max-width: 100% !important;
     object-fit: contain !important;
     object-position: left center !important;
