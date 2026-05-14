@@ -174,8 +174,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: bigger logo, slimmer header bar — fits viewport, no horizontal bleed */
 @media (max-width: 767px) {
   :root {
-    --header-h: clamp(110px, 28vw, 150px);
-    --logo-h:   clamp(110px, 28vw, 150px);
+    --header-h: clamp(94px, 24vw, 128px);
+    --logo-h:   clamp(94px, 24vw, 128px);
   }
   .site-header {
     padding-block: 0 !important;
@@ -1002,8 +1002,7 @@ a.button,
   .footer-links { gap: .65rem !important; }
 }
 
-/* ─── v2.7.1 — bump all small eyebrow/caption/alt-label text site-wide ─── */
-/* Hero meta line ("228 N PARK AVENUE", "WINTER PARK · AVEDA CONCEPT SALON") */
+/* ─── v2.7.5 — alt/eyebrow text 10% smaller + force wrapping ─── */
 .hero-eyebrow,
 .hero-typo .hero-eyebrow,
 .hero-meta,
@@ -1011,12 +1010,14 @@ a.button,
 .hero-image-credit,
 .hero-actions .hero-secondary,
 .hero-actions .hero-reserve {
-  font-size: clamp(.95rem, 1.3vw, 1.15rem) !important;
-  letter-spacing: .22em !important;
+  font-size: clamp(.85rem, 1.15vw, 1.03rem) !important;
+  letter-spacing: .2em !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
 }
-.hero-image-credit { font-size: clamp(.8rem, 1vw, .95rem) !important; }
+.hero-image-credit { font-size: clamp(.72rem, .9vw, .85rem) !important; }
 
-/* Section eyebrows / labels */
 .eyebrow,
 .section-eyebrow,
 .feature-eyebrow,
@@ -1031,11 +1032,12 @@ a.button,
 .menu-toggle,
 .header-book,
 .drawer-book {
-  font-size: clamp(.85rem, 1.1vw, 1rem) !important;
-  letter-spacing: .2em !important;
+  font-size: clamp(.76rem, 1vw, .9rem) !important;
+  letter-spacing: .18em !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
 }
 
-/* Image captions, credits, small alt copy */
 figcaption,
 .wp-caption-text,
 img + small,
@@ -1043,21 +1045,23 @@ img + small,
 .image-credit,
 .alt-text,
 .gallery-caption {
-  font-size: clamp(.9rem, 1.15vw, 1.05rem) !important;
-  letter-spacing: .15em !important;
+  font-size: clamp(.8rem, 1.05vw, .95rem) !important;
+  letter-spacing: .14em !important;
   line-height: 1.5 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
 }
 
-/* Footer body copy */
 .footer-brand p,
 .footer-brand address,
 .footer-brand .wordmark,
 .footer-col a,
 .footer-bottom * {
-  font-size: clamp(.9rem, 1.1vw, 1rem) !important;
+  font-size: clamp(.8rem, 1vw, .9rem) !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
 }
 
-/* Mobile: keep them readable, don't shrink below 14px */
 @media (max-width: 767px) {
   .hero-eyebrow,
   .hero-typo .hero-eyebrow,
@@ -1072,12 +1076,22 @@ img + small,
   .wp-caption-text,
   .gallery-tile figcaption,
   .hero-image-credit {
-    font-size: 1rem !important;
-    letter-spacing: .2em !important;
+    font-size: .9rem !important;
+    letter-spacing: .18em !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    text-align: center;
+    line-height: 1.55 !important;
   }
   .footer-brand p,
   .footer-brand address,
   .footer-col a {
-    font-size: 1.05rem !important;
+    font-size: .95rem !important;
+  }
+  /* Kill nowrap on key inline elements that cause overflow */
+  .booking-strip-cta,
+  .service-cta {
+    white-space: normal !important;
   }
 }
