@@ -1110,3 +1110,75 @@ img + small,
     white-space: normal !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   v2.9.0 — CTO AUDIT V2.1 FIXES
+   1. CTA contrast → deep forest #1B3A2D + white (12.6:1, WCAG AAA)
+   2. Link contrast → #167A6E (4.6:1, WCAG AA)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --color-cta-bg:        #1B3A2D;
+  --color-cta-bg-hover:  #264F3D;
+  --color-cta-text:      #FFFFFF;
+  --color-link-aa:       #167A6E;
+}
+
+/* All booking / primary CTAs — AAA contrast */
+.hero-reserve,
+.booking-strip-cta,
+.header-book,
+.drawer-book,
+.cta-primary,
+.book-appointment,
+.reserve-btn,
+.sticky-book,
+.mint-sticky-book,
+a.button[href*="phorest"],
+a[href*="phorest"].button,
+.wp-block-button__link[href*="phorest"] {
+  background: var(--color-cta-bg) !important;
+  background-color: var(--color-cta-bg) !important;
+  color: var(--color-cta-text) !important;
+  border-color: var(--color-cta-bg) !important;
+}
+.hero-reserve:hover,
+.booking-strip-cta:hover,
+.header-book:hover,
+.drawer-book:hover,
+.cta-primary:hover,
+.book-appointment:hover,
+.reserve-btn:hover,
+.sticky-book:hover,
+.mint-sticky-book:hover,
+a.button[href*="phorest"]:hover,
+a[href*="phorest"].button:hover {
+  background: var(--color-cta-bg-hover) !important;
+  background-color: var(--color-cta-bg-hover) !important;
+  color: var(--color-cta-text) !important;
+}
+
+/* Link contrast on cream/ivory backgrounds */
+.hero-meta a,
+.entry-content a:not(.button):not(.hero-reserve):not(.booking-strip-cta),
+.page-content a:not(.button),
+.manifesto-body a,
+.review-card a,
+.blog-teaser-card a,
+.footer-col a:not(.header-book):not(.drawer-book) {
+  color: var(--color-link-aa) !important;
+}
+.hero-meta a:hover,
+.entry-content a:not(.button):hover,
+.manifesto-body a:hover {
+  color: var(--color-cta-bg) !important;
+}
+
+/* Focus ring uses CTA color for keyboard a11y */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-cta-bg) !important;
+  outline-offset: 3px !important;
+}

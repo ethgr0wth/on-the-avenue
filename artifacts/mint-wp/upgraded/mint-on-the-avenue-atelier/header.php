@@ -112,7 +112,7 @@
 </header>
 
 <!-- ─── Drawer Menu ────────────────────────────────────────── -->
-<div class="drawer-overlay" id="drawer-menu" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Site menu', 'mint-ota' ); ?>">
+<div class="drawer-overlay" id="drawer-menu" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" aria-label="<?php esc_attr_e( 'Site menu', 'mint-ota' ); ?>">
     <nav class="drawer-nav" aria-label="<?php esc_attr_e( 'Drawer navigation', 'mint-ota' ); ?>">
         <?php
         wp_nav_menu( [

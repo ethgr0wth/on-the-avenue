@@ -54,24 +54,29 @@ function mint_rest_lockdown( $result ) {
     $route = isset( $GLOBALS['wp']->query_vars['rest_route'] ) ? $GLOBALS['wp']->query_vars['rest_route'] : '';
     if ( ! $route ) return $result;
 
-    $blocked_prefixes = [
-        '/wordfence/',
-        '/wpe/',
-        '/wpe_sign_on_plugin/',
-        '/seopress/',
-        '/wp/v2/users',
-        '/duplicate-post/',
+    /* Allowlist: only these prefixes are publicly readable. */
+    $allowed_prefixes = [
+        '/wp/v2/posts',
+        '/wp/v2/pages',
+        '/wp/v2/media',
+        '/wp/v2/categories',
+        '/wp/v2/tags',
+        '/wp/v2/search',
+        '/oembed/',
+        '/contact-form-7/',
+        '/wpcf7/',
     ];
-    foreach ( $blocked_prefixes as $prefix ) {
+    foreach ( $allowed_prefixes as $prefix ) {
         if ( strpos( $route, $prefix ) === 0 ) {
-            return new WP_Error(
-                'rest_forbidden',
-                __( 'Authentication required for this endpoint.', 'mint-ota' ),
-                [ 'status' => 401 ]
-            );
+            return $result;
         }
     }
-    return $result;
+    /* Everything else (wordfence, wpe, seopress, users, plugin endpoints) → blocked. */
+    return new WP_Error(
+        'rest_forbidden',
+        __( 'Authentication required for this endpoint.', 'mint-ota' ),
+        [ 'status' => 401 ]
+    );
 }
 add_filter( 'rest_authentication_errors', 'mint_rest_lockdown', 99 );
 

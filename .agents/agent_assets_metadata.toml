@@ -497,3 +497,9 @@ id = "jXMJOj-0sfNeQhdslbamQ"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-014328-v2.8.3-NO-SCROLL-SHRINK.zip"
 type = "unspecified"
 title = "Mint Atelier v2.8.3 — mobile logo no longer shrinks on scroll"
+
+[[outputs]]
+id = "QxNDrtWTBNRA_Dzt3Yjr8"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-152721-v2.9.0-CTO-AUDIT-V21.zip"
+type = "unspecified"
+title = "Mint Atelier v2.9.0 — CTO V2.1 fixes (CTA AAA, link AA, REST allowlist, early security headers, drawer a11y)"

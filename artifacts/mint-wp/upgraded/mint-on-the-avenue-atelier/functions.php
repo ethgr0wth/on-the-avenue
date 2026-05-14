@@ -7,8 +7,17 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.8.3-no-scroll-shrink-' . date( 'YmdHis' ) );
+define( 'MINT_VERSION', '2.9.0-cto-audit-v21-' . date( 'YmdHis' ) );
 define( 'MINT_VARIANT', 'atelier' );
+
+/* ─── v2.9.0: Early security headers (fallback before WPE cache layer) ─── */
+if ( ! is_admin() && ! headers_sent() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+    @header( 'X-Content-Type-Options: nosniff' );
+    @header( 'X-Frame-Options: SAMEORIGIN' );
+    @header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+    @header( 'Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()' );
+    @header( 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload' );
+}
 
 /* ─── Audit fixes (security headers, REST lockdown, redirects, a11y) ─── */
 $mint_audit_fixes = get_template_directory() . '/inc/audit-fixes.php';
