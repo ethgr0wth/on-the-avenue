@@ -473,3 +473,9 @@ id = "Tjy7DrYqM8Ry8FKOsjHS_"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-010431-v2.7.5-ALT-DOWN-WRAP.zip"
 type = "unspecified"
 title = "Mint Atelier v2.7.5 — alt text 10% smaller, forced wrapping"
+
+[[outputs]]
+id = "oo0lTHCGsDD0Af34w2G3P"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-010515-v2.7.6-REZIP.zip"
+type = "unspecified"
+title = "Mint Atelier v2.7.6 — fresh zip"
