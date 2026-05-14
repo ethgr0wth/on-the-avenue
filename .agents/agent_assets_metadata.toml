@@ -485,3 +485,9 @@ id = "yx9dH8T-f9MIwja-1Lqb9"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-010709-v2.8.0-MOBILE-LOGO-2X.zip"
 type = "unspecified"
 title = "Mint Atelier v2.8.0 — mobile header logo doubled"
+
+[[outputs]]
+id = "fQf0266d_JW9Yf_CX5Oer"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-010947-v2.8.2-LOGO-75VW.zip"
+type = "unspecified"
+title = "Mint Atelier v2.8.2 — mobile logo at 75% header width"

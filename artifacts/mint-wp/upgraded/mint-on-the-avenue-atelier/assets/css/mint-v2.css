@@ -174,8 +174,8 @@ body footer.footer:not(.site-footer) { display: none !important; }
 /* Mobile: bigger logo, slimmer header bar — fits viewport, no horizontal bleed */
 @media (max-width: 767px) {
   :root {
-    --header-h: clamp(94px, 24vw, 128px);
-    --logo-h:   clamp(188px, 48vw, 256px);
+    --header-h: clamp(80px, 20vw, 120px);
+    --logo-w:   75vw;
   }
   .site-header {
     padding-block: 0 !important;
@@ -192,11 +192,13 @@ body footer.footer:not(.site-footer) { display: none !important; }
   /* Mobile uses the sticky bottom CTA — hide the redundant header button */
   .header-book { display: none !important; }
   .wordmark {
-    flex: 1 1 auto;
+    flex: 0 0 var(--logo-w);
     min-width: 0;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
+    width: var(--logo-w);
+    max-width: var(--logo-w);
   }
   .wordmark a, .wordmark .custom-logo-link {
     display: block;
@@ -204,10 +206,10 @@ body footer.footer:not(.site-footer) { display: none !important; }
     width: 100%;
   }
   .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
-    height: var(--logo-h) !important;
+    height: auto !important;
+    width: var(--logo-w) !important;
+    max-width: var(--logo-w) !important;
     max-height: none !important;
-    width: auto !important;
-    max-width: 100% !important;
     object-fit: contain !important;
     object-position: left center !important;
   }
