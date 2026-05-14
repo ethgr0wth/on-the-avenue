@@ -87,7 +87,7 @@
                 'menu'        => 'Primary - Right',
                 'theme_location' => 'primary-right',
                 'container'   => false,
-                'depth'       => 1,
+                'depth'       => 2,
                 'fallback_cb' => 'mint_fallback_nav',
             ];
             wp_nav_menu( $menu_args );
@@ -119,7 +119,7 @@
             'menu'        => 'Primary - Right',
             'theme_location' => 'primary-right',
             'container'   => false,
-            'depth'       => 1,
+            'depth'       => 2,
             'fallback_cb' => 'mint_fallback_nav',
         ] );
         ?>
@@ -137,16 +137,38 @@
  */
 if ( ! function_exists( 'mint_fallback_nav' ) ) :
 function mint_fallback_nav() {
-    $links = [
+    $services_children = [
+        'New Guest Special'    => '/services/new-guest-special/',
+        'Hair Color'           => '/services/hair-color/',
+        'Haircuts'             => '/services/haircuts/',
+        'Extensions'           => '/services/extensions/',
+        'Smoothing Treatments' => '/services/smoothing-treatments/',
+        'Spa Services'         => '/services/spa-services/',
+    ];
+    $top = [
         'Services'   => '/services',
-        'Artists'    => '/our-artists',
+        'Artists'    => '/about/meet-the-team/',
         'Journal'    => '/blog',
         'Reviews'    => '/reviews',
         'Visit'      => '/contact',
     ];
     echo '<ul class="menu">';
-    foreach ( $links as $label => $path ) {
-        printf( '<li><a href="%s">%s</a></li>', esc_url( home_url( $path ) ), esc_html( $label ) );
+    foreach ( $top as $label => $path ) {
+        $is_services = ( $label === 'Services' );
+        printf(
+            '<li class="menu-item%s"><a href="%s">%s</a>',
+            $is_services ? ' menu-item-has-children has-services' : '',
+            esc_url( home_url( $path ) ),
+            esc_html( $label )
+        );
+        if ( $is_services ) {
+            echo '<ul class="sub-menu">';
+            foreach ( $services_children as $clabel => $cpath ) {
+                printf( '<li class="menu-item"><a href="%s">%s</a></li>', esc_url( home_url( $cpath ) ), esc_html( $clabel ) );
+            }
+            echo '</ul>';
+        }
+        echo '</li>';
     }
     echo '</ul>';
 }
