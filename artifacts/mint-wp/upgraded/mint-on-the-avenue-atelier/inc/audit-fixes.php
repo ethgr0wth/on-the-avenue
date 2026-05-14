@@ -229,31 +229,91 @@ function mint_default_alt_text( $attr, $attachment ) {
 add_filter( 'wp_get_attachment_image_attributes', 'mint_default_alt_text', 10, 2 );
 
 /* ─────────────────────────────────────────────────────────────────
- * MED-01 / OG: Default meta description fallback for pages without one.
- * SEOPress will override when present.
+ * MED-01 (v2.9.1): Per-page meta descriptions — overrides SEOPress.
+ * CTO V2.1: every page was showing "Winter Park, FL" only. Map of
+ * route → unique 140-160 char description, keyed by request path.
  * ───────────────────────────────────────────────────────────────── */
-function mint_default_meta_description() {
-    // If SEOPress already printed a description, skip.
-    if ( defined( 'SEOPRESS_VERSION' ) ) return;
+function mint_meta_description_map() {
+    return [
+        '/'                                => 'Mint on the Avenue — family-owned Aveda salon on Park Avenue, Winter Park FL. Editorial color, precision cutting, and plant-based care for five years and counting.',
+        '/about/'                          => 'A family-owned Aveda Lifestyle Salon on Park Avenue in Winter Park, Florida. Five years of devoted color, master cutting, and Aveda plant-based care.',
+        '/about/meet-the-team/'            => 'Meet the master stylists, colorists, and educators of Mint on the Avenue — a family-owned Aveda team practicing on Park Avenue, Winter Park FL.',
+        '/services/'                       => 'Editorial color, master cutting, balayage, lived-in highlights, extensions, smoothing, and Aveda spa services on Park Avenue in Winter Park, FL.',
+        '/services/new-guest-special/'     => 'New to Mint? Enjoy 20% off your first visit at our Aveda salon on Park Avenue in Winter Park, FL. Color, cut, or care — your choice.',
+        '/services/hair-color/'            => 'Editorial color at Mint on the Avenue — balayage, lived-in highlights, gloss, gray blending, and bespoke Aveda color in Winter Park, Florida.',
+        '/services/haircuts/'              => 'Master cutting and precision styling at Mint on the Avenue. Aveda-trained stylists on Park Avenue, Winter Park FL.',
+        '/services/extensions/'            => 'Premium hair extensions and lengthening services at our Aveda salon on Park Avenue, Winter Park, Florida.',
+        '/services/smoothing-treatments/'  => 'Keratin and Aveda Botanical Repair smoothing treatments for sleek, healthier hair. Mint on the Avenue, Winter Park FL.',
+        '/services/spa-services/'          => 'Aveda facials, scalp treatments, and spa rituals on Park Avenue, Winter Park, Florida. Plant-based, pure, and personal.',
+        '/contact/'                        => 'Visit Mint on the Avenue at 228 N Park Avenue, Winter Park, FL 32789. Call 407.645.2264 or book online — open most days, Aveda lifestyle salon.',
+        '/blog/'                           => 'Notes, education, and behind-the-chair from Mint on the Avenue — an Aveda salon on Park Avenue, Winter Park FL.',
+        '/gift-cards/'                     => 'Give the gift of editorial color and Aveda care. Mint on the Avenue gift cards — Park Avenue, Winter Park, Florida.',
+        '/shop/'                           => 'Shop Aveda professional hair, skin, and scalp care from Mint on the Avenue — curated by Aveda-trained stylists in Winter Park, FL.',
+        '/privacy-policy/'                 => 'Mint on the Avenue privacy policy — how we handle visitor and client information for our Aveda salon in Winter Park, Florida.',
+    ];
+}
 
-    $desc = '';
-    if ( is_front_page() ) {
-        $desc = 'Mint on the Avenue — a family-owned Aveda salon on Park Avenue in Winter Park, Florida. Editorial color, master cutting, and plant-based care.';
-    } elseif ( is_singular() ) {
-        $excerpt = get_the_excerpt();
-        if ( $excerpt ) {
-            $desc = wp_trim_words( wp_strip_all_tags( $excerpt ), 28, '…' );
-        } else {
-            $desc = wp_trim_words( wp_strip_all_tags( get_the_content() ), 28, '…' );
-        }
-    } else {
-        $desc = get_bloginfo( 'description' );
+function mint_meta_description_for_request() {
+    $path = isset( $_SERVER['REQUEST_URI'] ) ? strtok( $_SERVER['REQUEST_URI'], '?' ) : '/';
+    $path = '/' . ltrim( $path, '/' );
+    if ( substr( $path, -1 ) !== '/' && strpos( $path, '.' ) === false ) {
+        $path .= '/';
     }
+    $map = mint_meta_description_map();
+    if ( isset( $map[ $path ] ) ) {
+        return $map[ $path ];
+    }
+    // Fallback: try root collapse to '/'
+    if ( $path === '/index.php/' || $path === '/index.html/' ) {
+        return $map['/'];
+    }
+    // Singular fallback: excerpt → content
+    if ( is_singular() ) {
+        $excerpt = get_the_excerpt();
+        $base = $excerpt ? $excerpt : get_the_content();
+        $base = wp_trim_words( wp_strip_all_tags( $base ), 28, '…' );
+        if ( $base ) return $base;
+    }
+    // Last-resort default (never the generic "Winter Park, FL")
+    return 'Mint on the Avenue — family-owned Aveda Lifestyle Salon on Park Avenue in Winter Park, Florida. Editorial color, precision cutting, plant-based care.';
+}
+
+/* Override SEOPress description so our per-page copy wins. */
+add_filter( 'seopress_titles_desc',         'mint_meta_description_for_request', 99 );
+add_filter( 'seopress_social_og_desc',      'mint_meta_description_for_request', 99 );
+add_filter( 'seopress_social_twitter_desc', 'mint_meta_description_for_request', 99 );
+
+/* Print our description in wp_head if SEOPress isn't active or didn't output one. */
+function mint_default_meta_description() {
+    if ( defined( 'SEOPRESS_VERSION' ) ) return; // SEOPress will print via its own hook.
+    $desc = mint_meta_description_for_request();
     if ( $desc ) {
         echo "\n" . '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
     }
 }
 add_action( 'wp_head', 'mint_default_meta_description', 1 );
+
+/* Belt-and-suspenders: strip any duplicate generic "Winter Park, FL" meta. */
+function mint_strip_generic_description( $buffer ) {
+    if ( stripos( $buffer, '<meta name="description"' ) === false ) return $buffer;
+    // Remove any meta description tag whose content is exactly "Winter Park, FL" or similar 1-line generics.
+    $buffer = preg_replace(
+        '#<meta\s+name=["\']description["\']\s+content=["\']\s*(Winter Park,?\s*FL\.?|Winter Park, Florida\.?)\s*["\']\s*/?>#i',
+        '',
+        $buffer
+    );
+    return $buffer;
+}
+function mint_start_meta_ob() {
+    if ( is_admin() ) return;
+    ob_start( 'mint_strip_generic_description' );
+}
+function mint_flush_meta_ob() {
+    if ( is_admin() ) return;
+    if ( ob_get_level() > 0 ) @ob_end_flush();
+}
+add_action( 'template_redirect', 'mint_start_meta_ob', 0 );
+add_action( 'shutdown',          'mint_flush_meta_ob', 0 );
 
 /* ─────────────────────────────────────────────────────────────────
  * MED-09: Extra schema — Organization sitewide + BreadcrumbList on inner.
