@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.9.7-kill-duplicate-sidenav-' . date( 'YmdHis' ) );
+define( 'MINT_VERSION', '2.9.8-one-sidebar-only-' . date( 'YmdHis' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── v2.9.0: Early security headers (fallback before WPE cache layer) ─── */

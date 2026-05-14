@@ -1339,22 +1339,15 @@ section#testimonials .services-tile,
 section#testimonials .services-tile > div { display: block !important; }
 
 /* ═══════════════════════════════════════════════════════════════
-   v2.9.7 — Kill the parent theme's duplicate in-page sidebar nav.
-   Header dropdown is the only nav we want. The sidebar.php /
-   sidebar-page.php files render .interiorsub-nav twice (mobile +
-   desktop) and the Foundation hide/show classes don't always fire,
-   producing visible duplicates on service child pages.
+   v2.9.8 — Keep ONE sidebar nav, hide the duplicate.
+   Parent theme renders .interiorsub-nav twice (mobile #sidenav +
+   desktop #subnav). Foundation .hide-for-large / .show-for-large
+   isn't masking properly, so both show. Keep #subnav, drop the
+   mobile-only #sidenav and the "Menu" opener tab.
    ═══════════════════════════════════════════════════════════════ */
 #sidebar .opensub,
 #sidebar #sidenav,
-#sidebar #subnav,
-#sidenav,
-#subnav,
-nav.interiorsub,
-.interiorsub-nav,
-ul.interiorsub-nav,
-.sidebar .interiorsub-nav,
-#sidebar .interiorsub-nav {
+#sidenav {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;
@@ -1362,11 +1355,42 @@ ul.interiorsub-nav,
   margin: 0 !important;
   padding: 0 !important;
 }
-/* Reclaim the column space on singular pages — let content fill width. */
-#sidebar { display: none !important; }
-#inner-content .large-8.medium-8.columns,
-#inner-content .medium-8.columns {
-  width: 100% !important;
-  max-width: 100% !important;
-  flex: 1 1 100% !important;
+/* Ensure #subnav (the one we keep) is always visible */
+#sidebar #subnav,
+#subnav {
+  display: block !important;
+  visibility: visible !important;
+}
+/* Tidy sidebar styling so the surviving menu looks intentional */
+#sidebar {
+  padding: 1.5rem 0;
+}
+#sidebar .interiorsub-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+#sidebar .interiorsub-nav li { list-style: none; margin: 0; }
+#sidebar .interiorsub-nav a {
+  display: block;
+  padding: .55rem .25rem;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-forest, #1B3A2D);
+  border-bottom: 1px solid rgba(27,58,45,0.08);
+  text-decoration: none;
+  transition: color .2s, padding-left .2s;
+}
+#sidebar .interiorsub-nav a:hover {
+  color: var(--color-cta-bg, #1B3A2D);
+  padding-left: .5rem;
+}
+#sidebar .interiorsub-nav .current-menu-item > a,
+#sidebar .interiorsub-nav .current_page_item > a {
+  color: var(--color-cta-bg, #1B3A2D);
+  font-weight: 600;
 }

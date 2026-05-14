@@ -545,3 +545,9 @@ id = "XPbCFyeD-IyQ8xnQ2Mn2h"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-162814-v2.9.7-KILL-DUPLICATE-SIDENAV.zip"
 type = "unspecified"
 title = "Mint Atelier v2.9.7 — Removes duplicate in-page sidebar menus; header dropdown is the only nav"
+
+[[outputs]]
+id = "pOSh4Hb8gSzYw0-p_8M37"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-162857-v2.9.8-ONE-SIDEBAR-ONLY.zip"
+type = "unspecified"
+title = "Mint Atelier v2.9.8 — One in-page sidebar menu only (de-duped, styled)"
