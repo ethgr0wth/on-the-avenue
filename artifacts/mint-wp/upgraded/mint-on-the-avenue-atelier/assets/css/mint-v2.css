@@ -171,27 +171,63 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .site-header.scrolled .custom-logo-link img {
   height: var(--logo-h) !important;
 }
-/* Mobile: same logo+padding rule */
+/* Mobile: header bar halved, logo doubled — intentional bleed below the bar */
 @media (max-width: 767px) {
   :root {
-    --header-h: clamp(170px, 42vw, 230px);
-    --logo-h: var(--header-h);
+    --header-h: clamp(85px, 21vw, 115px);   /* half bar */
+    --logo-h:   clamp(340px, 84vw, 460px);  /* doubled logo */
   }
-  .site-header { padding-block: 0 !important; overflow: visible; min-height: var(--header-h) !important; }
-  .header-inner { padding-inline: .75rem; gap: .5rem; min-height: var(--header-h) !important; }
+  .site-header {
+    padding-block: 0 !important;
+    overflow: visible !important;
+    min-height: var(--header-h) !important;
+    height: var(--header-h) !important;
+  }
+  .header-inner {
+    padding-inline: .75rem;
+    gap: .5rem;
+    min-height: var(--header-h) !important;
+    height: var(--header-h) !important;
+    overflow: visible !important;
+    align-items: center;
+  }
   /* Mobile uses the sticky bottom CTA — hide the redundant header button */
   .header-book { display: none !important; }
-  .wordmark { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; max-width: 70%; }
-  .wordmark a, .wordmark .custom-logo-link { display: block; line-height: 0; }
+  .wordmark {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    max-width: 75%;
+    overflow: visible;
+  }
+  .wordmark a, .wordmark .custom-logo-link { display: block; line-height: 0; overflow: visible; }
   .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
     height: var(--logo-h) !important;
     width: auto !important;
     max-width: none !important;
+    /* let it bleed below the header bar */
+    transform: translateY(0);
+  }
+  /* push page content down so the bleeding logo doesn't cover the hero */
+  body.home #page,
+  body #page {
+    padding-top: calc(var(--logo-h) - var(--header-h)) !important;
   }
   .header-actions { flex-shrink: 0; gap: .75rem; }
   .menu-toggle { padding: .5rem; }
   .menu-toggle-bars { width: 30px; gap: 7px; }
   .menu-toggle-bars span { height: 2px; }
+
+  /* HERO wordmark — doubled size, bleeds off the sides */
+  .hero-typo .hero-title-logo { margin: 0 0 .25rem; overflow: visible; }
+  .hero-wordmark-img {
+    width: 200vw !important;
+    max-width: none !important;
+    margin-left: -50vw !important;
+    height: auto !important;
+  }
+  .hero-typo { overflow: visible !important; }
 }
 @media (max-width: 767px) {
   /* legacy block kept harmless */
