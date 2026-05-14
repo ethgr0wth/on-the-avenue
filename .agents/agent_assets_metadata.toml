@@ -509,3 +509,9 @@ id = "HekayGPfNo8rtP6zfZ1di"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-152829-v2.9.1-META-DESC-PER-PAGE.zip"
 type = "unspecified"
 title = "Mint Atelier v2.9.1 — Per-page meta descriptions (15 routes mapped, SEOPress overridden)"
+
+[[outputs]]
+id = "qrhRAMzGQL0PbyG5DxfPs"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-154704-v2.9.2-CONCEPT-SALON-NO-LOOKBOOK.zip"
+type = "unspecified"
+title = "Mint Atelier v2.9.2 — Concept Salon copy + Lookbook → Journal (/blog)"

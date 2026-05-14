@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.9.1-meta-desc-per-page-' . date( 'YmdHis' ) );
+define( 'MINT_VERSION', '2.9.2-concept-salon-no-lookbook-' . date( 'YmdHis' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── v2.9.0: Early security headers (fallback before WPE cache layer) ─── */

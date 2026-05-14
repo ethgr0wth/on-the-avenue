@@ -236,7 +236,7 @@ add_filter( 'wp_get_attachment_image_attributes', 'mint_default_alt_text', 10, 2
 function mint_meta_description_map() {
     return [
         '/'                                => 'Mint on the Avenue — family-owned Aveda salon on Park Avenue, Winter Park FL. Editorial color, precision cutting, and plant-based care for five years and counting.',
-        '/about/'                          => 'A family-owned Aveda Lifestyle Salon on Park Avenue in Winter Park, Florida. Five years of devoted color, master cutting, and Aveda plant-based care.',
+        '/about/'                          => 'A family-owned Aveda Concept Salon on Park Avenue in Winter Park, Florida. Five years of devoted color, master cutting, and Aveda plant-based care.',
         '/about/meet-the-team/'            => 'Meet the master stylists, colorists, and educators of Mint on the Avenue — a family-owned Aveda team practicing on Park Avenue, Winter Park FL.',
         '/services/'                       => 'Editorial color, master cutting, balayage, lived-in highlights, extensions, smoothing, and Aveda spa services on Park Avenue in Winter Park, FL.',
         '/services/new-guest-special/'     => 'New to Mint? Enjoy 20% off your first visit at our Aveda salon on Park Avenue in Winter Park, FL. Color, cut, or care — your choice.',
@@ -245,7 +245,7 @@ function mint_meta_description_map() {
         '/services/extensions/'            => 'Premium hair extensions and lengthening services at our Aveda salon on Park Avenue, Winter Park, Florida.',
         '/services/smoothing-treatments/'  => 'Keratin and Aveda Botanical Repair smoothing treatments for sleek, healthier hair. Mint on the Avenue, Winter Park FL.',
         '/services/spa-services/'          => 'Aveda facials, scalp treatments, and spa rituals on Park Avenue, Winter Park, Florida. Plant-based, pure, and personal.',
-        '/contact/'                        => 'Visit Mint on the Avenue at 228 N Park Avenue, Winter Park, FL 32789. Call 407.645.2264 or book online — open most days, Aveda lifestyle salon.',
+        '/contact/'                        => 'Visit Mint on the Avenue at 228 N Park Avenue, Winter Park, FL 32789. Call 407.645.2264 or book online — Aveda Concept Salon on Park Avenue.',
         '/blog/'                           => 'Notes, education, and behind-the-chair from Mint on the Avenue — an Aveda salon on Park Avenue, Winter Park FL.',
         '/gift-cards/'                     => 'Give the gift of editorial color and Aveda care. Mint on the Avenue gift cards — Park Avenue, Winter Park, Florida.',
         '/shop/'                           => 'Shop Aveda professional hair, skin, and scalp care from Mint on the Avenue — curated by Aveda-trained stylists in Winter Park, FL.',
@@ -275,7 +275,7 @@ function mint_meta_description_for_request() {
         if ( $base ) return $base;
     }
     // Last-resort default (never the generic "Winter Park, FL")
-    return 'Mint on the Avenue — family-owned Aveda Lifestyle Salon on Park Avenue in Winter Park, Florida. Editorial color, precision cutting, plant-based care.';
+    return 'Mint on the Avenue — family-owned Aveda Concept Salon on Park Avenue in Winter Park, Florida. Editorial color, precision cutting, plant-based care.';
 }
 
 /* Override SEOPress description so our per-page copy wins. */

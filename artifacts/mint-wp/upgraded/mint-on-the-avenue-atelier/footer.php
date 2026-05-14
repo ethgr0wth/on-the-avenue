@@ -28,7 +28,7 @@
                         <span class="wordmark"><?php bloginfo( 'name' ); ?></span>
                     <?php endif; ?>
                 </a>
-                <p><?php esc_html_e( 'An Aveda lifestyle salon on Park Avenue in Winter Park, Florida. Color, cut, and care rooted in plant-based luxury.', 'mint-ota' ); ?></p>
+                <p><?php esc_html_e( 'An Aveda Concept Salon on Park Avenue in Winter Park, Florida. Color, cut, and care rooted in plant-based luxury.', 'mint-ota' ); ?></p>
                 <address>
                     228 N Park Ave<br>
                     Winter Park, FL 32789<br>
@@ -51,7 +51,7 @@
                 <ul class="footer-links">
                     <li><a href="<?php echo esc_url( home_url( '/services' ) ); ?>"><?php esc_html_e( 'Services', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/about/meet-the-team/' ) ); ?>"><?php esc_html_e( 'Artists', 'mint-ota' ); ?></a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/gallery' ) ); ?>"><?php esc_html_e( 'Lookbook', 'mint-ota' ); ?></a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/blog' ) ); ?>"><?php esc_html_e( 'Journal', 'mint-ota' ); ?></a></li>
                     <li><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact', 'mint-ota' ); ?></a></li>
                 </ul>
 
@@ -94,7 +94,7 @@
 
         <div class="footer-bottom">
             <p>
-                &copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'An Aveda Lifestyle Salon.', 'mint-ota' ); ?>
+                &copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'An Aveda Concept Salon.', 'mint-ota' ); ?>
                 &nbsp;&middot;&nbsp;
                 <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>"><?php esc_html_e( 'Privacy Policy', 'mint-ota' ); ?></a>
             </p>

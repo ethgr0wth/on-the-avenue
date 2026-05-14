@@ -127,7 +127,7 @@
     </nav>
     <div class="drawer-footer">
         <p>228 N Park Ave · Winter Park, FL · 407.645.2264</p>
-        <p>An Aveda Lifestyle Salon</p>
+        <p>An Aveda Concept Salon</p>
     </div>
 </div>
 
@@ -140,7 +140,7 @@ function mint_fallback_nav() {
     $links = [
         'Services'   => '/services',
         'Artists'    => '/our-artists',
-        'Lookbook'   => '/gallery',
+        'Journal'    => '/blog',
         'Reviews'    => '/reviews',
         'Visit'      => '/contact',
     ];
