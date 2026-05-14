@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.7.1-alt-text-larger-' . date( 'YmdHi' ) );
+define( 'MINT_VERSION', '2.7.2-mobile-fit-' . date( 'YmdHi' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── Audit fixes (security headers, REST lockdown, redirects, a11y) ─── */

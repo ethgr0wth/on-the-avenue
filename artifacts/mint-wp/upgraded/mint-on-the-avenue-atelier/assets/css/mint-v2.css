@@ -171,23 +171,21 @@ body footer.footer:not(.site-footer) { display: none !important; }
 .site-header.scrolled .custom-logo-link img {
   height: var(--logo-h) !important;
 }
-/* Mobile: header bar halved, logo doubled — intentional bleed below the bar */
+/* Mobile: bigger logo, slimmer header bar — fits viewport, no horizontal bleed */
 @media (max-width: 767px) {
   :root {
-    --header-h: clamp(85px, 21vw, 115px);   /* half bar */
-    --logo-h:   clamp(340px, 84vw, 460px);  /* doubled logo */
+    --header-h: clamp(110px, 28vw, 150px);
+    --logo-h:   clamp(110px, 28vw, 150px);
   }
   .site-header {
     padding-block: 0 !important;
     overflow: visible !important;
     min-height: var(--header-h) !important;
-    height: var(--header-h) !important;
   }
   .header-inner {
-    padding-inline: .75rem;
+    padding-inline: .5rem;
     gap: .5rem;
     min-height: var(--header-h) !important;
-    height: var(--header-h) !important;
     overflow: visible !important;
     align-items: center;
   }
@@ -198,36 +196,54 @@ body footer.footer:not(.site-footer) { display: none !important; }
     min-width: 0;
     display: flex;
     align-items: center;
-    max-width: 75%;
-    overflow: visible;
+    overflow: hidden;
   }
-  .wordmark a, .wordmark .custom-logo-link { display: block; line-height: 0; overflow: visible; }
+  .wordmark a, .wordmark .custom-logo-link {
+    display: block;
+    line-height: 0;
+    width: 100%;
+  }
   .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
-    height: var(--logo-h) !important;
-    width: auto !important;
-    max-width: none !important;
-    /* let it bleed below the header bar */
-    transform: translateY(0);
+    height: auto !important;
+    max-height: var(--logo-h) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    object-position: left center !important;
   }
-  /* push page content down so the bleeding logo doesn't cover the hero */
-  body.home #page,
-  body #page {
-    padding-top: calc(var(--logo-h) - var(--header-h)) !important;
-  }
-  .header-actions { flex-shrink: 0; gap: .75rem; }
+  .header-actions { flex-shrink: 0; gap: .5rem; }
   .menu-toggle { padding: .5rem; }
-  .menu-toggle-bars { width: 30px; gap: 7px; }
+  .menu-toggle-bars { width: 28px; gap: 6px; }
   .menu-toggle-bars span { height: 2px; }
 
-  /* HERO wordmark — doubled size, bleeds off the sides */
-  .hero-typo .hero-title-logo { margin: 0 0 .25rem; overflow: visible; }
+  /* HERO wordmark — fills viewport width, no overflow */
+  .hero-typo .hero-title-logo { margin: 0 0 .5rem; overflow: visible; }
   .hero-wordmark-img {
-    width: 200vw !important;
-    max-width: none !important;
-    margin-left: -50vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-inline: 0 !important;
     height: auto !important;
+    display: block;
   }
-  .hero-typo { overflow: visible !important; }
+  .hero-typo { overflow: visible !important; padding-inline: 1.25rem; }
+
+  /* Hero CTAs — make sure they wrap and don't overflow */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 1rem !important;
+    width: 100%;
+  }
+  .hero-actions .hero-reserve,
+  .hero-actions .hero-secondary {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: 1rem !important;
+    letter-spacing: .2em !important;
+    white-space: normal !important;
+  }
 }
 @media (max-width: 767px) {
   /* legacy block kept harmless */

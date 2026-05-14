@@ -455,3 +455,9 @@ id = "2ZcALAtPeb1B94G2-TMx_"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-004959-v2.7.1-ALT-LARGER.zip"
 type = "unspecified"
 title = "Mint Atelier v2.7.1 — all alt/eyebrow/caption text larger"
+
+[[outputs]]
+id = "Hd1jnGJ68eoOuh9eKcH4g"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-005636-v2.7.2-MOBILE-FIT.zip"
+type = "unspecified"
+title = "Mint Atelier v2.7.2 — mobile fits viewport, hero CTAs wrap"
