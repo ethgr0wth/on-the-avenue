@@ -10,9 +10,49 @@
   document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initDrawer();
+    initDropdowns();
     initHeroParallax();
     initFadeIns();
   });
+
+  function initDropdowns() {
+    const items = document.querySelectorAll('.header-nav .menu-item-has-children');
+    if (!items.length) return;
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+    items.forEach(item => {
+      const link = item.querySelector(':scope > a');
+      if (!link) return;
+      const href = (link.getAttribute('href') || '').trim();
+      const label = (link.textContent || '').trim().toLowerCase();
+      if (!href || href === '#' || href.endsWith('/#') || href.endsWith('#')) {
+        if (label.indexOf('service') !== -1) link.setAttribute('href', '/services/');
+      }
+      link.addEventListener('click', (e) => {
+        if (!isTouch) return;
+        if (!item.classList.contains('open')) {
+          e.preventDefault();
+          document.querySelectorAll('.header-nav .menu-item-has-children.open').forEach(o => {
+            if (o !== item) o.classList.remove('open');
+          });
+          item.classList.add('open');
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.header-nav .menu-item-has-children')) {
+        document.querySelectorAll('.header-nav .menu-item-has-children.open')
+          .forEach(o => o.classList.remove('open'));
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.header-nav .menu-item-has-children.open')
+          .forEach(o => o.classList.remove('open'));
+      }
+    });
+  }
 
   function initHeader() {
     const header = document.querySelector('.site-header');

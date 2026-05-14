@@ -278,6 +278,24 @@ function mint_meta_description_for_request() {
     return 'Mint on the Avenue — family-owned Aveda Concept Salon on Park Avenue in Winter Park, Florida. Editorial color, precision cutting, plant-based care.';
 }
 
+/* ─────────────────────────────────────────────────────────────────
+ * v2.9.4: Rewrite '#' hrefs on Services parent menu item to /services/.
+ * Many WP menus set parent items to '#'; we always want the click to
+ * navigate to the Services index page.
+ * ───────────────────────────────────────────────────────────────── */
+function mint_fix_services_menu_href( $items, $args ) {
+    foreach ( $items as $item ) {
+        $url   = isset( $item->url )   ? trim( $item->url )   : '';
+        $title = isset( $item->title ) ? strtolower( $item->title ) : '';
+        $is_empty_href = ( $url === '' || $url === '#' || substr( $url, -2 ) === '/#' || substr( $url, -1 ) === '#' );
+        if ( $is_empty_href && strpos( $title, 'service' ) !== false ) {
+            $item->url = home_url( '/services/' );
+        }
+    }
+    return $items;
+}
+add_filter( 'wp_nav_menu_objects', 'mint_fix_services_menu_href', 10, 2 );
+
 /* Override SEOPress description so our per-page copy wins. */
 add_filter( 'seopress_titles_desc',         'mint_meta_description_for_request', 99 );
 add_filter( 'seopress_social_og_desc',      'mint_meta_description_for_request', 99 );

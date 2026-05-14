@@ -1261,3 +1261,10 @@ select:focus-visible {
   line-height: 1.6;
 }
 .drawer-nav .sub-menu a:hover { color: var(--color-warm-white, #F7F2E6); }
+
+/* v2.9.4 — open state for touch + click-toggle */
+.header-nav .menu-item-has-children.open > .sub-menu {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) !important;
+}

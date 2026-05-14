@@ -521,3 +521,9 @@ id = "UnE5n_o78eABlXWLEElkh"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-160731-v2.9.3-SERVICES-DROPDOWN.zip"
 type = "unspecified"
 title = "Mint Atelier v2.9.3 — Services dropdown on desktop + full services list in mobile drawer"
+
+[[outputs]]
+id = "I3P3LKt8nq6tj9QW2icMB"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-160849-v2.9.4-SERVICES-CLICKABLE.zip"
+type = "unspecified"
+title = "Mint Atelier v2.9.4 — Services nav clickable (href rewrite + touch toggle + open state)"
