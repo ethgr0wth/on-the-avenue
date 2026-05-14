@@ -1268,3 +1268,35 @@ select:focus-visible {
   pointer-events: auto !important;
   transform: translateX(-50%) translateY(0) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   v2.9.5 — Services landing grid tiles (clickable + readable)
+   ═══════════════════════════════════════════════════════════════ */
+.services-tile { display: block; text-decoration: none; cursor: pointer; }
+.services-tile > div { overflow: hidden; }
+.services-title {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 200px;
+  margin: 0 0 1.25rem !important;
+  padding: 2rem 1.5rem !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  font-family: var(--font-display, 'Cormorant Garamond', serif) !important;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: .04em !important;
+  text-transform: none !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+  transition: transform .4s var(--ease-out, ease), filter .4s var(--ease-out, ease);
+}
+.services-tile:hover .services-title { transform: scale(1.02); filter: brightness(1.08); }
+.services-tile:focus-visible .services-title { outline: 2px solid var(--color-cta-bg, #1B3A2D); outline-offset: 3px; }
+
+/* hide any leftover collapse panels just in case */
+.testimonial-wrap .testimonial-content,
+section#testimonials .testimonials[style*="display: none"] { display: none !important; }

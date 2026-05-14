@@ -527,3 +527,9 @@ id = "I3P3LKt8nq6tj9QW2icMB"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-160849-v2.9.4-SERVICES-CLICKABLE.zip"
 type = "unspecified"
 title = "Mint Atelier v2.9.4 — Services nav clickable (href rewrite + touch toggle + open state)"
+
+[[outputs]]
+id = "W6h-M7fzQet2QVs7X4z97"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-161353-v2.9.5-SERVICES-TILES-CLICKABLE.zip"
+type = "unspecified"
+title = "Mint Atelier v2.9.5 — Services landing tiles now navigate to child pages + readable title overlay"

@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MINT_VERSION', '2.9.4-services-clickable-' . date( 'YmdHis' ) );
+define( 'MINT_VERSION', '2.9.5-services-tiles-clickable-' . date( 'YmdHis' ) );
 define( 'MINT_VARIANT', 'atelier' );
 
 /* ─── v2.9.0: Early security headers (fallback before WPE cache layer) ─── */
