@@ -985,3 +985,83 @@ a.button,
   .footer-social { gap: .85rem !important; }
   .footer-links { gap: .65rem !important; }
 }
+
+/* ─── v2.7.1 — bump all small eyebrow/caption/alt-label text site-wide ─── */
+/* Hero meta line ("228 N PARK AVENUE", "WINTER PARK · AVEDA CONCEPT SALON") */
+.hero-eyebrow,
+.hero-typo .hero-eyebrow,
+.hero-meta,
+.hero-meta a,
+.hero-image-credit,
+.hero-actions .hero-secondary,
+.hero-actions .hero-reserve {
+  font-size: clamp(.95rem, 1.3vw, 1.15rem) !important;
+  letter-spacing: .22em !important;
+}
+.hero-image-credit { font-size: clamp(.8rem, 1vw, .95rem) !important; }
+
+/* Section eyebrows / labels */
+.eyebrow,
+.section-eyebrow,
+.feature-eyebrow,
+.cta-eyebrow,
+.cta-fineprint,
+.blog-teaser-eyebrow,
+.review-date,
+.gallery-tile figcaption,
+.footer-col h4,
+.footer-bottom,
+.drawer-footer p,
+.menu-toggle,
+.header-book,
+.drawer-book {
+  font-size: clamp(.85rem, 1.1vw, 1rem) !important;
+  letter-spacing: .2em !important;
+}
+
+/* Image captions, credits, small alt copy */
+figcaption,
+.wp-caption-text,
+img + small,
+.caption,
+.image-credit,
+.alt-text,
+.gallery-caption {
+  font-size: clamp(.9rem, 1.15vw, 1.05rem) !important;
+  letter-spacing: .15em !important;
+  line-height: 1.5 !important;
+}
+
+/* Footer body copy */
+.footer-brand p,
+.footer-brand address,
+.footer-brand .wordmark,
+.footer-col a,
+.footer-bottom * {
+  font-size: clamp(.9rem, 1.1vw, 1rem) !important;
+}
+
+/* Mobile: keep them readable, don't shrink below 14px */
+@media (max-width: 767px) {
+  .hero-eyebrow,
+  .hero-typo .hero-eyebrow,
+  .hero-meta,
+  .hero-meta a,
+  .eyebrow,
+  .section-eyebrow,
+  .cta-fineprint,
+  .footer-col h4,
+  .footer-bottom,
+  figcaption,
+  .wp-caption-text,
+  .gallery-tile figcaption,
+  .hero-image-credit {
+    font-size: 1rem !important;
+    letter-spacing: .2em !important;
+  }
+  .footer-brand p,
+  .footer-brand address,
+  .footer-col a {
+    font-size: 1.05rem !important;
+  }
+}

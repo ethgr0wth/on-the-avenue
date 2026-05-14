@@ -449,3 +449,9 @@ id = "-hZNgPJ-pLsTu4vPwa7Gg"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-004849-v2.7.0-MOBILE-BLEED.zip"
 type = "unspecified"
 title = "Mint Atelier v2.7.0 — mobile logo doubled, header halved, bleed"
+
+[[outputs]]
+id = "2ZcALAtPeb1B94G2-TMx_"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-004959-v2.7.1-ALT-LARGER.zip"
+type = "unspecified"
+title = "Mint Atelier v2.7.1 — all alt/eyebrow/caption text larger"
