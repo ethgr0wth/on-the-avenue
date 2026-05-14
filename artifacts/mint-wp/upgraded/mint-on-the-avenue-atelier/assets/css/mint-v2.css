@@ -205,13 +205,26 @@ body footer.footer:not(.site-footer) { display: none !important; }
     line-height: 0;
     width: 100%;
   }
-  .wordmark img, .wordmark .custom-logo, .custom-logo-link img {
+  .wordmark img, .wordmark .custom-logo, .custom-logo-link img,
+  .site-header.scrolled .wordmark img,
+  .site-header.scrolled .wordmark .custom-logo,
+  .site-header.scrolled .custom-logo-link img,
+  .site-header.scrolled .wordmark-logo {
     height: auto !important;
     width: var(--logo-w) !important;
     max-width: var(--logo-w) !important;
     max-height: none !important;
+    min-height: 0 !important;
     object-fit: contain !important;
     object-position: left center !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  /* Lock header bar height on scroll too */
+  .site-header.scrolled,
+  .site-header.scrolled .header-inner {
+    min-height: var(--header-h) !important;
+    height: auto !important;
   }
   .header-actions { flex-shrink: 0; gap: .5rem; }
   .menu-toggle { padding: .5rem; }

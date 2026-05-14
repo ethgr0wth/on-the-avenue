@@ -491,3 +491,9 @@ id = "fQf0266d_JW9Yf_CX5Oer"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-010947-v2.8.2-LOGO-75VW.zip"
 type = "unspecified"
 title = "Mint Atelier v2.8.2 — mobile logo at 75% header width"
+
+[[outputs]]
+id = "jXMJOj-0sfNeQhdslbamQ"
+uri = "file://artifacts/mint-wp/mint-atelier-20260514-014328-v2.8.3-NO-SCROLL-SHRINK.zip"
+type = "unspecified"
+title = "Mint Atelier v2.8.3 — mobile logo no longer shrinks on scroll"
