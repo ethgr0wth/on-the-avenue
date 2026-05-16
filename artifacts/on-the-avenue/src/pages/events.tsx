@@ -7,41 +7,40 @@ export function Events() {
   const { data: events, isLoading } = useOtaListEvents();
 
   return (
-    <div className="pb-32 bg-background">
+    <div className="pb-32 bg-muted/10 min-h-screen">
       {/* Header */}
-      <section className="relative overflow-hidden py-16 md:py-24 border-b border-white/5 glass-panel">
-        <div className="absolute inset-0 bg-primary/5 mix-blend-overlay pointer-events-none" />
-        <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-8 text-white">
+      <section className="bg-card border-b border-border py-12 md:py-16 shadow-sm">
+        <div className="container mx-auto px-4 lg:px-8 text-center max-w-3xl">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 text-primary shadow-sm">
             <Calendar className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 tracking-tighter">EVENT <span className="text-primary neon-text">FEED</span></h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 tracking-tight text-foreground">Upcoming Events</h1>
+          <p className="text-lg text-muted-foreground font-light">
             Gatherings, workshops, and celebrations happening along the avenue.
           </p>
         </div>
       </section>
 
       {/* List */}
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
           {isLoading ? (
             <div className="space-y-8">
               {[1, 2].map(i => (
-                <div key={i} className="flex flex-col md:flex-row gap-6 glass-panel p-4 rounded-3xl">
-                  <Skeleton className="w-full md:w-2/5 aspect-[4/3] rounded-2xl bg-white/5" />
+                <div key={i} className="flex flex-col md:flex-row gap-6 bg-card p-4 rounded-3xl shadow-sm border border-border">
+                  <Skeleton className="w-full md:w-2/5 aspect-[4/3] rounded-2xl bg-muted" />
                   <div className="flex-1 space-y-4 p-4">
-                    <Skeleton className="h-10 w-3/4 bg-white/5" />
-                    <Skeleton className="h-6 w-1/2 bg-white/5" />
-                    <Skeleton className="h-24 w-full bg-white/5" />
+                    <Skeleton className="h-10 w-3/4 bg-muted" />
+                    <Skeleton className="h-6 w-1/2 bg-muted" />
+                    <Skeleton className="h-24 w-full bg-muted" />
                   </div>
                 </div>
               ))}
             </div>
           ) : events?.length === 0 ? (
-            <div className="text-center py-24 glass-panel rounded-3xl border border-white/10">
-              <h3 className="text-2xl font-display font-bold mb-3">0 EVENTS FOUND</h3>
-              <p className="text-muted-foreground font-mono text-sm">NO GATHERINGS DETECTED ON THE GRID SCHEDULE.</p>
+            <div className="text-center py-24 bg-card rounded-3xl border border-border shadow-sm">
+              <h3 className="text-2xl font-display font-bold mb-3 text-foreground">No upcoming events</h3>
+              <p className="text-muted-foreground">Check back later for new gatherings and activities.</p>
             </div>
           ) : (
             <div className="space-y-8">
@@ -50,7 +49,7 @@ export function Events() {
                 return (
                   <article 
                     key={event.id} 
-                    className="flex flex-col md:flex-row gap-6 md:gap-8 group glass-panel border-white/10 rounded-3xl p-4 hover:border-primary/40 hover:shadow-[0_0_30px_-5px_rgba(0,240,255,0.15)] transition-all duration-300"
+                    className="flex flex-col md:flex-row gap-6 md:gap-8 group bg-card border border-border rounded-3xl p-4 hover:shadow-md transition-all duration-300"
                     data-testid={`article-event-${event.id}`}
                   >
                     {/* Date Block & Image */}
@@ -60,17 +59,16 @@ export function Events() {
                           src={event.imageUrl || `${import.meta.env.BASE_URL}images/event-placeholder.jpg`} 
                           alt={event.title}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent"></div>
                       </div>
                       
                       {/* Date Badge */}
-                      <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-md border border-white/10 rounded-xl flex flex-col items-center justify-center w-16 h-16 shadow-xl">
-                        <span className="text-[10px] font-mono text-primary font-bold leading-none mb-1">
-                          {format(eventDate, 'MMM').toUpperCase()}
+                      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur shadow-md rounded-xl flex flex-col items-center justify-center w-16 h-16 text-foreground">
+                        <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-0.5">
+                          {format(eventDate, 'MMM')}
                         </span>
-                        <span className="text-2xl font-display font-bold leading-none text-white">
+                        <span className="text-2xl font-display font-bold leading-none">
                           {format(eventDate, 'd')}
                         </span>
                       </div>
@@ -78,26 +76,26 @@ export function Events() {
 
                     {/* Content */}
                     <div className="flex-1 py-4 pr-4">
-                      <div className="flex flex-col gap-2 mb-4 border-b border-white/10 pb-4">
-                        <h3 className="text-3xl font-display font-bold leading-tight group-hover:text-primary transition-colors">{event.title}</h3>
+                      <div className="flex flex-col gap-2 mb-4 border-b border-border pb-4">
+                        <h3 className="text-3xl font-display font-bold leading-tight group-hover:text-primary transition-colors tracking-tight text-foreground">{event.title}</h3>
                         
-                        <div className="flex flex-wrap gap-4 mt-3">
-                          <div className="flex items-center gap-2 text-xs font-mono text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded">
-                            <Clock className="w-3.5 h-3.5" />
-                            <span>{format(eventDate, 'EEEE, h:mm a').toUpperCase()}</span>
+                        <div className="flex flex-wrap gap-3 mt-3">
+                          <div className="flex items-center gap-1.5 text-sm font-medium text-foreground bg-muted px-3 py-1.5 rounded-full">
+                            <Clock className="w-4 h-4 text-muted-foreground" />
+                            <span>{format(eventDate, 'EEEE, h:mm a')}</span>
                           </div>
                           
                           {event.location && (
-                            <div className="flex items-center gap-2 text-xs font-mono text-white bg-white/10 border border-white/20 px-3 py-1.5 rounded">
-                              <MapPin className="w-3.5 h-3.5" />
-                              <span>{event.location.toUpperCase()}</span>
+                            <div className="flex items-center gap-1.5 text-sm font-medium text-foreground bg-muted px-3 py-1.5 rounded-full">
+                              <MapPin className="w-4 h-4 text-muted-foreground" />
+                              <span>{event.location}</span>
                             </div>
                           )}
                         </div>
                       </div>
                       
                       {event.description && (
-                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                        <p className="text-muted-foreground leading-relaxed">
                           {event.description}
                         </p>
                       )}

@@ -1,42 +1,42 @@
 import { Link } from "wouter";
-import { Search, Map, Calendar, Settings, Zap } from "lucide-react";
+import { Search, Map, Calendar, Settings, Sun } from "lucide-react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary">
-      <header className="sticky top-0 z-50 w-full glass-panel border-b border-white/5">
+    <div className="min-h-[100dvh] flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+      <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-xl border-b border-border shadow-sm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground group-hover:neon-glow transition-all duration-300">
-                <Zap className="w-4 h-4 fill-current" />
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                <Sun className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-bold text-lg leading-none tracking-tight">On The Avenue</span>
-                <span className="text-[10px] uppercase tracking-widest text-primary font-medium">v3.2035</span>
+                <span className="font-display font-semibold text-xl tracking-tight text-foreground">On The Avenue</span>
+                <span className="text-xs text-muted-foreground tracking-wide">Winter Park, FL</span>
               </div>
             </Link>
             
-            <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10">
-              <Link href="/businesses" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 hover:text-primary transition-colors flex items-center gap-2">
+            <nav className="hidden md:flex items-center gap-2">
+              <Link href="/businesses" className="px-5 py-2.5 rounded-full text-sm font-medium text-foreground hover:bg-muted hover:text-primary transition-colors flex items-center gap-2">
                 <Search className="w-4 h-4" /> Discover
               </Link>
-              <Link href="/categories" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 hover:text-primary transition-colors flex items-center gap-2">
+              <Link href="/categories" className="px-5 py-2.5 rounded-full text-sm font-medium text-foreground hover:bg-muted hover:text-primary transition-colors flex items-center gap-2">
                 <Map className="w-4 h-4" /> Categories
               </Link>
-              <Link href="/offers" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 hover:text-primary transition-colors flex items-center gap-2">
+              <Link href="/offers" className="px-5 py-2.5 rounded-full text-sm font-medium text-foreground hover:bg-muted hover:text-primary transition-colors flex items-center gap-2">
                 <TagIcon /> Offers
               </Link>
-              <Link href="/events" className="px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 hover:text-primary transition-colors flex items-center gap-2">
+              <Link href="/events" className="px-5 py-2.5 rounded-full text-sm font-medium text-foreground hover:bg-muted hover:text-primary transition-colors flex items-center gap-2">
                 <Calendar className="w-4 h-4" /> Events
               </Link>
             </nav>
 
-            <div className="flex items-center gap-2">
-              <Link href="/submit" className="hidden md:flex px-4 py-2 text-sm font-bold bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all hover:neon-glow">
-                + Add Place
+            <div className="flex items-center gap-3">
+              <Link href="/submit" className="hidden md:flex px-6 py-2.5 text-sm font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all shadow-sm hover:shadow">
+                Submit Listing
               </Link>
-              <Link href="/owner" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <Link href="/owner" className="w-10 h-10 flex items-center justify-center rounded-full bg-muted border border-border hover:bg-accent transition-colors text-foreground">
                 <Settings className="w-4 h-4" />
               </Link>
             </div>
@@ -48,26 +48,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-white/10 bg-card/50 mt-auto">
-        <div className="container mx-auto px-4 lg:px-8 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center text-primary">
-                <Zap className="w-3 h-3 fill-current" />
+      <footer className="border-t border-border bg-card mt-auto">
+        <div className="container mx-auto px-4 lg:px-8 py-16">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <Sun className="w-4 h-4" />
               </div>
-              <span className="font-display font-bold">On The Avenue</span>
+              <div className="flex flex-col">
+                <span className="font-display font-semibold text-lg">On The Avenue</span>
+                <span className="text-muted-foreground text-sm">Winter Park Local Guide</span>
+              </div>
             </div>
             
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-medium text-muted-foreground">
               <Link href="/businesses" className="hover:text-primary transition-colors">Directory</Link>
-              <Link href="/submit" className="hover:text-primary transition-colors">Submit</Link>
-              <Link href="/owner" className="hover:text-primary transition-colors">Owners</Link>
-              <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
+              <Link href="/submit" className="hover:text-primary transition-colors">Submit a Business</Link>
+              <Link href="/owner" className="hover:text-primary transition-colors">Owner Portal</Link>
+              <Link href="/admin" className="hover:text-primary transition-colors">Admin Access</Link>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground/50">
-            <p>DATA // YELP_DNA_INTEGRATION // PARK_AVE_GRID</p>
-            <p className="flex items-center gap-1">SYS.STATUS: <span className="text-primary">ONLINE</span></p>
+          <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+            <p>Presented by Mint on the Avenue.</p>
+            <p>Park Avenue, Winter Park, FL.</p>
           </div>
         </div>
       </footer>

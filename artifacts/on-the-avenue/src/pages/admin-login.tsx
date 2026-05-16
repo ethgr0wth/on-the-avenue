@@ -31,8 +31,8 @@ export function AdminLogin() {
         },
         onError: () => {
           toast({
-            title: "ACCESS DENIED",
-            description: "INVALID SECURITY CLEARANCE.",
+            title: "Access Denied",
+            description: "Incorrect password. Please try again.",
             variant: "destructive",
           });
         }
@@ -41,22 +41,19 @@ export function AdminLogin() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-20 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.05)_0%,transparent_70%)] pointer-events-none" />
-      <div className="w-full max-w-sm relative z-10">
-        <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-primary/10 border border-primary/30 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_-5px_rgba(0,240,255,0.2)]">
-            <Lock className="w-8 h-8 text-primary" />
+    <div className="min-h-[85vh] flex items-center justify-center py-20 px-4 bg-muted/10">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary shadow-sm">
+            <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl font-display font-bold tracking-tighter mb-2">SYS<span className="text-primary neon-text">ADMIN</span></h1>
-          <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-1">
-            <ShieldAlert className="w-3 h-3 text-destructive" /> RESTRICTED SECTOR
+          <h1 className="text-4xl font-display font-bold tracking-tight mb-2 text-foreground">Admin Access</h1>
+          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-1.5">
+            <ShieldAlert className="w-4 h-4" /> Restricted Area
           </p>
         </div>
 
-        <div className="glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-          
+        <div className="bg-card p-8 rounded-[2rem] border border-border shadow-sm">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -64,9 +61,9 @@ export function AdminLogin() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Clearance Code</FormLabel>
+                    <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Admin Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} className="bg-black/60 border-white/10 focus-visible:border-primary focus-visible:ring-primary rounded-xl h-12 text-center tracking-[0.5em] font-mono text-lg text-primary placeholder:text-muted-foreground/30" data-testid="input-admin-password" />
+                      <Input type="password" placeholder="••••••••" {...field} className="bg-background border-border focus-visible:border-primary focus-visible:ring-primary/20 rounded-xl h-14 text-center tracking-[0.3em] font-medium text-lg text-foreground placeholder:text-muted-foreground/30 shadow-sm" data-testid="input-admin-password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -75,10 +72,10 @@ export function AdminLogin() {
               <button 
                 type="submit" 
                 disabled={login.isPending}
-                className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-primary/90 transition-all neon-glow disabled:opacity-50 mt-4"
+                className="w-full bg-primary text-primary-foreground py-4 rounded-full font-bold uppercase tracking-wider hover:bg-primary/90 transition-all shadow-sm hover:shadow disabled:opacity-50 mt-4"
                 data-testid="button-admin-login"
               >
-                {login.isPending ? "VERIFYING..." : "AUTHENTICATE"}
+                {login.isPending ? "Authenticating..." : "Sign In"}
               </button>
             </form>
           </Form>
