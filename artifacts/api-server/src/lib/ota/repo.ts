@@ -21,6 +21,9 @@ export interface Business {
   hours: string | null;
   imageUrl: string | null;
   offer: string | null;
+  rating: number | null;
+  reviewCount: number | null;
+  priceTier: string | null;
   ownerEmail: string | null;
   isFeatured: boolean;
   isFoundingSponsor: boolean;
@@ -85,6 +88,9 @@ function serializeBusiness(b: Business): Record<string, string> {
     hours: b.hours ?? "",
     imageUrl: b.imageUrl ?? "",
     offer: b.offer ?? "",
+    rating: b.rating != null ? String(b.rating) : "",
+    reviewCount: b.reviewCount != null ? String(b.reviewCount) : "",
+    priceTier: b.priceTier ?? "",
     ownerEmail: b.ownerEmail ?? "",
     isFeatured: b.isFeatured ? "1" : "0",
     isFoundingSponsor: b.isFoundingSponsor ? "1" : "0",
@@ -111,6 +117,9 @@ function deserializeBusiness(h: Record<string, string>): Business | null {
     hours: h.hours || null,
     imageUrl: h.imageUrl || null,
     offer: h.offer || null,
+    rating: h.rating ? Number(h.rating) : null,
+    reviewCount: h.reviewCount ? Number(h.reviewCount) : null,
+    priceTier: h.priceTier || null,
     ownerEmail: h.ownerEmail || null,
     isFeatured: h.isFeatured === "1",
     isFoundingSponsor: h.isFoundingSponsor === "1",
@@ -217,6 +226,9 @@ export async function createBusiness(input: {
     hours: input.hours?.trim() || null,
     imageUrl: input.imageUrl?.trim() || null,
     offer: input.offer?.trim() || null,
+    rating: null,
+    reviewCount: null,
+    priceTier: null,
     ownerEmail: input.ownerEmail.toLowerCase().trim(),
     isFeatured: false,
     isFoundingSponsor: false,
@@ -249,6 +261,9 @@ export async function seedBusiness(input: {
   website?: string | null;
   hours?: string | null;
   imageUrl?: string | null;
+  rating?: number | null;
+  reviewCount?: number | null;
+  priceTier?: string | null;
 }): Promise<Business> {
   const s = getStorage();
   const id = nid();
@@ -266,6 +281,9 @@ export async function seedBusiness(input: {
     hours: input.hours?.trim() || null,
     imageUrl: input.imageUrl?.trim() || null,
     offer: null,
+    rating: input.rating ?? null,
+    reviewCount: input.reviewCount ?? null,
+    priceTier: input.priceTier?.trim() || null,
     ownerEmail: null,
     isFeatured: false,
     isFoundingSponsor: false,
@@ -501,10 +519,25 @@ export type PublicBusiness = Omit<
   Business,
   "ownerEmail" | "pendingChanges" | "rejectionReason"
 >;
+/**
+ * NETROWS/Google CDN image URLs come back with a tiny default sizing suffix
+ * (e.g. `=w122-h92-k-no`). Upgrade to a larger variant for the public UI.
+ */
+function upgradeImageUrl(url: string | null): string | null {
+  if (!url) return url;
+  let host: string;
+  try {
+    host = new URL(url).hostname;
+  } catch {
+    return url;
+  }
+  if (!/(^|\.)googleusercontent\.com$/.test(host)) return url;
+  return url.replace(/=w\d+-h\d+(-[a-z-]+)?$/, "=w1600-h1200-k-no");
+}
 export function toPublicBusiness(b: Business): PublicBusiness {
   const { ownerEmail: _o, pendingChanges: _p, rejectionReason: _r, ...rest } = b;
   void _o; void _p; void _r;
-  return rest;
+  return { ...rest, imageUrl: upgradeImageUrl(rest.imageUrl) };
 }
 
 /**

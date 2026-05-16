@@ -553,6 +553,9 @@ components:
         hours: { type: ["string", "null"] }
         imageUrl: { type: ["string", "null"] }
         offer: { type: ["string", "null"] }
+        rating: { type: ["number", "null"] }
+        reviewCount: { type: ["integer", "null"] }
+        priceTier: { type: ["string", "null"] }
         ownerEmail: { type: ["string", "null"] }
         isFeatured: { type: boolean }
         isFoundingSponsor: { type: boolean }

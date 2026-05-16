@@ -1,157 +1,142 @@
+/**
+ * NETROWS Google Maps adapter.
+ * NETROWS wraps Google Maps + Yelp + ~55 other sources behind one bearer-token API.
+ * We only need text search → CDN photo URL + ratings/reviews/price for the Yelp aesthetic.
+ */
 import { logger } from "../logger";
 
-const TEXT_SEARCH_URL = "https://places.googleapis.com/v1/places:searchText";
+const NETROWS_SEARCH_URL = "https://api.netrows.com/v1/google-maps/search";
 
 export interface PlaceResult {
   placeId: string;
   name: string;
   category: string;
+  description: string | null;
   address: string | null;
   phone: string | null;
   website: string | null;
   hours: string | null;
   imageUrl: string | null;
   rating: number | null;
+  reviewCount: number | null;
+  priceTier: string | null;
 }
 
-const TYPE_TO_CATEGORY: Record<string, string> = {
-  restaurant: "Restaurants",
-  meal_takeaway: "Restaurants",
-  meal_delivery: "Restaurants",
-  cafe: "Cafés",
-  coffee_shop: "Cafés",
-  bakery: "Bakeries",
-  ice_cream_shop: "Bakeries",
-  bar: "Bars & Nightlife",
-  night_club: "Bars & Nightlife",
-  pub: "Bars & Nightlife",
-  wine_bar: "Bars & Nightlife",
-  beauty_salon: "Beauty & Spa",
-  hair_care: "Beauty & Spa",
-  hair_salon: "Beauty & Spa",
-  spa: "Beauty & Spa",
-  nail_salon: "Beauty & Spa",
-  barber_shop: "Beauty & Spa",
-  clothing_store: "Shops",
-  jewelry_store: "Shops",
-  book_store: "Shops",
-  gift_shop: "Shops",
-  shoe_store: "Shops",
-  furniture_store: "Shops",
-  home_goods_store: "Shops",
-  store: "Shops",
-  art_gallery: "Galleries",
-  museum: "Culture",
-  performing_arts_theater: "Culture",
-  gym: "Fitness",
-  yoga_studio: "Fitness",
-  fitness_center: "Fitness",
-  florist: "Shops",
-  pet_store: "Shops",
-  veterinary_care: "Services",
-  dentist: "Services",
-  real_estate_agency: "Services",
-};
+/**
+ * NETROWS returns human-readable Google Maps category strings like
+ * "Pizza restaurant", "Beauty salon", "Hair salon". Map them to our
+ * coarse OTA categories by substring match — first hit wins.
+ */
+const CATEGORY_RULES: Array<[RegExp, string]> = [
+  [/coffee|caf[eé]|espresso/i, "Cafés"],
+  [/bakery|patisserie|donut|doughnut|ice cream|gelato|dessert/i, "Bakeries"],
+  [/bar|pub|lounge|nightclub|brewery|wine|cocktail|tap room/i, "Bars & Nightlife"],
+  [/salon|spa|barber|nail|beauty|hair|wax|lash|brow|skincare/i, "Beauty & Spa"],
+  [/gallery/i, "Galleries"],
+  [/museum|theat(re|er)|cinema|performing arts|cultural/i, "Culture"],
+  [/gym|yoga|pilates|fitness|crossfit|cycling studio|barre/i, "Fitness"],
+  [/restaurant|pizzeria|diner|grill|steakhouse|taqueria|sushi|ramen|noodle|bistro|eatery|food/i, "Restaurants"],
+  [/store|shop|boutique|jewel|clothing|apparel|book|gift|florist|home goods|furniture|market/i, "Shops"],
+  [/dentist|doctor|clinic|veterin|real estate|insurance|agency|attorney|lawyer|cleaner|repair/i, "Services"],
+];
 
-function mapCategory(primary: string | undefined, types: string[] | undefined): string {
-  if (primary && TYPE_TO_CATEGORY[primary]) return TYPE_TO_CATEGORY[primary];
-  for (const t of types ?? []) {
-    if (TYPE_TO_CATEGORY[t]) return TYPE_TO_CATEGORY[t];
+function mapCategory(categories: string[] | undefined): string {
+  for (const cat of categories ?? []) {
+    for (const [re, label] of CATEGORY_RULES) {
+      if (re.test(cat)) return label;
+    }
   }
   return "Local Business";
 }
 
-interface GPlace {
-  id: string;
-  displayName?: { text: string };
-  formattedAddress?: string;
-  nationalPhoneNumber?: string;
-  websiteUri?: string;
-  primaryType?: string;
-  types?: string[];
-  photos?: { name: string }[];
-  rating?: number;
-  regularOpeningHours?: { weekdayDescriptions?: string[] };
-  businessStatus?: string;
+interface NetrowsPlace {
+  name: string;
+  feature_id?: string;
+  place_id?: string;
+  rating?: number | null;
+  review_count?: number | null;
+  categories?: string[];
+  address?: string | null;
+  website?: string | null;
+  latitude?: number;
+  longitude?: number;
+  image?: string | null;
+  phone?: string | null;
+  open_state?: string | null;
+  description?: string | null;
+  price?: string | null;
 }
 
+interface NetrowsSearchResponse {
+  query?: string;
+  results?: NetrowsPlace[];
+  total_results?: number;
+  message?: string;
+  code?: string;
+}
+
+const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
 /**
- * Resolve a Google photo reference to a stable CDN URL.
- * Using skipHttpRedirect=true returns JSON with a googleusercontent.com URL
- * so we never have to expose the API key in client-facing image tags.
+ * NETROWS occasionally returns `SERVICE_UNAVAILABLE` when its upstream is rate-limited.
+ * Retry a few times with backoff before giving up.
  */
-async function resolvePhoto(photoName: string, apiKey: string): Promise<string | null> {
-  try {
-    const url =
-      `https://places.googleapis.com/v1/${photoName}/media` +
-      `?maxWidthPx=1200&maxHeightPx=800&skipHttpRedirect=true&key=${encodeURIComponent(apiKey)}`;
-    const resp = await fetch(url);
-    if (!resp.ok) return null;
-    const data = (await resp.json()) as { photoUri?: string };
-    return data.photoUri ?? null;
-  } catch (err) {
-    logger.warn({ err }, "places: photo resolve failed");
-    return null;
+async function fetchWithRetry(url: string, apiKey: string, maxAttempts = 4): Promise<NetrowsSearchResponse> {
+  let lastErr = "";
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const text = await resp.text();
+    let data: NetrowsSearchResponse;
+    try {
+      data = JSON.parse(text) as NetrowsSearchResponse;
+    } catch {
+      lastErr = `non-JSON ${resp.status}: ${text.slice(0, 200)}`;
+      logger.warn({ attempt, status: resp.status }, "netrows: non-JSON response");
+      await sleep(1500 * attempt);
+      continue;
+    }
+    if (resp.ok && Array.isArray(data.results)) return data;
+    if (data.code === "SERVICE_UNAVAILABLE") {
+      lastErr = data.message ?? "service unavailable";
+      logger.warn({ attempt, code: data.code }, "netrows: service unavailable, retrying");
+      await sleep(2000 * attempt);
+      continue;
+    }
+    throw new Error(`NETROWS ${resp.status} ${data.code ?? ""}: ${data.message ?? text.slice(0, 200)}`);
   }
+  throw new Error(`NETROWS unavailable after ${maxAttempts} attempts: ${lastErr}`);
 }
 
 /**
- * Text-search Places API (New). Returns up to `maxResults` results,
- * with photos pre-resolved to CDN URLs.
+ * Text-search the NETROWS Google Maps endpoint.
+ * Returns up to `maxResults` results with CDN photo URLs ready to use.
  */
 export async function searchPlaces(query: string, maxResults = 20): Promise<PlaceResult[]> {
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) throw new Error("GOOGLE_PLACES_API_KEY is not set");
+  const apiKey = process.env.NETROWS_API_KEY;
+  if (!apiKey) throw new Error("NETROWS_API_KEY is not set");
 
-  const fieldMask = [
-    "places.id",
-    "places.displayName",
-    "places.formattedAddress",
-    "places.nationalPhoneNumber",
-    "places.websiteUri",
-    "places.primaryType",
-    "places.types",
-    "places.photos",
-    "places.rating",
-    "places.businessStatus",
-    "places.regularOpeningHours.weekdayDescriptions",
-  ].join(",");
+  const url = `${NETROWS_SEARCH_URL}?query=${encodeURIComponent(query)}`;
+  const data = await fetchWithRetry(url, apiKey);
+  const places = (data.results ?? []).slice(0, maxResults);
 
-  const resp = await fetch(TEXT_SEARCH_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Goog-Api-Key": apiKey,
-      "X-Goog-FieldMask": fieldMask,
-    },
-    body: JSON.stringify({ textQuery: query, pageSize: Math.min(maxResults, 20) }),
-  });
-
-  if (!resp.ok) {
-    const body = await resp.text();
-    throw new Error(`Places API ${resp.status}: ${body.slice(0, 400)}`);
-  }
-
-  const data = (await resp.json()) as { places?: GPlace[] };
-  const places = (data.places ?? []).filter(
-    (p) => p.businessStatus !== "CLOSED_PERMANENTLY",
-  );
-
-  const results: PlaceResult[] = [];
-  for (const p of places) {
-    const photoName = p.photos?.[0]?.name;
-    const imageUrl = photoName ? await resolvePhoto(photoName, apiKey) : null;
-    results.push({
-      placeId: p.id,
-      name: p.displayName?.text ?? "Unnamed",
-      category: mapCategory(p.primaryType, p.types),
-      address: p.formattedAddress ?? null,
-      phone: p.nationalPhoneNumber ?? null,
-      website: p.websiteUri ?? null,
-      hours: p.regularOpeningHours?.weekdayDescriptions?.join("\n") ?? null,
-      imageUrl,
+  return places.map((p): PlaceResult => {
+    const placeId = p.place_id || p.feature_id || `${p.name}-${p.latitude}-${p.longitude}`;
+    return {
+      placeId,
+      name: p.name,
+      category: mapCategory(p.categories),
+      description: p.description ?? null,
+      address: p.address ?? null,
+      phone: p.phone ?? null,
+      website: p.website ?? null,
+      hours: p.open_state ?? null,
+      imageUrl: p.image ?? null,
       rating: typeof p.rating === "number" ? p.rating : null,
-    });
-  }
-  return results;
+      reviewCount: typeof p.review_count === "number" ? p.review_count : null,
+      priceTier: p.price ?? null,
+    };
+  });
 }

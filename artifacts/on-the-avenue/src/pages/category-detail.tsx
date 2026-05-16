@@ -1,6 +1,6 @@
 import { useOtaGetCategory, getOtaGetCategoryQueryKey } from "@workspace/api-client-react";
 import { useParams, Link } from "wouter";
-import { ChevronLeft, MapPin } from "lucide-react";
+import { ChevronLeft, MapPin, Star, Tag } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function CategoryDetail() {
@@ -17,10 +17,10 @@ export function CategoryDetail() {
   if (isLoading) {
     return (
       <div className="animate-pulse pb-24">
-        <div className="h-64 w-full bg-muted"></div>
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => <Skeleton key={i} className="h-80 w-full rounded-none" />)}
+        <div className="h-64 w-full bg-white/5"></div>
+        <div className="container mx-auto px-4 lg:px-8 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-80 w-full rounded-2xl bg-white/5" />)}
           </div>
         </div>
       </div>
@@ -30,10 +30,10 @@ export function CategoryDetail() {
   if (error || !categoryData) {
     return (
       <div className="container mx-auto px-4 py-32 text-center max-w-lg">
-        <h2 className="text-3xl font-serif mb-4">Category Not Found</h2>
-        <p className="text-muted-foreground mb-8">This collection doesn't exist or has been removed.</p>
-        <Link href="/categories" className="inline-flex items-center gap-2 text-sm uppercase tracking-wider border border-border px-6 py-3 hover:bg-muted transition-colors">
-          <ChevronLeft className="w-4 h-4" /> All Categories
+        <h2 className="text-3xl font-display font-bold mb-4 text-primary">SECTOR OFFLINE</h2>
+        <p className="text-muted-foreground mb-8 font-mono text-sm">Requested category data could not be retrieved from the grid.</p>
+        <Link href="/categories" className="inline-flex items-center gap-2 text-sm font-bold bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-colors">
+          <ChevronLeft className="w-4 h-4" /> VIEW ALL SECTORS
         </Link>
       </div>
     );
@@ -42,65 +42,87 @@ export function CategoryDetail() {
   return (
     <div className="pb-24">
       {/* Header */}
-      <section className="bg-muted/30 border-b border-border py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
-           {/* Abstract decorative element */}
+      <section className="glass-panel border-b border-white/10 py-16 md:py-24 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-[0.03] pointer-events-none">
            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full text-primary fill-current">
               <polygon points="100,0 0,100 100,100" />
            </svg>
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <Link href="/categories" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-8" data-testid="link-back-categories">
-            <ChevronLeft className="w-3 h-3" /> Categories
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <Link href="/categories" className="inline-flex items-center gap-2 text-[10px] font-mono text-muted-foreground hover:text-white transition-colors mb-8 bg-white/5 px-3 py-1.5 rounded border border-white/10" data-testid="link-back-categories">
+            <ChevronLeft className="w-3 h-3" /> PARENT SECTOR
           </Link>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6 tracking-tight">{categoryData.label}</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed border-l border-primary pl-6 py-1">
+          <div className="flex items-end gap-6 mb-6">
+            <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tighter leading-none">{categoryData.label}</h1>
+            <div className="hidden md:flex flex-col mb-2">
+               <span className="text-[10px] font-mono text-muted-foreground">ACTIVE NODES</span>
+               <span className="text-2xl font-bold text-primary">{categoryData.businesses.length}</span>
+            </div>
+          </div>
+          <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed">
             {categoryData.intro || `Discover the finest ${categoryData.label.toLowerCase()} on the avenue.`}
           </p>
         </div>
       </section>
 
       {/* Grid */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-12 border-b border-border/50 pb-4">
-            <span className="text-sm font-medium">{categoryData.businesses.length} Establishments</span>
-          </div>
-
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 lg:px-8">
           {categoryData.businesses.length === 0 ? (
-            <div className="text-center py-24 border border-dashed border-border/60">
-              <h3 className="text-2xl font-serif mb-2">Empty Collection</h3>
-              <p className="text-muted-foreground text-sm">There are no establishments in this category yet.</p>
+            <div className="text-center py-32 glass-panel rounded-3xl border border-white/10 max-w-3xl mx-auto">
+              <h3 className="text-2xl font-display font-bold mb-2">SECTOR EMPTY</h3>
+              <p className="text-muted-foreground font-mono text-sm">NO ACTIVE ESTABLISHMENTS FOUND IN THIS CATEGORY.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {categoryData.businesses.map(business => (
                 <Link 
                   key={business.id} 
                   href={`/businesses/${business.slug}`}
-                  className="group flex flex-col h-full"
+                  className="group flex flex-col bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 hover:shadow-[0_0_30px_-5px_rgba(0,240,255,0.15)] transition-all duration-300"
                   data-testid={`card-business-${business.id}`}
                 >
-                  <div className="aspect-[4/3] bg-muted mb-5 overflow-hidden relative border border-border/20">
+                  <div className="aspect-[4/3] bg-muted relative overflow-hidden">
                     <img 
-                      src={business.imageUrl || "/images/category-placeholder.jpg"} 
+                      src={business.imageUrl || `${import.meta.env.BASE_URL}images/category-placeholder.jpg`} 
                       alt={business.name}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
+                      referrerPolicy="no-referrer" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent opacity-80" />
+                    
+                    <div className="absolute top-3 left-3 flex flex-col gap-2">
+                      {business.rating != null && (
+                        <div className="bg-background/80 backdrop-blur-md text-foreground px-2 py-1 rounded-md text-xs font-bold flex items-center gap-1 border border-white/10 shadow-lg">
+                          <Star className="w-3 h-3 text-primary fill-primary" /> 
+                          {business.rating.toFixed(1)}
+                          <span className="text-muted-foreground font-mono ml-1">({business.reviewCount})</span>
+                        </div>
+                      )}
+                      {business.priceTier && (
+                        <div className="bg-background/80 backdrop-blur-md text-emerald-400 px-2 py-1 rounded-md text-xs font-bold border border-white/10 shadow-lg w-fit">
+                          {business.priceTier}
+                        </div>
+                      )}
+                    </div>
+
                     {business.isFeatured && (
-                      <div className="absolute top-3 right-3 bg-foreground text-background text-[10px] uppercase tracking-widest px-2 py-1 z-10">
-                        Featured
+                      <div className="absolute top-3 right-3 bg-white text-black text-[10px] font-bold px-2 py-1 rounded-md shadow-lg">
+                        FEATURED
+                      </div>
+                    )}
+                    
+                    {business.offer && (
+                      <div className="absolute bottom-3 left-3 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 shadow-[0_0_10px_rgba(0,240,255,0.5)]">
+                        <Tag className="w-3 h-3" /> OFFER
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 flex flex-col">
-                    <h3 className="text-xl font-serif mb-2 group-hover:text-primary transition-colors leading-tight">{business.name}</h3>
-                    {business.tagline && (
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">{business.tagline}</p>
-                    )}
+                  <div className="p-5 flex flex-col flex-1 bg-card">
+                    <h3 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors leading-tight">{business.name}</h3>
+                    {business.tagline && <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">{business.tagline}</p>}
                     {business.address && (
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground mt-auto pt-4 border-t border-border/30">
-                        <MapPin className="w-3 h-3 text-primary/70" />
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground mt-4 pt-4 border-t border-white/5">
+                        <MapPin className="w-3 h-3 text-primary" />
                         <span className="truncate">{business.address}</span>
                       </div>
                     )}

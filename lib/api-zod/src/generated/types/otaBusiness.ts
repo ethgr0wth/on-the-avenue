@@ -30,6 +30,12 @@ export interface OtaBusiness {
   /** @nullable */
   offer?: string | null;
   /** @nullable */
+  rating?: number | null;
+  /** @nullable */
+  reviewCount?: number | null;
+  /** @nullable */
+  priceTier?: string | null;
+  /** @nullable */
   ownerEmail?: string | null;
   isFeatured?: boolean;
   isFoundingSponsor?: boolean;

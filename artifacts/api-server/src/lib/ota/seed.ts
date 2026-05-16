@@ -1,8 +1,9 @@
 /**
- * One-shot Google Places → approved-listings seeder.
+ * One-shot NETROWS → approved-listings seeder.
  * - `runSeedIfNeeded()` is called on server boot. It no-ops once seed:done flag is set.
  * - `runSeed({ force })` is called by an admin route to re-run / extend.
- * Dedupe is by Google Place ID so reruns add new businesses without duplicating.
+ * Dedupe is by NETROWS place_id (Google Maps stable id) so reruns add new
+ * businesses without duplicating.
  */
 import { logger } from "../logger";
 import { getStorage } from "./storage";
@@ -30,7 +31,6 @@ async function doSeed(query: string): Promise<SeedResult> {
   };
   for (const p of places) {
     try {
-      // Dedup: skip if we've already imported this place id
       const existingId = await s.get(k.seedByPlace(p.placeId));
       if (existingId) {
         out.skipped++;
@@ -39,12 +39,15 @@ async function doSeed(query: string): Promise<SeedResult> {
       const biz = await seedBusiness({
         name: p.name,
         category: p.category,
+        description: p.description,
         address: p.address,
         phone: p.phone,
         website: p.website,
         hours: p.hours,
         imageUrl: p.imageUrl,
-        tagline: p.rating != null ? `★ ${p.rating.toFixed(1)} on Google` : null,
+        rating: p.rating,
+        reviewCount: p.reviewCount,
+        priceTier: p.priceTier,
       });
       await s.set(k.seedByPlace(p.placeId), biz.id);
       out.inserted++;
@@ -57,18 +60,33 @@ async function doSeed(query: string): Promise<SeedResult> {
 }
 
 export async function runSeed(opts: { force?: boolean; query?: string } = {}): Promise<SeedResult> {
-  const query = opts.query ?? process.env.OTA_SEED_QUERY ?? "";
-  if (!query) {
+  const raw = opts.query ?? process.env.OTA_SEED_QUERY ?? "";
+  const queries = raw.split(/\s*[,;|]\s*/).map((q) => q.trim()).filter(Boolean);
+  if (queries.length === 0) {
     return { query: "", fetched: 0, inserted: 0, skipped: 0, errors: ["OTA_SEED_QUERY not set"] };
   }
-  if (!process.env.GOOGLE_PLACES_API_KEY) {
-    return { query, fetched: 0, inserted: 0, skipped: 0, errors: ["GOOGLE_PLACES_API_KEY not set"] };
+  if (!process.env.NETROWS_API_KEY) {
+    return { query: raw, fetched: 0, inserted: 0, skipped: 0, errors: ["NETROWS_API_KEY not set"] };
   }
-  const result = await doSeed(query);
-  if (!opts.force) {
+  const combined: SeedResult = { query: queries.join(" | "), fetched: 0, inserted: 0, skipped: 0, errors: [] };
+  for (const q of queries) {
+    try {
+      const r = await doSeed(q);
+      combined.fetched += r.fetched;
+      combined.inserted += r.inserted;
+      combined.skipped += r.skipped;
+      combined.errors.push(...r.errors);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      combined.errors.push(`[${q}] ${msg}`);
+    }
+  }
+  // Only mark "done" if we actually inserted something, so a transient
+  // upstream outage doesn't permanently block the boot-time seeder.
+  if (!opts.force && combined.inserted > 0) {
     await getStorage().set(k.seedDone(), new Date().toISOString());
   }
-  return result;
+  return combined;
 }
 
 /** Called from the server entrypoint. Safe to call repeatedly. */
@@ -79,11 +97,11 @@ export async function runSeedIfNeeded(): Promise<void> {
     logger.info({ seededAt: done }, "ota seed: already done, skipping");
     return;
   }
-  if (!process.env.OTA_SEED_QUERY || !process.env.GOOGLE_PLACES_API_KEY) {
+  if (!process.env.OTA_SEED_QUERY || !process.env.NETROWS_API_KEY) {
     logger.info(
       {
         hasQuery: !!process.env.OTA_SEED_QUERY,
-        hasKey: !!process.env.GOOGLE_PLACES_API_KEY,
+        hasKey: !!process.env.NETROWS_API_KEY,
       },
       "ota seed: env not configured, skipping",
     );
