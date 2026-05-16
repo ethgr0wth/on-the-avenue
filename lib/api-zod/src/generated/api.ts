@@ -8,9 +8,697 @@
 import * as zod from "zod";
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
+});
+
+/**
+ * @summary Homepage payload (featured, spotlight, offers)
+ */
+export const OtaGetHomeResponse = zod.object({
+  featured: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+  spotlight: zod
+    .union([
+      zod.object({
+        id: zod.string(),
+        slug: zod.string(),
+        name: zod.string(),
+        category: zod.string(),
+        tagline: zod.string().nullish(),
+        description: zod.string().nullish(),
+        address: zod.string().nullish(),
+        phone: zod.string().nullish(),
+        website: zod.string().nullish(),
+        hours: zod.string().nullish(),
+        imageUrl: zod.string().nullish(),
+        offer: zod.string().nullish(),
+        ownerEmail: zod.string().nullish(),
+        isFeatured: zod.boolean().optional(),
+        isFoundingSponsor: zod.boolean().optional(),
+        status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+        rejectionReason: zod.string().nullish(),
+        pendingChanges: zod
+          .record(zod.string(), zod.unknown())
+          .nullish()
+          .describe("Major edits awaiting re-approval"),
+        createdAt: zod.string(),
+        updatedAt: zod.string().nullish(),
+      }),
+      zod.null(),
+    ])
+    .optional(),
+  categories: zod.array(
+    zod.object({
+      slug: zod.string(),
+      label: zod.string(),
+      count: zod.number(),
+    }),
+  ),
+  offers: zod.array(
+    zod.object({
+      id: zod.string(),
+      businessId: zod.string(),
+      businessName: zod.string().nullish(),
+      businessSlug: zod.string().nullish(),
+      title: zod.string(),
+      description: zod.string().nullish(),
+      expiresAt: zod.string().nullish(),
+      isActive: zod.boolean().optional(),
+      createdAt: zod.string(),
+    }),
+  ),
+  events: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      title: zod.string(),
+      location: zod.string().nullish(),
+      eventDate: zod.string(),
+      description: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      createdAt: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary List approved businesses
+ */
+export const OtaListBusinessesQueryParams = zod.object({
+  q: zod.coerce.string().optional(),
+  category: zod.coerce.string().optional(),
+});
+
+export const OtaListBusinessesResponseItem = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+export const OtaListBusinessesResponse = zod.array(
+  OtaListBusinessesResponseItem,
+);
+
+export const OtaGetBusinessParams = zod.object({
+  slug: zod.coerce.string(),
+});
+
+export const OtaGetBusinessResponse = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+
+export const OtaListCategoriesResponseItem = zod.object({
+  slug: zod.string(),
+  label: zod.string(),
+  count: zod.number(),
+});
+export const OtaListCategoriesResponse = zod.array(
+  OtaListCategoriesResponseItem,
+);
+
+export const OtaGetCategoryParams = zod.object({
+  slug: zod.coerce.string(),
+});
+
+export const OtaGetCategoryResponse = zod.object({
+  slug: zod.string(),
+  label: zod.string(),
+  intro: zod.string(),
+  businesses: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+});
+
+export const OtaListOffersResponseItem = zod.object({
+  id: zod.string(),
+  businessId: zod.string(),
+  businessName: zod.string().nullish(),
+  businessSlug: zod.string().nullish(),
+  title: zod.string(),
+  description: zod.string().nullish(),
+  expiresAt: zod.string().nullish(),
+  isActive: zod.boolean().optional(),
+  createdAt: zod.string(),
+});
+export const OtaListOffersResponse = zod.array(OtaListOffersResponseItem);
+
+export const OtaListEventsResponseItem = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  title: zod.string(),
+  location: zod.string().nullish(),
+  eventDate: zod.string(),
+  description: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  createdAt: zod.string(),
+});
+export const OtaListEventsResponse = zod.array(OtaListEventsResponseItem);
+
+/**
+ * @summary Submit a new business listing for review
+ */
+
+export const OtaOwnerSubmitBody = zod.object({
+  name: zod.string().min(1),
+  category: zod.string().min(1),
+  ownerEmail: zod.string().email(),
+  tagline: zod.string().optional(),
+  description: zod.string().optional(),
+  address: zod.string().optional(),
+  phone: zod.string().optional(),
+  website: zod.string().optional(),
+  hours: zod.string().optional(),
+  imageUrl: zod.string().optional(),
+  offer: zod.string().optional(),
+});
+
+/**
+ * @summary Send a magic edit-link to an owner's email
+ */
+export const OtaOwnerRequestLinkBody = zod.object({
+  email: zod.string().email(),
+});
+
+export const OtaOwnerRequestLinkResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Exchange a magic-link token for an owner session
+ */
+export const OtaOwnerVerifyBody = zod.object({
+  token: zod.string(),
+});
+
+export const OtaOwnerVerifyResponse = zod.object({
+  email: zod.string(),
+  listings: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+});
+
+/**
+ * @summary Get the signed-in owner's listings
+ */
+export const OtaOwnerGetMeResponse = zod.object({
+  email: zod.string(),
+  listings: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+});
+
+export const OtaOwnerLogoutResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Owner edits their listing (tiered re-approval)
+ */
+export const OtaOwnerUpdateListingParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaOwnerUpdateListingBody = zod
+  .object({
+    name: zod.string().optional(),
+    category: zod.string().optional(),
+    tagline: zod.string().optional(),
+    description: zod.string().optional(),
+    address: zod.string().optional(),
+    phone: zod.string().optional(),
+    website: zod.string().optional(),
+    hours: zod.string().optional(),
+    imageUrl: zod.string().optional(),
+    offer: zod.string().optional(),
+  })
+  .describe(
+    "Tiered re-approval — name\/category changes go to pendingChanges;\nother fields go live immediately.\n",
+  );
+
+export const OtaOwnerUpdateListingResponse = zod.object({
+  listing: zod.object({
+    id: zod.string(),
+    slug: zod.string(),
+    name: zod.string(),
+    category: zod.string(),
+    tagline: zod.string().nullish(),
+    description: zod.string().nullish(),
+    address: zod.string().nullish(),
+    phone: zod.string().nullish(),
+    website: zod.string().nullish(),
+    hours: zod.string().nullish(),
+    imageUrl: zod.string().nullish(),
+    offer: zod.string().nullish(),
+    ownerEmail: zod.string().nullish(),
+    isFeatured: zod.boolean().optional(),
+    isFoundingSponsor: zod.boolean().optional(),
+    status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+    rejectionReason: zod.string().nullish(),
+    pendingChanges: zod
+      .record(zod.string(), zod.unknown())
+      .nullish()
+      .describe("Major edits awaiting re-approval"),
+    createdAt: zod.string(),
+    updatedAt: zod.string().nullish(),
+  }),
+  pendingMajor: zod
+    .boolean()
+    .describe(
+      "True when major changes (name\/category) are awaiting re-approval",
+    ),
+});
+
+export const OtaAdminLoginBody = zod.object({
+  password: zod.string(),
+});
+
+export const OtaAdminLoginResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+export const OtaAdminLogoutResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Check admin session
+ */
+export const OtaAdminGetMeResponse = zod.object({
+  authenticated: zod.boolean(),
+});
+
+/**
+ * @summary Moderation queue (pending submissions + pending edits)
+ */
+export const OtaAdminGetQueueResponse = zod.object({
+  pendingSubmissions: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+  pendingEdits: zod.array(
+    zod.object({
+      id: zod.string(),
+      slug: zod.string(),
+      name: zod.string(),
+      category: zod.string(),
+      tagline: zod.string().nullish(),
+      description: zod.string().nullish(),
+      address: zod.string().nullish(),
+      phone: zod.string().nullish(),
+      website: zod.string().nullish(),
+      hours: zod.string().nullish(),
+      imageUrl: zod.string().nullish(),
+      offer: zod.string().nullish(),
+      ownerEmail: zod.string().nullish(),
+      isFeatured: zod.boolean().optional(),
+      isFoundingSponsor: zod.boolean().optional(),
+      status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+      rejectionReason: zod.string().nullish(),
+      pendingChanges: zod
+        .record(zod.string(), zod.unknown())
+        .nullish()
+        .describe("Major edits awaiting re-approval"),
+      createdAt: zod.string(),
+      updatedAt: zod.string().nullish(),
+    }),
+  ),
+});
+
+export const OtaAdminListAllListingsQueryParams = zod.object({
+  status: zod
+    .enum(["pending", "approved", "rejected", "unpublished", "all"])
+    .optional(),
+});
+
+export const OtaAdminListAllListingsResponseItem = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+export const OtaAdminListAllListingsResponse = zod.array(
+  OtaAdminListAllListingsResponseItem,
+);
+
+export const OtaAdminApproveListingParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminApproveListingResponse = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+
+export const OtaAdminRejectListingParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminRejectListingBody = zod.object({
+  reason: zod.string().min(1),
+});
+
+export const OtaAdminRejectListingResponse = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+
+export const OtaAdminUpdateListingParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminUpdateListingBody = zod.object({
+  name: zod.string().optional(),
+  category: zod.string().optional(),
+  tagline: zod.string().optional(),
+  description: zod.string().optional(),
+  address: zod.string().optional(),
+  phone: zod.string().optional(),
+  website: zod.string().optional(),
+  hours: zod.string().optional(),
+  imageUrl: zod.string().optional(),
+  offer: zod.string().optional(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod
+    .enum(["pending", "approved", "rejected", "unpublished"])
+    .optional(),
+});
+
+export const OtaAdminUpdateListingResponse = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  name: zod.string(),
+  category: zod.string(),
+  tagline: zod.string().nullish(),
+  description: zod.string().nullish(),
+  address: zod.string().nullish(),
+  phone: zod.string().nullish(),
+  website: zod.string().nullish(),
+  hours: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  offer: zod.string().nullish(),
+  ownerEmail: zod.string().nullish(),
+  isFeatured: zod.boolean().optional(),
+  isFoundingSponsor: zod.boolean().optional(),
+  status: zod.enum(["pending", "approved", "rejected", "unpublished"]),
+  rejectionReason: zod.string().nullish(),
+  pendingChanges: zod
+    .record(zod.string(), zod.unknown())
+    .nullish()
+    .describe("Major edits awaiting re-approval"),
+  createdAt: zod.string(),
+  updatedAt: zod.string().nullish(),
+});
+
+export const OtaAdminDeleteListingParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminDeleteListingResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+export const OtaAdminListOffersResponseItem = zod.object({
+  id: zod.string(),
+  businessId: zod.string(),
+  businessName: zod.string().nullish(),
+  businessSlug: zod.string().nullish(),
+  title: zod.string(),
+  description: zod.string().nullish(),
+  expiresAt: zod.string().nullish(),
+  isActive: zod.boolean().optional(),
+  createdAt: zod.string(),
+});
+export const OtaAdminListOffersResponse = zod.array(
+  OtaAdminListOffersResponseItem,
+);
+
+export const OtaAdminCreateOfferBody = zod.object({
+  businessId: zod.string(),
+  title: zod.string().min(1),
+  description: zod.string().optional(),
+  expiresAt: zod.string().optional(),
+});
+
+export const OtaAdminDeleteOfferParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminDeleteOfferResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+export const OtaAdminListEventsResponseItem = zod.object({
+  id: zod.string(),
+  slug: zod.string(),
+  title: zod.string(),
+  location: zod.string().nullish(),
+  eventDate: zod.string(),
+  description: zod.string().nullish(),
+  imageUrl: zod.string().nullish(),
+  createdAt: zod.string(),
+});
+export const OtaAdminListEventsResponse = zod.array(
+  OtaAdminListEventsResponseItem,
+);
+
+export const OtaAdminCreateEventBody = zod.object({
+  title: zod.string().min(1),
+  location: zod.string().optional(),
+  eventDate: zod.string(),
+  description: zod.string().optional(),
+  imageUrl: zod.string().optional(),
+});
+
+export const OtaAdminDeleteEventParams = zod.object({
+  id: zod.coerce.string(),
+});
+
+export const OtaAdminDeleteEventResponse = zod.object({
+  ok: zod.boolean(),
 });

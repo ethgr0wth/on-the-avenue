@@ -5,18 +5,47 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  HealthStatus,
+  OtaAdminListAllListingsParams,
+  OtaAdminListingUpdate,
+  OtaAdminLoginInput,
+  OtaAdminSession,
+  OtaBusiness,
+  OtaCategory,
+  OtaCategoryDetail,
+  OtaError,
+  OtaEvent,
+  OtaEventInput,
+  OtaHomePayload,
+  OtaListBusinessesParams,
+  OtaListingInput,
+  OtaListingUpdate,
+  OtaMagicLinkRequest,
+  OtaModerationQueue,
+  OtaOffer,
+  OtaOfferInput,
+  OtaOkResponse,
+  OtaOwnerEditResult,
+  OtaOwnerSession,
+  OtaRejectInput,
+  OtaSubmissionResult,
+  OtaTokenInput,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -25,7 +54,6 @@ type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const getHealthCheckUrl = () => {
@@ -99,3 +127,2202 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary Homepage payload (featured, spotlight, offers)
+ */
+export const getOtaGetHomeUrl = () => {
+  return `/api/ota/home`;
+};
+
+export const otaGetHome = async (
+  options?: RequestInit,
+): Promise<OtaHomePayload> => {
+  return customFetch<OtaHomePayload>(getOtaGetHomeUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaGetHomeQueryKey = () => {
+  return [`/api/ota/home`] as const;
+};
+
+export const getOtaGetHomeQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaGetHome>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaGetHome>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaGetHomeQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaGetHome>>> = ({
+    signal,
+  }) => otaGetHome({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaGetHome>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaGetHomeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaGetHome>>
+>;
+export type OtaGetHomeQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Homepage payload (featured, spotlight, offers)
+ */
+
+export function useOtaGetHome<
+  TData = Awaited<ReturnType<typeof otaGetHome>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaGetHome>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaGetHomeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary List approved businesses
+ */
+export const getOtaListBusinessesUrl = (params?: OtaListBusinessesParams) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/ota/businesses?${stringifiedParams}`
+    : `/api/ota/businesses`;
+};
+
+export const otaListBusinesses = async (
+  params?: OtaListBusinessesParams,
+  options?: RequestInit,
+): Promise<OtaBusiness[]> => {
+  return customFetch<OtaBusiness[]>(getOtaListBusinessesUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaListBusinessesQueryKey = (
+  params?: OtaListBusinessesParams,
+) => {
+  return [`/api/ota/businesses`, ...(params ? [params] : [])] as const;
+};
+
+export const getOtaListBusinessesQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaListBusinesses>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: OtaListBusinessesParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaListBusinesses>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getOtaListBusinessesQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaListBusinesses>>
+  > = ({ signal }) => otaListBusinesses(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaListBusinesses>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaListBusinessesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaListBusinesses>>
+>;
+export type OtaListBusinessesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List approved businesses
+ */
+
+export function useOtaListBusinesses<
+  TData = Awaited<ReturnType<typeof otaListBusinesses>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: OtaListBusinessesParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaListBusinesses>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaListBusinessesQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaGetBusinessUrl = (slug: string) => {
+  return `/api/ota/businesses/${slug}`;
+};
+
+export const otaGetBusiness = async (
+  slug: string,
+  options?: RequestInit,
+): Promise<OtaBusiness> => {
+  return customFetch<OtaBusiness>(getOtaGetBusinessUrl(slug), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaGetBusinessQueryKey = (slug: string) => {
+  return [`/api/ota/businesses/${slug}`] as const;
+};
+
+export const getOtaGetBusinessQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaGetBusiness>>,
+  TError = ErrorType<OtaError>,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaGetBusiness>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaGetBusinessQueryKey(slug);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaGetBusiness>>> = ({
+    signal,
+  }) => otaGetBusiness(slug, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!slug,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaGetBusiness>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaGetBusinessQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaGetBusiness>>
+>;
+export type OtaGetBusinessQueryError = ErrorType<OtaError>;
+
+export function useOtaGetBusiness<
+  TData = Awaited<ReturnType<typeof otaGetBusiness>>,
+  TError = ErrorType<OtaError>,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaGetBusiness>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaGetBusinessQueryOptions(slug, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaListCategoriesUrl = () => {
+  return `/api/ota/categories`;
+};
+
+export const otaListCategories = async (
+  options?: RequestInit,
+): Promise<OtaCategory[]> => {
+  return customFetch<OtaCategory[]>(getOtaListCategoriesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaListCategoriesQueryKey = () => {
+  return [`/api/ota/categories`] as const;
+};
+
+export const getOtaListCategoriesQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaListCategories>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListCategories>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaListCategoriesQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaListCategories>>
+  > = ({ signal }) => otaListCategories({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaListCategories>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaListCategoriesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaListCategories>>
+>;
+export type OtaListCategoriesQueryError = ErrorType<unknown>;
+
+export function useOtaListCategories<
+  TData = Awaited<ReturnType<typeof otaListCategories>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListCategories>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaListCategoriesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaGetCategoryUrl = (slug: string) => {
+  return `/api/ota/categories/${slug}`;
+};
+
+export const otaGetCategory = async (
+  slug: string,
+  options?: RequestInit,
+): Promise<OtaCategoryDetail> => {
+  return customFetch<OtaCategoryDetail>(getOtaGetCategoryUrl(slug), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaGetCategoryQueryKey = (slug: string) => {
+  return [`/api/ota/categories/${slug}`] as const;
+};
+
+export const getOtaGetCategoryQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaGetCategory>>,
+  TError = ErrorType<unknown>,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaGetCategory>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaGetCategoryQueryKey(slug);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaGetCategory>>> = ({
+    signal,
+  }) => otaGetCategory(slug, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!slug,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaGetCategory>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaGetCategoryQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaGetCategory>>
+>;
+export type OtaGetCategoryQueryError = ErrorType<unknown>;
+
+export function useOtaGetCategory<
+  TData = Awaited<ReturnType<typeof otaGetCategory>>,
+  TError = ErrorType<unknown>,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaGetCategory>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaGetCategoryQueryOptions(slug, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaListOffersUrl = () => {
+  return `/api/ota/offers`;
+};
+
+export const otaListOffers = async (
+  options?: RequestInit,
+): Promise<OtaOffer[]> => {
+  return customFetch<OtaOffer[]>(getOtaListOffersUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaListOffersQueryKey = () => {
+  return [`/api/ota/offers`] as const;
+};
+
+export const getOtaListOffersQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaListOffers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListOffers>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaListOffersQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaListOffers>>> = ({
+    signal,
+  }) => otaListOffers({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaListOffers>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaListOffersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaListOffers>>
+>;
+export type OtaListOffersQueryError = ErrorType<unknown>;
+
+export function useOtaListOffers<
+  TData = Awaited<ReturnType<typeof otaListOffers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListOffers>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaListOffersQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaListEventsUrl = () => {
+  return `/api/ota/events`;
+};
+
+export const otaListEvents = async (
+  options?: RequestInit,
+): Promise<OtaEvent[]> => {
+  return customFetch<OtaEvent[]>(getOtaListEventsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaListEventsQueryKey = () => {
+  return [`/api/ota/events`] as const;
+};
+
+export const getOtaListEventsQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaListEvents>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListEvents>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaListEventsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaListEvents>>> = ({
+    signal,
+  }) => otaListEvents({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaListEvents>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaListEventsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaListEvents>>
+>;
+export type OtaListEventsQueryError = ErrorType<unknown>;
+
+export function useOtaListEvents<
+  TData = Awaited<ReturnType<typeof otaListEvents>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaListEvents>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaListEventsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit a new business listing for review
+ */
+export const getOtaOwnerSubmitUrl = () => {
+  return `/api/ota/owner/submit`;
+};
+
+export const otaOwnerSubmit = async (
+  otaListingInput: OtaListingInput,
+  options?: RequestInit,
+): Promise<OtaSubmissionResult> => {
+  return customFetch<OtaSubmissionResult>(getOtaOwnerSubmitUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaListingInput),
+  });
+};
+
+export const getOtaOwnerSubmitMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerSubmit>>,
+    TError,
+    { data: BodyType<OtaListingInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaOwnerSubmit>>,
+  TError,
+  { data: BodyType<OtaListingInput> },
+  TContext
+> => {
+  const mutationKey = ["otaOwnerSubmit"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaOwnerSubmit>>,
+    { data: BodyType<OtaListingInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaOwnerSubmit(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaOwnerSubmitMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerSubmit>>
+>;
+export type OtaOwnerSubmitMutationBody = BodyType<OtaListingInput>;
+export type OtaOwnerSubmitMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Submit a new business listing for review
+ */
+export const useOtaOwnerSubmit = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerSubmit>>,
+    TError,
+    { data: BodyType<OtaListingInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaOwnerSubmit>>,
+  TError,
+  { data: BodyType<OtaListingInput> },
+  TContext
+> => {
+  return useMutation(getOtaOwnerSubmitMutationOptions(options));
+};
+
+/**
+ * @summary Send a magic edit-link to an owner's email
+ */
+export const getOtaOwnerRequestLinkUrl = () => {
+  return `/api/ota/owner/request-link`;
+};
+
+export const otaOwnerRequestLink = async (
+  otaMagicLinkRequest: OtaMagicLinkRequest,
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaOwnerRequestLinkUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaMagicLinkRequest),
+  });
+};
+
+export const getOtaOwnerRequestLinkMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerRequestLink>>,
+    TError,
+    { data: BodyType<OtaMagicLinkRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaOwnerRequestLink>>,
+  TError,
+  { data: BodyType<OtaMagicLinkRequest> },
+  TContext
+> => {
+  const mutationKey = ["otaOwnerRequestLink"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaOwnerRequestLink>>,
+    { data: BodyType<OtaMagicLinkRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaOwnerRequestLink(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaOwnerRequestLinkMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerRequestLink>>
+>;
+export type OtaOwnerRequestLinkMutationBody = BodyType<OtaMagicLinkRequest>;
+export type OtaOwnerRequestLinkMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Send a magic edit-link to an owner's email
+ */
+export const useOtaOwnerRequestLink = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerRequestLink>>,
+    TError,
+    { data: BodyType<OtaMagicLinkRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaOwnerRequestLink>>,
+  TError,
+  { data: BodyType<OtaMagicLinkRequest> },
+  TContext
+> => {
+  return useMutation(getOtaOwnerRequestLinkMutationOptions(options));
+};
+
+/**
+ * @summary Exchange a magic-link token for an owner session
+ */
+export const getOtaOwnerVerifyUrl = () => {
+  return `/api/ota/owner/verify`;
+};
+
+export const otaOwnerVerify = async (
+  otaTokenInput: OtaTokenInput,
+  options?: RequestInit,
+): Promise<OtaOwnerSession> => {
+  return customFetch<OtaOwnerSession>(getOtaOwnerVerifyUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaTokenInput),
+  });
+};
+
+export const getOtaOwnerVerifyMutationOptions = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerVerify>>,
+    TError,
+    { data: BodyType<OtaTokenInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaOwnerVerify>>,
+  TError,
+  { data: BodyType<OtaTokenInput> },
+  TContext
+> => {
+  const mutationKey = ["otaOwnerVerify"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaOwnerVerify>>,
+    { data: BodyType<OtaTokenInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaOwnerVerify(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaOwnerVerifyMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerVerify>>
+>;
+export type OtaOwnerVerifyMutationBody = BodyType<OtaTokenInput>;
+export type OtaOwnerVerifyMutationError = ErrorType<OtaError>;
+
+/**
+ * @summary Exchange a magic-link token for an owner session
+ */
+export const useOtaOwnerVerify = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerVerify>>,
+    TError,
+    { data: BodyType<OtaTokenInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaOwnerVerify>>,
+  TError,
+  { data: BodyType<OtaTokenInput> },
+  TContext
+> => {
+  return useMutation(getOtaOwnerVerifyMutationOptions(options));
+};
+
+/**
+ * @summary Get the signed-in owner's listings
+ */
+export const getOtaOwnerGetMeUrl = () => {
+  return `/api/ota/owner/me`;
+};
+
+export const otaOwnerGetMe = async (
+  options?: RequestInit,
+): Promise<OtaOwnerSession> => {
+  return customFetch<OtaOwnerSession>(getOtaOwnerGetMeUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaOwnerGetMeQueryKey = () => {
+  return [`/api/ota/owner/me`] as const;
+};
+
+export const getOtaOwnerGetMeQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaOwnerGetMe>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaOwnerGetMe>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaOwnerGetMeQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaOwnerGetMe>>> = ({
+    signal,
+  }) => otaOwnerGetMe({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaOwnerGetMe>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaOwnerGetMeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerGetMe>>
+>;
+export type OtaOwnerGetMeQueryError = ErrorType<OtaError>;
+
+/**
+ * @summary Get the signed-in owner's listings
+ */
+
+export function useOtaOwnerGetMe<
+  TData = Awaited<ReturnType<typeof otaOwnerGetMe>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaOwnerGetMe>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaOwnerGetMeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaOwnerLogoutUrl = () => {
+  return `/api/ota/owner/logout`;
+};
+
+export const otaOwnerLogout = async (
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaOwnerLogoutUrl(), {
+    ...options,
+    method: "POST",
+  });
+};
+
+export const getOtaOwnerLogoutMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaOwnerLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = ["otaOwnerLogout"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaOwnerLogout>>,
+    void
+  > = () => {
+    return otaOwnerLogout(requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaOwnerLogoutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerLogout>>
+>;
+
+export type OtaOwnerLogoutMutationError = ErrorType<unknown>;
+
+export const useOtaOwnerLogout = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaOwnerLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  return useMutation(getOtaOwnerLogoutMutationOptions(options));
+};
+
+/**
+ * @summary Owner edits their listing (tiered re-approval)
+ */
+export const getOtaOwnerUpdateListingUrl = (id: string) => {
+  return `/api/ota/owner/listings/${id}`;
+};
+
+export const otaOwnerUpdateListing = async (
+  id: string,
+  otaListingUpdate: OtaListingUpdate,
+  options?: RequestInit,
+): Promise<OtaOwnerEditResult> => {
+  return customFetch<OtaOwnerEditResult>(getOtaOwnerUpdateListingUrl(id), {
+    ...options,
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaListingUpdate),
+  });
+};
+
+export const getOtaOwnerUpdateListingMutationOptions = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerUpdateListing>>,
+    TError,
+    { id: string; data: BodyType<OtaListingUpdate> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaOwnerUpdateListing>>,
+  TError,
+  { id: string; data: BodyType<OtaListingUpdate> },
+  TContext
+> => {
+  const mutationKey = ["otaOwnerUpdateListing"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaOwnerUpdateListing>>,
+    { id: string; data: BodyType<OtaListingUpdate> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return otaOwnerUpdateListing(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaOwnerUpdateListingMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaOwnerUpdateListing>>
+>;
+export type OtaOwnerUpdateListingMutationBody = BodyType<OtaListingUpdate>;
+export type OtaOwnerUpdateListingMutationError = ErrorType<OtaError>;
+
+/**
+ * @summary Owner edits their listing (tiered re-approval)
+ */
+export const useOtaOwnerUpdateListing = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaOwnerUpdateListing>>,
+    TError,
+    { id: string; data: BodyType<OtaListingUpdate> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaOwnerUpdateListing>>,
+  TError,
+  { id: string; data: BodyType<OtaListingUpdate> },
+  TContext
+> => {
+  return useMutation(getOtaOwnerUpdateListingMutationOptions(options));
+};
+
+export const getOtaAdminLoginUrl = () => {
+  return `/api/ota/admin/login`;
+};
+
+export const otaAdminLogin = async (
+  otaAdminLoginInput: OtaAdminLoginInput,
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaAdminLoginUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaAdminLoginInput),
+  });
+};
+
+export const getOtaAdminLoginMutationOptions = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminLogin>>,
+    TError,
+    { data: BodyType<OtaAdminLoginInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminLogin>>,
+  TError,
+  { data: BodyType<OtaAdminLoginInput> },
+  TContext
+> => {
+  const mutationKey = ["otaAdminLogin"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminLogin>>,
+    { data: BodyType<OtaAdminLoginInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaAdminLogin(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminLoginMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminLogin>>
+>;
+export type OtaAdminLoginMutationBody = BodyType<OtaAdminLoginInput>;
+export type OtaAdminLoginMutationError = ErrorType<OtaError>;
+
+export const useOtaAdminLogin = <
+  TError = ErrorType<OtaError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminLogin>>,
+    TError,
+    { data: BodyType<OtaAdminLoginInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminLogin>>,
+  TError,
+  { data: BodyType<OtaAdminLoginInput> },
+  TContext
+> => {
+  return useMutation(getOtaAdminLoginMutationOptions(options));
+};
+
+export const getOtaAdminLogoutUrl = () => {
+  return `/api/ota/admin/logout`;
+};
+
+export const otaAdminLogout = async (
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaAdminLogoutUrl(), {
+    ...options,
+    method: "POST",
+  });
+};
+
+export const getOtaAdminLogoutMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = ["otaAdminLogout"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminLogout>>,
+    void
+  > = () => {
+    return otaAdminLogout(requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminLogoutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminLogout>>
+>;
+
+export type OtaAdminLogoutMutationError = ErrorType<unknown>;
+
+export const useOtaAdminLogout = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminLogout>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminLogout>>,
+  TError,
+  void,
+  TContext
+> => {
+  return useMutation(getOtaAdminLogoutMutationOptions(options));
+};
+
+/**
+ * @summary Check admin session
+ */
+export const getOtaAdminGetMeUrl = () => {
+  return `/api/ota/admin/me`;
+};
+
+export const otaAdminGetMe = async (
+  options?: RequestInit,
+): Promise<OtaAdminSession> => {
+  return customFetch<OtaAdminSession>(getOtaAdminGetMeUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaAdminGetMeQueryKey = () => {
+  return [`/api/ota/admin/me`] as const;
+};
+
+export const getOtaAdminGetMeQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaAdminGetMe>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetMe>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaAdminGetMeQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof otaAdminGetMe>>> = ({
+    signal,
+  }) => otaAdminGetMe({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetMe>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaAdminGetMeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminGetMe>>
+>;
+export type OtaAdminGetMeQueryError = ErrorType<OtaError>;
+
+/**
+ * @summary Check admin session
+ */
+
+export function useOtaAdminGetMe<
+  TData = Awaited<ReturnType<typeof otaAdminGetMe>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetMe>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaAdminGetMeQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Moderation queue (pending submissions + pending edits)
+ */
+export const getOtaAdminGetQueueUrl = () => {
+  return `/api/ota/admin/queue`;
+};
+
+export const otaAdminGetQueue = async (
+  options?: RequestInit,
+): Promise<OtaModerationQueue> => {
+  return customFetch<OtaModerationQueue>(getOtaAdminGetQueueUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaAdminGetQueueQueryKey = () => {
+  return [`/api/ota/admin/queue`] as const;
+};
+
+export const getOtaAdminGetQueueQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaAdminGetQueue>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetQueue>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaAdminGetQueueQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaAdminGetQueue>>
+  > = ({ signal }) => otaAdminGetQueue({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetQueue>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaAdminGetQueueQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminGetQueue>>
+>;
+export type OtaAdminGetQueueQueryError = ErrorType<OtaError>;
+
+/**
+ * @summary Moderation queue (pending submissions + pending edits)
+ */
+
+export function useOtaAdminGetQueue<
+  TData = Awaited<ReturnType<typeof otaAdminGetQueue>>,
+  TError = ErrorType<OtaError>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminGetQueue>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaAdminGetQueueQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaAdminListAllListingsUrl = (
+  params?: OtaAdminListAllListingsParams,
+) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? "null" : value.toString());
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0
+    ? `/api/ota/admin/listings?${stringifiedParams}`
+    : `/api/ota/admin/listings`;
+};
+
+export const otaAdminListAllListings = async (
+  params?: OtaAdminListAllListingsParams,
+  options?: RequestInit,
+): Promise<OtaBusiness[]> => {
+  return customFetch<OtaBusiness[]>(getOtaAdminListAllListingsUrl(params), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaAdminListAllListingsQueryKey = (
+  params?: OtaAdminListAllListingsParams,
+) => {
+  return [`/api/ota/admin/listings`, ...(params ? [params] : [])] as const;
+};
+
+export const getOtaAdminListAllListingsQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaAdminListAllListings>>,
+  TError = ErrorType<OtaError>,
+>(
+  params?: OtaAdminListAllListingsParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaAdminListAllListings>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getOtaAdminListAllListingsQueryKey(params);
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaAdminListAllListings>>
+  > = ({ signal }) =>
+    otaAdminListAllListings(params, { signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListAllListings>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaAdminListAllListingsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminListAllListings>>
+>;
+export type OtaAdminListAllListingsQueryError = ErrorType<OtaError>;
+
+export function useOtaAdminListAllListings<
+  TData = Awaited<ReturnType<typeof otaAdminListAllListings>>,
+  TError = ErrorType<OtaError>,
+>(
+  params?: OtaAdminListAllListingsParams,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof otaAdminListAllListings>>,
+      TError,
+      TData
+    >;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaAdminListAllListingsQueryOptions(params, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaAdminApproveListingUrl = (id: string) => {
+  return `/api/ota/admin/listings/${id}/approve`;
+};
+
+export const otaAdminApproveListing = async (
+  id: string,
+  options?: RequestInit,
+): Promise<OtaBusiness> => {
+  return customFetch<OtaBusiness>(getOtaAdminApproveListingUrl(id), {
+    ...options,
+    method: "POST",
+  });
+};
+
+export const getOtaAdminApproveListingMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminApproveListing>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminApproveListing>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["otaAdminApproveListing"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminApproveListing>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return otaAdminApproveListing(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminApproveListingMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminApproveListing>>
+>;
+
+export type OtaAdminApproveListingMutationError = ErrorType<unknown>;
+
+export const useOtaAdminApproveListing = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminApproveListing>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminApproveListing>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getOtaAdminApproveListingMutationOptions(options));
+};
+
+export const getOtaAdminRejectListingUrl = (id: string) => {
+  return `/api/ota/admin/listings/${id}/reject`;
+};
+
+export const otaAdminRejectListing = async (
+  id: string,
+  otaRejectInput: OtaRejectInput,
+  options?: RequestInit,
+): Promise<OtaBusiness> => {
+  return customFetch<OtaBusiness>(getOtaAdminRejectListingUrl(id), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaRejectInput),
+  });
+};
+
+export const getOtaAdminRejectListingMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminRejectListing>>,
+    TError,
+    { id: string; data: BodyType<OtaRejectInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminRejectListing>>,
+  TError,
+  { id: string; data: BodyType<OtaRejectInput> },
+  TContext
+> => {
+  const mutationKey = ["otaAdminRejectListing"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminRejectListing>>,
+    { id: string; data: BodyType<OtaRejectInput> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return otaAdminRejectListing(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminRejectListingMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminRejectListing>>
+>;
+export type OtaAdminRejectListingMutationBody = BodyType<OtaRejectInput>;
+export type OtaAdminRejectListingMutationError = ErrorType<unknown>;
+
+export const useOtaAdminRejectListing = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminRejectListing>>,
+    TError,
+    { id: string; data: BodyType<OtaRejectInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminRejectListing>>,
+  TError,
+  { id: string; data: BodyType<OtaRejectInput> },
+  TContext
+> => {
+  return useMutation(getOtaAdminRejectListingMutationOptions(options));
+};
+
+export const getOtaAdminUpdateListingUrl = (id: string) => {
+  return `/api/ota/admin/listings/${id}`;
+};
+
+export const otaAdminUpdateListing = async (
+  id: string,
+  otaAdminListingUpdate: OtaAdminListingUpdate,
+  options?: RequestInit,
+): Promise<OtaBusiness> => {
+  return customFetch<OtaBusiness>(getOtaAdminUpdateListingUrl(id), {
+    ...options,
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaAdminListingUpdate),
+  });
+};
+
+export const getOtaAdminUpdateListingMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminUpdateListing>>,
+    TError,
+    { id: string; data: BodyType<OtaAdminListingUpdate> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminUpdateListing>>,
+  TError,
+  { id: string; data: BodyType<OtaAdminListingUpdate> },
+  TContext
+> => {
+  const mutationKey = ["otaAdminUpdateListing"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminUpdateListing>>,
+    { id: string; data: BodyType<OtaAdminListingUpdate> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return otaAdminUpdateListing(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminUpdateListingMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminUpdateListing>>
+>;
+export type OtaAdminUpdateListingMutationBody = BodyType<OtaAdminListingUpdate>;
+export type OtaAdminUpdateListingMutationError = ErrorType<unknown>;
+
+export const useOtaAdminUpdateListing = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminUpdateListing>>,
+    TError,
+    { id: string; data: BodyType<OtaAdminListingUpdate> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminUpdateListing>>,
+  TError,
+  { id: string; data: BodyType<OtaAdminListingUpdate> },
+  TContext
+> => {
+  return useMutation(getOtaAdminUpdateListingMutationOptions(options));
+};
+
+export const getOtaAdminDeleteListingUrl = (id: string) => {
+  return `/api/ota/admin/listings/${id}`;
+};
+
+export const otaAdminDeleteListing = async (
+  id: string,
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaAdminDeleteListingUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getOtaAdminDeleteListingMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteListing>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminDeleteListing>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["otaAdminDeleteListing"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminDeleteListing>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return otaAdminDeleteListing(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminDeleteListingMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminDeleteListing>>
+>;
+
+export type OtaAdminDeleteListingMutationError = ErrorType<unknown>;
+
+export const useOtaAdminDeleteListing = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteListing>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminDeleteListing>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getOtaAdminDeleteListingMutationOptions(options));
+};
+
+export const getOtaAdminListOffersUrl = () => {
+  return `/api/ota/admin/offers`;
+};
+
+export const otaAdminListOffers = async (
+  options?: RequestInit,
+): Promise<OtaOffer[]> => {
+  return customFetch<OtaOffer[]>(getOtaAdminListOffersUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaAdminListOffersQueryKey = () => {
+  return [`/api/ota/admin/offers`] as const;
+};
+
+export const getOtaAdminListOffersQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaAdminListOffers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListOffers>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaAdminListOffersQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaAdminListOffers>>
+  > = ({ signal }) => otaAdminListOffers({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListOffers>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaAdminListOffersQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminListOffers>>
+>;
+export type OtaAdminListOffersQueryError = ErrorType<unknown>;
+
+export function useOtaAdminListOffers<
+  TData = Awaited<ReturnType<typeof otaAdminListOffers>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListOffers>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaAdminListOffersQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaAdminCreateOfferUrl = () => {
+  return `/api/ota/admin/offers`;
+};
+
+export const otaAdminCreateOffer = async (
+  otaOfferInput: OtaOfferInput,
+  options?: RequestInit,
+): Promise<OtaOffer> => {
+  return customFetch<OtaOffer>(getOtaAdminCreateOfferUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaOfferInput),
+  });
+};
+
+export const getOtaAdminCreateOfferMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminCreateOffer>>,
+    TError,
+    { data: BodyType<OtaOfferInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminCreateOffer>>,
+  TError,
+  { data: BodyType<OtaOfferInput> },
+  TContext
+> => {
+  const mutationKey = ["otaAdminCreateOffer"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminCreateOffer>>,
+    { data: BodyType<OtaOfferInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaAdminCreateOffer(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminCreateOfferMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminCreateOffer>>
+>;
+export type OtaAdminCreateOfferMutationBody = BodyType<OtaOfferInput>;
+export type OtaAdminCreateOfferMutationError = ErrorType<unknown>;
+
+export const useOtaAdminCreateOffer = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminCreateOffer>>,
+    TError,
+    { data: BodyType<OtaOfferInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminCreateOffer>>,
+  TError,
+  { data: BodyType<OtaOfferInput> },
+  TContext
+> => {
+  return useMutation(getOtaAdminCreateOfferMutationOptions(options));
+};
+
+export const getOtaAdminDeleteOfferUrl = (id: string) => {
+  return `/api/ota/admin/offers/${id}`;
+};
+
+export const otaAdminDeleteOffer = async (
+  id: string,
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaAdminDeleteOfferUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getOtaAdminDeleteOfferMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteOffer>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminDeleteOffer>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["otaAdminDeleteOffer"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminDeleteOffer>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return otaAdminDeleteOffer(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminDeleteOfferMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminDeleteOffer>>
+>;
+
+export type OtaAdminDeleteOfferMutationError = ErrorType<unknown>;
+
+export const useOtaAdminDeleteOffer = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteOffer>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminDeleteOffer>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getOtaAdminDeleteOfferMutationOptions(options));
+};
+
+export const getOtaAdminListEventsUrl = () => {
+  return `/api/ota/admin/events`;
+};
+
+export const otaAdminListEvents = async (
+  options?: RequestInit,
+): Promise<OtaEvent[]> => {
+  return customFetch<OtaEvent[]>(getOtaAdminListEventsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getOtaAdminListEventsQueryKey = () => {
+  return [`/api/ota/admin/events`] as const;
+};
+
+export const getOtaAdminListEventsQueryOptions = <
+  TData = Awaited<ReturnType<typeof otaAdminListEvents>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListEvents>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getOtaAdminListEventsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof otaAdminListEvents>>
+  > = ({ signal }) => otaAdminListEvents({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListEvents>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type OtaAdminListEventsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminListEvents>>
+>;
+export type OtaAdminListEventsQueryError = ErrorType<unknown>;
+
+export function useOtaAdminListEvents<
+  TData = Awaited<ReturnType<typeof otaAdminListEvents>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof otaAdminListEvents>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getOtaAdminListEventsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+export const getOtaAdminCreateEventUrl = () => {
+  return `/api/ota/admin/events`;
+};
+
+export const otaAdminCreateEvent = async (
+  otaEventInput: OtaEventInput,
+  options?: RequestInit,
+): Promise<OtaEvent> => {
+  return customFetch<OtaEvent>(getOtaAdminCreateEventUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(otaEventInput),
+  });
+};
+
+export const getOtaAdminCreateEventMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminCreateEvent>>,
+    TError,
+    { data: BodyType<OtaEventInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminCreateEvent>>,
+  TError,
+  { data: BodyType<OtaEventInput> },
+  TContext
+> => {
+  const mutationKey = ["otaAdminCreateEvent"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminCreateEvent>>,
+    { data: BodyType<OtaEventInput> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return otaAdminCreateEvent(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminCreateEventMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminCreateEvent>>
+>;
+export type OtaAdminCreateEventMutationBody = BodyType<OtaEventInput>;
+export type OtaAdminCreateEventMutationError = ErrorType<unknown>;
+
+export const useOtaAdminCreateEvent = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminCreateEvent>>,
+    TError,
+    { data: BodyType<OtaEventInput> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminCreateEvent>>,
+  TError,
+  { data: BodyType<OtaEventInput> },
+  TContext
+> => {
+  return useMutation(getOtaAdminCreateEventMutationOptions(options));
+};
+
+export const getOtaAdminDeleteEventUrl = (id: string) => {
+  return `/api/ota/admin/events/${id}`;
+};
+
+export const otaAdminDeleteEvent = async (
+  id: string,
+  options?: RequestInit,
+): Promise<OtaOkResponse> => {
+  return customFetch<OtaOkResponse>(getOtaAdminDeleteEventUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getOtaAdminDeleteEventMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteEvent>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof otaAdminDeleteEvent>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ["otaAdminDeleteEvent"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof otaAdminDeleteEvent>>,
+    { id: string }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return otaAdminDeleteEvent(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type OtaAdminDeleteEventMutationResult = NonNullable<
+  Awaited<ReturnType<typeof otaAdminDeleteEvent>>
+>;
+
+export type OtaAdminDeleteEventMutationError = ErrorType<unknown>;
+
+export const useOtaAdminDeleteEvent = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof otaAdminDeleteEvent>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof otaAdminDeleteEvent>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  return useMutation(getOtaAdminDeleteEventMutationOptions(options));
+};

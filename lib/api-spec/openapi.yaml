@@ -10,13 +10,19 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: ota-public
+    description: On the Avenue — public endpoints
+  - name: ota-owner
+    description: On the Avenue — business owner self-service
+  - name: ota-admin
+    description: On the Avenue — admin moderation
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +30,744 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # ───────────────────────── PUBLIC ─────────────────────────
+
+  /ota/home:
+    get:
+      operationId: otaGetHome
+      tags: [ota-public]
+      summary: Homepage payload (featured, spotlight, offers)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OtaHomePayload"
+
+  /ota/businesses:
+    get:
+      operationId: otaListBusinesses
+      tags: [ota-public]
+      summary: List approved businesses
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+        - name: category
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaBusiness" }
+
+  /ota/businesses/{slug}:
+    get:
+      operationId: otaGetBusiness
+      tags: [ota-public]
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaBusiness" }
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/categories:
+    get:
+      operationId: otaListCategories
+      tags: [ota-public]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaCategory" }
+
+  /ota/categories/{slug}:
+    get:
+      operationId: otaGetCategory
+      tags: [ota-public]
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaCategoryDetail" }
+
+  /ota/offers:
+    get:
+      operationId: otaListOffers
+      tags: [ota-public]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaOffer" }
+
+  /ota/events:
+    get:
+      operationId: otaListEvents
+      tags: [ota-public]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaEvent" }
+
+  # ───────────────────────── OWNER (magic link) ─────────────────────────
+
+  /ota/owner/submit:
+    post:
+      operationId: otaOwnerSubmit
+      tags: [ota-owner]
+      summary: Submit a new business listing for review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaListingInput" }
+      responses:
+        "201":
+          description: Submitted
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaSubmissionResult" }
+
+  /ota/owner/request-link:
+    post:
+      operationId: otaOwnerRequestLink
+      tags: [ota-owner]
+      summary: Send a magic edit-link to an owner's email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaMagicLinkRequest" }
+      responses:
+        "200":
+          description: Always returns ok to prevent email enumeration
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
+  /ota/owner/verify:
+    post:
+      operationId: otaOwnerVerify
+      tags: [ota-owner]
+      summary: Exchange a magic-link token for an owner session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaTokenInput" }
+      responses:
+        "200":
+          description: OK — session cookie set
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOwnerSession" }
+        "401":
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/owner/me:
+    get:
+      operationId: otaOwnerGetMe
+      tags: [ota-owner]
+      summary: Get the signed-in owner's listings
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOwnerSession" }
+        "401":
+          description: Not signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/owner/logout:
+    post:
+      operationId: otaOwnerLogout
+      tags: [ota-owner]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
+  /ota/owner/listings/{id}:
+    patch:
+      operationId: otaOwnerUpdateListing
+      tags: [ota-owner]
+      summary: Owner edits their listing (tiered re-approval)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaListingUpdate" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOwnerEditResult" }
+        "401":
+          description: Not signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+        "403":
+          description: Not your listing
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  # ───────────────────────── ADMIN ─────────────────────────
+
+  /ota/admin/login:
+    post:
+      operationId: otaAdminLogin
+      tags: [ota-admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaAdminLoginInput" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+        "401":
+          description: Invalid password
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/admin/logout:
+    post:
+      operationId: otaAdminLogout
+      tags: [ota-admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
+  /ota/admin/me:
+    get:
+      operationId: otaAdminGetMe
+      tags: [ota-admin]
+      summary: Check admin session
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaAdminSession" }
+        "401":
+          description: Not signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/admin/queue:
+    get:
+      operationId: otaAdminGetQueue
+      tags: [ota-admin]
+      summary: Moderation queue (pending submissions + pending edits)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaModerationQueue" }
+        "401":
+          description: Not signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/admin/listings:
+    get:
+      operationId: otaAdminListAllListings
+      tags: [ota-admin]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, approved, rejected, unpublished, all]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaBusiness" }
+        "401":
+          description: Not signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaError" }
+
+  /ota/admin/listings/{id}/approve:
+    post:
+      operationId: otaAdminApproveListing
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaBusiness" }
+
+  /ota/admin/listings/{id}/reject:
+    post:
+      operationId: otaAdminRejectListing
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaRejectInput" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaBusiness" }
+
+  /ota/admin/listings/{id}:
+    patch:
+      operationId: otaAdminUpdateListing
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaAdminListingUpdate" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaBusiness" }
+    delete:
+      operationId: otaAdminDeleteListing
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
+  /ota/admin/offers:
+    get:
+      operationId: otaAdminListOffers
+      tags: [ota-admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaOffer" }
+    post:
+      operationId: otaAdminCreateOffer
+      tags: [ota-admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaOfferInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOffer" }
+
+  /ota/admin/offers/{id}:
+    delete:
+      operationId: otaAdminDeleteOffer
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
+  /ota/admin/events:
+    get:
+      operationId: otaAdminListEvents
+      tags: [ota-admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/OtaEvent" }
+    post:
+      operationId: otaAdminCreateEvent
+      tags: [ota-admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OtaEventInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaEvent" }
+
+  /ota/admin/events/{id}:
+    delete:
+      operationId: otaAdminDeleteEvent
+      tags: [ota-admin]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/OtaOkResponse" }
+
 components:
   schemas:
     HealthStatus:
       type: object
       properties:
+        status: { type: string }
+      required: [status]
+
+    OtaError:
+      type: object
+      properties:
+        error: { type: string }
+      required: [error]
+
+    OtaOkResponse:
+      type: object
+      properties:
+        ok: { type: boolean }
+      required: [ok]
+
+    OtaBusiness:
+      type: object
+      required:
+        - id
+        - slug
+        - name
+        - category
+        - status
+        - createdAt
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        name: { type: string }
+        category: { type: string }
+        tagline: { type: ["string", "null"] }
+        description: { type: ["string", "null"] }
+        address: { type: ["string", "null"] }
+        phone: { type: ["string", "null"] }
+        website: { type: ["string", "null"] }
+        hours: { type: ["string", "null"] }
+        imageUrl: { type: ["string", "null"] }
+        offer: { type: ["string", "null"] }
+        ownerEmail: { type: ["string", "null"] }
+        isFeatured: { type: boolean }
+        isFoundingSponsor: { type: boolean }
         status:
           type: string
-      required:
-        - status
+          enum: [pending, approved, rejected, unpublished]
+        rejectionReason: { type: ["string", "null"] }
+        pendingChanges:
+          type: ["object", "null"]
+          description: Major edits awaiting re-approval
+          additionalProperties: true
+        createdAt: { type: string }
+        updatedAt: { type: ["string", "null"] }
 
+    OtaCategory:
+      type: object
+      required: [slug, label, count]
+      properties:
+        slug: { type: string }
+        label: { type: string }
+        count: { type: integer }
+
+    OtaCategoryDetail:
+      type: object
+      required: [slug, label, intro, businesses]
+      properties:
+        slug: { type: string }
+        label: { type: string }
+        intro: { type: string }
+        businesses:
+          type: array
+          items: { $ref: "#/components/schemas/OtaBusiness" }
+
+    OtaOffer:
+      type: object
+      required: [id, title, businessId, createdAt]
+      properties:
+        id: { type: string }
+        businessId: { type: string }
+        businessName: { type: ["string", "null"] }
+        businessSlug: { type: ["string", "null"] }
+        title: { type: string }
+        description: { type: ["string", "null"] }
+        expiresAt: { type: ["string", "null"] }
+        isActive: { type: boolean }
+        createdAt: { type: string }
+
+    OtaOfferInput:
+      type: object
+      required: [businessId, title]
+      properties:
+        businessId: { type: string }
+        title: { type: string, minLength: 1 }
+        description: { type: string }
+        expiresAt: { type: string }
+
+    OtaEvent:
+      type: object
+      required: [id, slug, title, eventDate, createdAt]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        title: { type: string }
+        location: { type: ["string", "null"] }
+        eventDate: { type: string }
+        description: { type: ["string", "null"] }
+        imageUrl: { type: ["string", "null"] }
+        createdAt: { type: string }
+
+    OtaEventInput:
+      type: object
+      required: [title, eventDate]
+      properties:
+        title: { type: string, minLength: 1 }
+        location: { type: string }
+        eventDate: { type: string }
+        description: { type: string }
+        imageUrl: { type: string }
+
+    OtaHomePayload:
+      type: object
+      required: [featured, categories, offers, events]
+      properties:
+        featured:
+          type: array
+          items: { $ref: "#/components/schemas/OtaBusiness" }
+        spotlight:
+          oneOf:
+            - { $ref: "#/components/schemas/OtaBusiness" }
+            - { type: "null" }
+        categories:
+          type: array
+          items: { $ref: "#/components/schemas/OtaCategory" }
+        offers:
+          type: array
+          items: { $ref: "#/components/schemas/OtaOffer" }
+        events:
+          type: array
+          items: { $ref: "#/components/schemas/OtaEvent" }
+
+    OtaListingInput:
+      type: object
+      required: [name, category, ownerEmail]
+      properties:
+        name: { type: string, minLength: 1 }
+        category: { type: string, minLength: 1 }
+        ownerEmail: { type: string, format: email }
+        tagline: { type: string }
+        description: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        website: { type: string }
+        hours: { type: string }
+        imageUrl: { type: string }
+        offer: { type: string }
+
+    OtaSubmissionResult:
+      type: object
+      required: [ok, message]
+      properties:
+        ok: { type: boolean }
+        message: { type: string }
+        listingId: { type: ["string", "null"] }
+
+    OtaMagicLinkRequest:
+      type: object
+      required: [email]
+      properties:
+        email: { type: string, format: email }
+
+    OtaTokenInput:
+      type: object
+      required: [token]
+      properties:
+        token: { type: string }
+
+    OtaOwnerSession:
+      type: object
+      required: [email, listings]
+      properties:
+        email: { type: string }
+        listings:
+          type: array
+          items: { $ref: "#/components/schemas/OtaBusiness" }
+
+    OtaListingUpdate:
+      type: object
+      description: |
+        Tiered re-approval — name/category changes go to pendingChanges;
+        other fields go live immediately.
+      properties:
+        name: { type: string }
+        category: { type: string }
+        tagline: { type: string }
+        description: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        website: { type: string }
+        hours: { type: string }
+        imageUrl: { type: string }
+        offer: { type: string }
+
+    OtaOwnerEditResult:
+      type: object
+      required: [listing, pendingMajor]
+      properties:
+        listing: { $ref: "#/components/schemas/OtaBusiness" }
+        pendingMajor:
+          type: boolean
+          description: True when major changes (name/category) are awaiting re-approval
+
+    OtaAdminLoginInput:
+      type: object
+      required: [password]
+      properties:
+        password: { type: string }
+
+    OtaAdminSession:
+      type: object
+      required: [authenticated]
+      properties:
+        authenticated: { type: boolean }
+
+    OtaRejectInput:
+      type: object
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1 }
+
+    OtaAdminListingUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        category: { type: string }
+        tagline: { type: string }
+        description: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        website: { type: string }
+        hours: { type: string }
+        imageUrl: { type: string }
+        offer: { type: string }
+        isFeatured: { type: boolean }
+        isFoundingSponsor: { type: boolean }
+        status:
+          type: string
+          enum: [pending, approved, rejected, unpublished]
+
+    OtaModerationQueue:
+      type: object
+      required: [pendingSubmissions, pendingEdits]
+      properties:
+        pendingSubmissions:
+          type: array
+          items: { $ref: "#/components/schemas/OtaBusiness" }
+        pendingEdits:
+          type: array
+          items: { $ref: "#/components/schemas/OtaBusiness" }

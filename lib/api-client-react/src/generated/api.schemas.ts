@@ -8,3 +8,257 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface OtaError {
+  error: string;
+}
+
+export interface OtaOkResponse {
+  ok: boolean;
+}
+
+export type OtaBusinessStatus =
+  (typeof OtaBusinessStatus)[keyof typeof OtaBusinessStatus];
+
+export const OtaBusinessStatus = {
+  pending: "pending",
+  approved: "approved",
+  rejected: "rejected",
+  unpublished: "unpublished",
+} as const;
+
+/**
+ * Major edits awaiting re-approval
+ * @nullable
+ */
+export type OtaBusinessPendingChanges = { [key: string]: unknown } | null;
+
+export interface OtaBusiness {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  /** @nullable */
+  tagline?: string | null;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  address?: string | null;
+  /** @nullable */
+  phone?: string | null;
+  /** @nullable */
+  website?: string | null;
+  /** @nullable */
+  hours?: string | null;
+  /** @nullable */
+  imageUrl?: string | null;
+  /** @nullable */
+  offer?: string | null;
+  /** @nullable */
+  ownerEmail?: string | null;
+  isFeatured?: boolean;
+  isFoundingSponsor?: boolean;
+  status: OtaBusinessStatus;
+  /** @nullable */
+  rejectionReason?: string | null;
+  /**
+   * Major edits awaiting re-approval
+   * @nullable
+   */
+  pendingChanges?: OtaBusinessPendingChanges;
+  createdAt: string;
+  /** @nullable */
+  updatedAt?: string | null;
+}
+
+export interface OtaCategory {
+  slug: string;
+  label: string;
+  count: number;
+}
+
+export interface OtaCategoryDetail {
+  slug: string;
+  label: string;
+  intro: string;
+  businesses: OtaBusiness[];
+}
+
+export interface OtaOffer {
+  id: string;
+  businessId: string;
+  /** @nullable */
+  businessName?: string | null;
+  /** @nullable */
+  businessSlug?: string | null;
+  title: string;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  expiresAt?: string | null;
+  isActive?: boolean;
+  createdAt: string;
+}
+
+export interface OtaOfferInput {
+  businessId: string;
+  /** @minLength 1 */
+  title: string;
+  description?: string;
+  expiresAt?: string;
+}
+
+export interface OtaEvent {
+  id: string;
+  slug: string;
+  title: string;
+  /** @nullable */
+  location?: string | null;
+  eventDate: string;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  imageUrl?: string | null;
+  createdAt: string;
+}
+
+export interface OtaEventInput {
+  /** @minLength 1 */
+  title: string;
+  location?: string;
+  eventDate: string;
+  description?: string;
+  imageUrl?: string;
+}
+
+export interface OtaHomePayload {
+  featured: OtaBusiness[];
+  spotlight?: OtaBusiness | null;
+  categories: OtaCategory[];
+  offers: OtaOffer[];
+  events: OtaEvent[];
+}
+
+export interface OtaListingInput {
+  /** @minLength 1 */
+  name: string;
+  /** @minLength 1 */
+  category: string;
+  ownerEmail: string;
+  tagline?: string;
+  description?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  imageUrl?: string;
+  offer?: string;
+}
+
+export interface OtaSubmissionResult {
+  ok: boolean;
+  message: string;
+  /** @nullable */
+  listingId?: string | null;
+}
+
+export interface OtaMagicLinkRequest {
+  email: string;
+}
+
+export interface OtaTokenInput {
+  token: string;
+}
+
+export interface OtaOwnerSession {
+  email: string;
+  listings: OtaBusiness[];
+}
+
+/**
+ * Tiered re-approval — name/category changes go to pendingChanges;
+other fields go live immediately.
+
+ */
+export interface OtaListingUpdate {
+  name?: string;
+  category?: string;
+  tagline?: string;
+  description?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  imageUrl?: string;
+  offer?: string;
+}
+
+export interface OtaOwnerEditResult {
+  listing: OtaBusiness;
+  /** True when major changes (name/category) are awaiting re-approval */
+  pendingMajor: boolean;
+}
+
+export interface OtaAdminLoginInput {
+  password: string;
+}
+
+export interface OtaAdminSession {
+  authenticated: boolean;
+}
+
+export interface OtaRejectInput {
+  /** @minLength 1 */
+  reason: string;
+}
+
+export type OtaAdminListingUpdateStatus =
+  (typeof OtaAdminListingUpdateStatus)[keyof typeof OtaAdminListingUpdateStatus];
+
+export const OtaAdminListingUpdateStatus = {
+  pending: "pending",
+  approved: "approved",
+  rejected: "rejected",
+  unpublished: "unpublished",
+} as const;
+
+export interface OtaAdminListingUpdate {
+  name?: string;
+  category?: string;
+  tagline?: string;
+  description?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  imageUrl?: string;
+  offer?: string;
+  isFeatured?: boolean;
+  isFoundingSponsor?: boolean;
+  status?: OtaAdminListingUpdateStatus;
+}
+
+export interface OtaModerationQueue {
+  pendingSubmissions: OtaBusiness[];
+  pendingEdits: OtaBusiness[];
+}
+
+export type OtaListBusinessesParams = {
+  q?: string;
+  category?: string;
+};
+
+export type OtaAdminListAllListingsParams = {
+  status?: OtaAdminListAllListingsStatus;
+};
+
+export type OtaAdminListAllListingsStatus =
+  (typeof OtaAdminListAllListingsStatus)[keyof typeof OtaAdminListAllListingsStatus];
+
+export const OtaAdminListAllListingsStatus = {
+  pending: "pending",
+  approved: "approved",
+  rejected: "rejected",
+  unpublished: "unpublished",
+  all: "all",
+} as const;
