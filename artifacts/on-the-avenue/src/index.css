@@ -1,10 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
-
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..900&display=swap');
 
 @theme inline {
   --color-background: hsl(var(--background));

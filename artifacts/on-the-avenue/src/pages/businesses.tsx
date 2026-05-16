@@ -1,12 +1,11 @@
 import { useOtaListBusinesses, useOtaListCategories } from "@workspace/api-client-react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { Search, MapPin, Star, Tag } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 
 export function Businesses() {
-  const [location] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   const urlQ = searchParams.get("q") || "";
   const urlCategory = searchParams.get("category") || "";
@@ -33,9 +32,9 @@ export function Businesses() {
     const currentSearch = window.location.search.replace(/^\?/, "");
     
     if (newSearch !== currentSearch) {
-      window.history.replaceState(null, "", `${location}${newSearch ? `?${newSearch}` : ""}`);
+      window.history.replaceState(null, "", `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}`);
     }
-  }, [debouncedQ, category, location]);
+  }, [debouncedQ, category]);
 
   const { data: businesses, isLoading: isLoadingBusinesses } = useOtaListBusinesses({ q: debouncedQ, category });
   const { data: categories } = useOtaListCategories();

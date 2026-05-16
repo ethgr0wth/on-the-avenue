@@ -27,7 +27,7 @@ import { useLocation } from "wouter";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { LogOut, Trash2, CheckCircle, XCircle, Settings2, Shield, Plus, Building2, Tag, Calendar as CalendarIcon, AlertCircle, MapPin } from "lucide-react";
+import { LogOut, Trash2, CheckCircle, XCircle, Shield, Plus, Building2, Tag, Calendar as CalendarIcon, AlertCircle, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -513,7 +513,7 @@ export function AdminDashboard() {
   const [, setLocation] = useLocation();
   const queryClient = useQueryClient();
   const { data: session, isLoading, isError } = useOtaAdminGetMe();
-  const { data: queue } = useOtaAdminGetQueue();
+  const { data: queue } = useOtaAdminGetQueue({ query: { enabled: !!session?.authenticated, queryKey: getOtaAdminGetQueueQueryKey() } });
   const logout = useOtaAdminLogout();
 
   useEffect(() => {
