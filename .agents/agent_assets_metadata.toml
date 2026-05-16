@@ -551,3 +551,21 @@ id = "pOSh4Hb8gSzYw0-p_8M37"
 uri = "file://artifacts/mint-wp/mint-atelier-20260514-162857-v2.9.8-ONE-SIDEBAR-ONLY.zip"
 type = "unspecified"
 title = "Mint Atelier v2.9.8 — One in-page sidebar menu only (de-duped, styled)"
+
+[[outputs]]
+id = "KLxUSYYakkoqum6LSl5hO"
+uri = "file://artifacts/on-the-avenue/public/images/hero.jpg"
+type = "image"
+title = "charming local neighborhood street with small businesses, sunny day"
+
+[[outputs]]
+id = "zOHKmt2AlluUWzf9fzxn6"
+uri = "file://artifacts/on-the-avenue/public/images/category-placeholder.jpg"
+type = "image"
+title = "artisanal cafe or boutique interior, warm lighting"
+
+[[outputs]]
+id = "oqpUhp3VBQcLptc-gk67_"
+uri = "file://artifacts/on-the-avenue/public/images/event-placeholder.jpg"
+type = "image"
+title = "community event gathering, outdoor market or street fair"
