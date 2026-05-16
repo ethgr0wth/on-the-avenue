@@ -42,6 +42,7 @@ import {
   deleteEvent,
   type ListingStatus,
 } from "../../lib/ota/repo";
+import { runSeed } from "../../lib/ota/seed";
 
 const router: IRouter = Router();
 
@@ -84,6 +85,15 @@ router.get("/me", async (req, res) => {
 });
 
 router.use(requireAdmin);
+
+// Admin-triggered re-seed from Google Places. Not in OpenAPI — call via curl/Postman.
+// POST /api/ota/admin/seed   body: { query?: string, force?: boolean }
+router.post("/seed", async (req, res) => {
+  const query = typeof req.body?.query === "string" ? req.body.query : undefined;
+  const force = req.body?.force === true;
+  const result = await runSeed({ query, force });
+  res.json(result);
+});
 
 router.get("/queue", async (_req, res) => {
   const [pendingSubmissions, pendingEdits] = await Promise.all([

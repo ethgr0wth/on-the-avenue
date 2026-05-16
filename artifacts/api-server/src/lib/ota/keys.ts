@@ -37,4 +37,8 @@ export const k = {
   ownerSession: (token: string) => `${NS}:session:owner:${token}`,
   // Admin sessions
   adminSession: (token: string) => `${NS}:session:admin:${token}`,
+
+  // Seed bookkeeping
+  seedDone: () => `${NS}:seed:done`,
+  seedByPlace: (placeId: string) => `${NS}:seed:place:${placeId}`,
 };

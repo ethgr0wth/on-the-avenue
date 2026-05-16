@@ -1,5 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { runSeedIfNeeded } from "./lib/ota/seed";
 
 const rawPort = process.env["PORT"];
 
@@ -22,4 +23,7 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
+  // Fire and forget — seed the OTA directory from Google Places on first boot.
+  // Idempotent: a `seed:done` flag in storage prevents reruns.
+  void runSeedIfNeeded();
 });

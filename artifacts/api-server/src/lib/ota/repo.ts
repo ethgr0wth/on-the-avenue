@@ -234,6 +234,54 @@ export async function createBusiness(input: {
   return biz;
 }
 
+/**
+ * Insert an already-approved business (e.g. seeded from Google Places).
+ * No owner email, no pending state — goes live immediately.
+ * Caller is responsible for dedup (placeId mapping in storage).
+ */
+export async function seedBusiness(input: {
+  name: string;
+  category: string;
+  tagline?: string | null;
+  description?: string | null;
+  address?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  hours?: string | null;
+  imageUrl?: string | null;
+}): Promise<Business> {
+  const s = getStorage();
+  const id = nid();
+  const slug = await uniqueSlug(slugify(input.name));
+  const biz: Business = {
+    id,
+    slug,
+    name: input.name.trim(),
+    category: input.category.trim(),
+    tagline: input.tagline?.trim() || null,
+    description: input.description?.trim() || null,
+    address: input.address?.trim() || null,
+    phone: input.phone?.trim() || null,
+    website: input.website?.trim() || null,
+    hours: input.hours?.trim() || null,
+    imageUrl: input.imageUrl?.trim() || null,
+    offer: null,
+    ownerEmail: null,
+    isFeatured: false,
+    isFoundingSponsor: false,
+    status: "approved",
+    rejectionReason: null,
+    pendingChanges: null,
+    createdAt: nowIso(),
+    updatedAt: null,
+  };
+  await s.hset(k.business(id), serializeBusiness(biz));
+  await s.set(k.bySlug(slug), id);
+  await s.sadd(k.byStatus("approved"), id);
+  await s.sadd(k.byCategory(biz.category), id);
+  return biz;
+}
+
 export async function getBusiness(id: string): Promise<Business | null> {
   const h = await getStorage().hgetall(k.business(id));
   if (!h || !h.id) return null;
