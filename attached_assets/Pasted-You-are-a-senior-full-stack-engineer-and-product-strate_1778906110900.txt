@@ -1,0 +1,205 @@
+You are a senior full-stack engineer and product strategist.
+
+Build a local SEO marketing web app called “On the Avenue.”
+
+The app is a neighborhood discovery platform sponsored by “Mint on the Avenue,” an Aveda salon. The goal is to help nearby local businesses get discovered while creating strong local SEO pages around Mint’s surrounding area.
+
+Core positioning:
+“On the Avenue” is a curated local guide featuring businesses, events, offers, and destination-style content around the neighborhood. Mint on the Avenue should appear as the founding sponsor / presenting partner, but the platform should feel broader than just the salon.
+
+Build the app as a modern, elegant, mobile-first web application.
+
+Tech stack:
+- React + Vite frontend
+- Tailwind CSS
+- Node.js + Express backend
+- SQLite for local development
+- Simple admin dashboard
+- SEO-friendly public pages
+- Clean folder structure
+
+Brand direction:
+- Elegant, premium, local, editorial
+- Colors inspired by Mint on the Avenue: soft mint, warm neutrals, black/charcoal, white, subtle gold or silver accents
+- Typography should feel modern and upscale
+- Avoid childish directory vibes
+- Make it feel like a local lifestyle magazine + business discovery engine
+
+Main public pages:
+1. Home page
+   - Hero section: “Discover what’s On the Avenue”
+   - Subtitle: “A curated local guide presented by Mint on the Avenue”
+   - Featured businesses
+   - Featured categories
+   - Neighborhood spotlight section
+   - Current offers
+   - Call-to-action for local businesses to get listed
+
+2. Business directory page
+   - Search businesses
+   - Filter by category
+   - Sort featured sponsors first
+   - Show cards with business name, category, address, phone, website, image, short description, offer badge if active
+
+3. Business detail page
+   - SEO-friendly route: /business/:slug
+   - Business name
+   - Category
+   - Address
+   - Phone
+   - Website
+   - Hours
+   - Description
+   - Gallery image
+   - Offer or promotion
+   - Nearby note: “Located near Mint on the Avenue”
+   - Meta title and description should be generated per business
+
+4. Category pages
+   - SEO-friendly route: /category/:slug
+   - Examples:
+     - salons
+     - coffee
+     - restaurants
+     - boutiques
+     - wellness
+     - fitness
+     - beauty
+     - professional-services
+   - Each category page should have intro SEO copy and business cards
+
+5. Offers page
+   - List local deals and promotions
+   - Include expiration dates
+   - Feature Mint offer at top as sponsor
+
+6. Events page
+   - Local events, popups, open houses, workshops, community nights
+   - Include title, date, location, description
+
+7. Partner / Get Listed page
+   - Form for local businesses to request a listing
+   - Fields:
+     - Business name
+     - Contact name
+     - Email
+     - Phone
+     - Website
+     - Category
+     - Description
+     - Offer / promotion
+   - Save submissions to SQLite
+   - Show success message
+
+8. Sponsor section
+   - Mint on the Avenue should be shown as the founding sponsor
+   - Include a sponsor card:
+     “Presented by Mint on the Avenue — an Aveda salon bringing beauty, community, and local discovery together.”
+
+Admin dashboard:
+- Route: /admin
+- Simple password protection using environment variable ADMIN_PASSWORD
+- Admin can:
+  - Add businesses
+  - Edit businesses
+  - Delete businesses
+  - Mark businesses as featured
+  - Add offers
+  - Add events
+  - View partner form submissions
+
+Database tables:
+1. businesses
+   - id
+   - name
+   - slug
+   - category
+   - description
+   - address
+   - phone
+   - website
+   - hours
+   - image_url
+   - offer
+   - is_featured
+   - created_at
+
+2. offers
+   - id
+   - business_id
+   - title
+   - description
+   - expires_at
+   - is_active
+   - created_at
+
+3. events
+   - id
+   - title
+   - slug
+   - location
+   - event_date
+   - description
+   - image_url
+   - created_at
+
+4. submissions
+   - id
+   - business_name
+   - contact_name
+   - email
+   - phone
+   - website
+   - category
+   - description
+   - offer
+   - created_at
+
+SEO requirements:
+- Every business page should generate meta title and meta description
+- Every category page should have SEO intro copy
+- Add JSON-LD LocalBusiness schema on business detail pages
+- Add sitemap endpoint at /sitemap.xml
+- Add robots.txt
+- Use clean slugs
+- Make page titles location-focused, for example:
+  “Best Coffee Near Mint on the Avenue | On the Avenue”
+  “Local Wellness Businesses Near Mint on the Avenue”
+  “Business Name | Local Guide | On the Avenue”
+
+Seed data:
+Create at least 10 sample businesses around a fictional local avenue:
+- Mint on the Avenue
+- A café
+- A boutique
+- A yoga studio
+- A bakery
+- A fitness studio
+- A restaurant
+- A florist
+- A nail salon
+- A photography studio
+
+Mint on the Avenue should be featured and marked as founding sponsor.
+
+UX requirements:
+- Mobile-first
+- Clean cards
+- Premium spacing
+- Sticky navigation
+- CTA buttons
+- Search/filter interface
+- Sponsor badge
+- Elegant footer with:
+  - On the Avenue
+  - Presented by Mint on the Avenue
+  - Get Listed
+  - Categories
+  - Contact
+
+Important:
+Build a working MVP, not just mockups.
+Use real routes, backend APIs, SQLite persistence, and an admin dashboard.
+Keep the code clean and easy to extend.
+Add comments where useful.
+At the end, explain how to run the app and where the main files are.
