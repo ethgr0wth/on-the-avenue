@@ -569,3 +569,9 @@ id = "oqpUhp3VBQcLptc-gk67_"
 uri = "file://artifacts/on-the-avenue/public/images/event-placeholder.jpg"
 type = "image"
 title = "community event gathering, outdoor market or street fair"
+
+[[outputs]]
+id = "Qk5I77WOQzEV3GuCYe7KI"
+uri = "file://docs/netrows-integration.md"
+type = "text"
+title = "NETROWS Integration Guide"
